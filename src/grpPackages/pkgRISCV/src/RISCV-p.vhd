@@ -69,6 +69,8 @@ package RISCV is
     subtype aJTypeImmsrc4Range is natural range 30 downto 21; -- j type immediate src 4
     subtype aJTypeRangeInImmRange is natural range 20 downto 1; -- range of j type immediate inside extended immediate
 
+    subtype aALUShiftRange is natural range 5 downto 0; -- alu shift range
+    subtype aFunct7OtherInstructionRange is natural range 30 downto 30; -- bit that is set when the other instruction should be executed
 
     -------------------------------------------------------------------------------
     -- OpCodes
@@ -184,19 +186,29 @@ package RISCV is
     );
     subtype aRawALUValue is std_ulogic_vector(cALUWidth downto 0); -- incl. overflow bit
     subtype aALUValue is std_ulogic_vector(cALUWidth - 1 downto 0);
-    
-    type aAllALURes is record
-        addsubRes : std_ulogic_vector(cBitWidth + 1 downto 0);
-        andRes : std_ulogic_vector(cBitWidth + 1 downto 0);
-        orRes : std_ulogic_vector(cBitWidth + 1 downto 0);
-        xorRes : std_ulogic_vector(cBitWidth + 1 downto 0);
-        sltRes : std_ulogic_vector(cBitWidth + 1 downto 0);
-        sllRes : std_ulogic_vector(cBitWidth + 1 downto 0);
-        srRes : std_ulogic_vector(cBitWidth + 1 downto 0);
+
+    type aALUValues is record
+        addsubRes   : aRawALUValue;
         addsubCarry : std_ulogic;
+        srValue     : std_ulogic;
+        shiftAmount : natural;
+        aluRawRes   : aRawALUValue;
+        aluRes      : aALUValue;
     end record;
-    
-    
+
+    constant cALUValuesZero : aALUValues := ((others => '0'), '0', '0', 0, (others => '0'), (others => '0'));
+
+    constant cFunct3addsub : aFunct3 := "000";
+    constant cFunct3sll    : aFunct3 := "001";
+    constant cFunct3slt    : aFunct3 := "010";
+    constant cFunct3sltu   : aFunct3 := "011";
+    constant cFunct3xor    : aFunct3 := "100";
+    constant cFunct3sr     : aFunct3 := "101";
+    constant cFunct3or     : aFunct3 := "110";
+    constant cFunct3and    : aFunct3 := "111";
+
+    constant cFunct7OtherInstrPos : natural := 30;
+
     -------------------------------------------------------------------------------
     -- CSR
     -------------------------------------------------------------------------------
@@ -322,10 +334,22 @@ package RISCV is
     function mapCsrAddr(addr : aCsrAddr) return integer;
     -- functio mapCsrAddrValid checks if the mapped address is in allowed region
     function mapCsrAddrValid(mapAddr : integer) return boolean;
+    -- function swapEndianess swaps the endianess of the input
+    function swapEndianess(vec : aWord) return aWord;
 
 end RISCV;
 
 package body RISCV is
+
+    function swapEndianess(vec : aWord) return aWord is
+        variable swappedVec : aWord;
+    begin
+        swappedVec(7 downto 0) := vec(cBitWidth - 1 downto 24);
+        swappedVec(15 downto 8) := vec(23 downto 16);
+        swappedVec(23 downto 16) := vec(15 downto 8);
+        swappedVec(cBitWidth - 1 downto 24) := vec(7 downto 0);
+        return swappedVec;
+    end function;
 
     function mapCsrAddr(addr : aCsrAddr) return integer is
     begin

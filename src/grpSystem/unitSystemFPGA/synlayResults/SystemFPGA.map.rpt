@@ -1,5 +1,5 @@
 Analysis & Synthesis report for SystemFPGA
-Sat Jan 09 11:14:58 2021
+Fri Jan 15 11:46:05 2021
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -23,7 +23,7 @@ Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
  15. General Register Statistics
  16. Inverted Register Statistics
  17. Multiplexer Restructuring Statistics (No Restructuring Performed)
- 18. Source assignments for riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_k2d2:auto_generated
+ 18. Source assignments for riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated
  19. Source assignments for riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|riscv_system_mm_interconnect_0_cmd_demux:cmd_demux
  20. Source assignments for riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|riscv_system_mm_interconnect_0_rsp_demux:rsp_demux
  21. Source assignments for riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|riscv_system_mm_interconnect_0_rsp_demux:rsp_demux_001
@@ -124,13 +124,13 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sat Jan 09 11:14:58 2021       ;
+; Analysis & Synthesis Status     ; Successful - Fri Jan 15 11:46:05 2021       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; SystemFPGA                                  ;
 ; Top-level Entity Name           ; SystemFPGA                                  ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 1289                                        ;
+; Total registers                 ; 2475                                        ;
 ; Total pins                      ; 22                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 262,144                                     ;
@@ -303,8 +303,8 @@ refer to the applicable agreement for further details.
 ; altrom.inc                                                                                               ; yes             ; Megafunction                           ; d:/intelfpga_lite/18.1/quartus/libraries/megafunctions/altrom.inc                                                                     ;              ;
 ; altram.inc                                                                                               ; yes             ; Megafunction                           ; d:/intelfpga_lite/18.1/quartus/libraries/megafunctions/altram.inc                                                                     ;              ;
 ; altdpram.inc                                                                                             ; yes             ; Megafunction                           ; d:/intelfpga_lite/18.1/quartus/libraries/megafunctions/altdpram.inc                                                                   ;              ;
-; db/altsyncram_k2d2.tdf                                                                                   ; yes             ; Auto-Generated Megafunction            ; X:/src/grpSystem/unitSystemFPGA/synlayResults/db/altsyncram_k2d2.tdf                                                                  ;              ;
-; /src/grpsystem/unitsystemfpga/checksystem.hex                                                            ; yes             ; Auto-Found Memory Initialization File  ; /src/grpsystem/unitsystemfpga/checksystem.hex                                                                                         ;              ;
+; db/altsyncram_e7e2.tdf                                                                                   ; yes             ; Auto-Generated Megafunction            ; X:/src/grpSystem/unitSystemFPGA/synlayResults/db/altsyncram_e7e2.tdf                                                                  ;              ;
+; X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex                                               ; yes             ; Auto-Found Memory Initialization File  ; X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex                                                                            ;              ;
 +----------------------------------------------------------------------------------------------------------+-----------------+----------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------+--------------+
 
 
@@ -313,16 +313,16 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimate of Logic utilization (ALMs needed) ; 1429           ;
+; Estimate of Logic utilization (ALMs needed) ; 3402           ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 1578           ;
-;     -- 7 input functions                    ; 457            ;
-;     -- 6 input functions                    ; 459            ;
-;     -- 5 input functions                    ; 173            ;
-;     -- 4 input functions                    ; 233            ;
-;     -- <=3 input functions                  ; 256            ;
+; Combinational ALUT usage for logic          ; 4288           ;
+;     -- 7 input functions                    ; 455            ;
+;     -- 6 input functions                    ; 1943           ;
+;     -- 5 input functions                    ; 210            ;
+;     -- 4 input functions                    ; 204            ;
+;     -- <=3 input functions                  ; 1476           ;
 ;                                             ;                ;
-; Dedicated logic registers                   ; 1289           ;
+; Dedicated logic registers                   ; 2475           ;
 ;                                             ;                ;
 ; I/O pins                                    ; 22             ;
 ; Total MLAB memory bits                      ; 0              ;
@@ -331,9 +331,9 @@ refer to the applicable agreement for further details.
 ; Total DSP Blocks                            ; 0              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 1321           ;
-; Total fan-out                               ; 14518          ;
-; Average fan-out                             ; 4.93           ;
+; Maximum fan-out                             ; 2507           ;
+; Total fan-out                               ; 30715          ;
+; Average fan-out                             ; 4.49           ;
 +---------------------------------------------+----------------+
 
 
@@ -342,40 +342,40 @@ refer to the applicable agreement for further details.
 +--------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------+--------------+
 ; Compilation Hierarchy Node                                               ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                        ; Entity Name                           ; Library Name ;
 +--------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------+--------------+
-; |SystemFPGA                                                              ; 1578 (1)            ; 1289 (8)                  ; 262144            ; 0          ; 22   ; 0            ; |SystemFPGA                                                                                                                                ; SystemFPGA                            ; work         ;
-;    |riscv_system:u0|                                                     ; 1577 (0)            ; 1281 (0)                  ; 262144            ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0                                                                                                                ; riscv_system                          ; riscv_system ;
-;       |Core:rv32ui_fsmd_0|                                               ; 1490 (1490)         ; 1215 (1215)               ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0                                                                                             ; Core                                  ; riscv_system ;
+; |SystemFPGA                                                              ; 4288 (1)            ; 2475 (8)                  ; 262144            ; 0          ; 22   ; 0            ; |SystemFPGA                                                                                                                                ; SystemFPGA                            ; work         ;
+;    |riscv_system:u0|                                                     ; 4287 (0)            ; 2467 (0)                  ; 262144            ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0                                                                                                                ; riscv_system                          ; riscv_system ;
+;       |Core:rv32ui_fsmd_0|                                               ; 4223 (4223)         ; 2401 (2401)               ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0                                                                                             ; Core                                  ; riscv_system ;
 ;       |altera_reset_controller:rst_controller|                           ; 6 (5)               ; 16 (10)                   ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|altera_reset_controller:rst_controller                                                                         ; altera_reset_controller               ; riscv_system ;
 ;          |altera_reset_synchronizer:alt_rst_req_sync_uq1|                ; 1 (1)               ; 3 (3)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|altera_reset_controller:rst_controller|altera_reset_synchronizer:alt_rst_req_sync_uq1                          ; altera_reset_synchronizer             ; riscv_system ;
 ;          |altera_reset_synchronizer:alt_rst_sync_uq1|                    ; 0 (0)               ; 3 (3)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|altera_reset_controller:rst_controller|altera_reset_synchronizer:alt_rst_sync_uq1                              ; altera_reset_synchronizer             ; riscv_system ;
-;       |riscv_system_leds:leds|                                           ; 11 (11)             ; 8 (8)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_leds:leds                                                                                         ; riscv_system_leds                     ; riscv_system ;
-;       |riscv_system_mm_interconnect_0:mm_interconnect_0|                 ; 60 (0)              ; 34 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0                                                               ; riscv_system_mm_interconnect_0        ; riscv_system ;
-;          |altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|                  ; 4 (4)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo                  ; altera_avalon_sc_fifo                 ; riscv_system ;
-;          |altera_avalon_sc_fifo:onchip_memory2_0_s2_agent_rsp_fifo|      ; 5 (5)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:onchip_memory2_0_s2_agent_rsp_fifo      ; altera_avalon_sc_fifo                 ; riscv_system ;
-;          |altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|              ; 5 (5)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo              ; altera_avalon_sc_fifo                 ; riscv_system ;
+;       |riscv_system_leds:leds|                                           ; 10 (10)             ; 8 (8)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_leds:leds                                                                                         ; riscv_system_leds                     ; riscv_system ;
+;       |riscv_system_mm_interconnect_0:mm_interconnect_0|                 ; 38 (0)              ; 34 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0                                                               ; riscv_system_mm_interconnect_0        ; riscv_system ;
+;          |altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|                  ; 5 (5)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo                  ; altera_avalon_sc_fifo                 ; riscv_system ;
+;          |altera_avalon_sc_fifo:onchip_memory2_0_s2_agent_rsp_fifo|      ; 2 (2)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:onchip_memory2_0_s2_agent_rsp_fifo      ; altera_avalon_sc_fifo                 ; riscv_system ;
+;          |altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|              ; 2 (2)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo              ; altera_avalon_sc_fifo                 ; riscv_system ;
 ;          |altera_merlin_master_agent:rv32ui_fsmd_0_data_agent|           ; 1 (1)               ; 1 (1)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_master_agent:rv32ui_fsmd_0_data_agent           ; altera_merlin_master_agent            ; riscv_system ;
-;          |altera_merlin_master_translator:rv32ui_fsmd_0_data_translator| ; 11 (11)             ; 1 (1)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_master_translator:rv32ui_fsmd_0_data_translator ; altera_merlin_master_translator       ; riscv_system ;
+;          |altera_merlin_master_translator:rv32ui_fsmd_0_data_translator| ; 6 (6)               ; 1 (1)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_master_translator:rv32ui_fsmd_0_data_translator ; altera_merlin_master_translator       ; riscv_system ;
 ;          |altera_merlin_slave_agent:leds_s1_agent|                       ; 1 (1)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_agent:leds_s1_agent                       ; altera_merlin_slave_agent             ; riscv_system ;
-;          |altera_merlin_slave_agent:switches_s1_agent|                   ; 4 (4)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_agent:switches_s1_agent                   ; altera_merlin_slave_agent             ; riscv_system ;
-;          |altera_merlin_slave_translator:leds_s1_translator|             ; 6 (6)               ; 12 (12)                   ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:leds_s1_translator             ; altera_merlin_slave_translator        ; riscv_system ;
+;          |altera_merlin_slave_agent:switches_s1_agent|                   ; 3 (3)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_agent:switches_s1_agent                   ; altera_merlin_slave_agent             ; riscv_system ;
+;          |altera_merlin_slave_translator:leds_s1_translator|             ; 7 (7)               ; 12 (12)                   ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:leds_s1_translator             ; altera_merlin_slave_translator        ; riscv_system ;
 ;          |altera_merlin_slave_translator:onchip_memory2_0_s2_translator| ; 2 (2)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:onchip_memory2_0_s2_translator ; altera_merlin_slave_translator        ; riscv_system ;
-;          |altera_merlin_slave_translator:switches_s1_translator|         ; 6 (6)               ; 12 (12)                   ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:switches_s1_translator         ; altera_merlin_slave_translator        ; riscv_system ;
-;          |riscv_system_mm_interconnect_0_router:router|                  ; 15 (15)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|riscv_system_mm_interconnect_0_router:router                  ; riscv_system_mm_interconnect_0_router ; riscv_system ;
+;          |altera_merlin_slave_translator:switches_s1_translator|         ; 7 (7)               ; 12 (12)                   ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:switches_s1_translator         ; altera_merlin_slave_translator        ; riscv_system ;
+;          |riscv_system_mm_interconnect_0_router:router|                  ; 2 (2)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|riscv_system_mm_interconnect_0_router:router                  ; riscv_system_mm_interconnect_0_router ; riscv_system ;
 ;       |riscv_system_onchip_memory2_0:onchip_memory2_0|                   ; 2 (2)               ; 0 (0)                     ; 262144            ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0                                                                 ; riscv_system_onchip_memory2_0         ; riscv_system ;
 ;          |altsyncram:the_altsyncram|                                     ; 0 (0)               ; 0 (0)                     ; 262144            ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram                                       ; altsyncram                            ; work         ;
-;             |altsyncram_k2d2:auto_generated|                             ; 0 (0)               ; 0 (0)                     ; 262144            ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_k2d2:auto_generated        ; altsyncram_k2d2                       ; work         ;
+;             |altsyncram_e7e2:auto_generated|                             ; 0 (0)               ; 0 (0)                     ; 262144            ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated        ; altsyncram_e7e2                       ; work         ;
 ;       |riscv_system_switches:switches|                                   ; 8 (8)               ; 8 (8)                     ; 0                 ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_switches:switches                                                                                 ; riscv_system_switches                 ; riscv_system ;
 +--------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis RAM Summary                                                                                                                                                                                                                                                  ;
-+------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------+-------------------------------------------------+
-; Name                                                                                                                               ; Type ; Mode           ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size   ; MIF                                             ;
-+------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------+-------------------------------------------------+
-; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_k2d2:auto_generated|ALTSYNCRAM ; AUTO ; True Dual Port ; 8192         ; 32           ; 8192         ; 32           ; 262144 ; X:/src/grpSystem/unitSystemFPGA/checkSystem.hex ;
-+------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------+-------------------------------------------------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                                                                                                                                                                             ;
++------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------+------------------------------------------------------------+
+; Name                                                                                                                               ; Type ; Mode           ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size   ; MIF                                                        ;
++------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------+------------------------------------------------------------+
+; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated|ALTSYNCRAM ; AUTO ; True Dual Port ; 8192         ; 32           ; 8192         ; 32           ; 262144 ; X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex ;
++------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------+------------------------------------------------------------+
 
 
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -597,10 +597,10 @@ Encoding Type:  One-Hot
 ; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[0][22]                                                                                                                                                      ; Stuck at GND due to stuck port clock_enable                                                                                                                                                                     ;
 ; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[0][21]                                                                                                                                                      ; Stuck at GND due to stuck port clock_enable                                                                                                                                                                     ;
 ; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[0][20]                                                                                                                                                      ; Stuck at GND due to stuck port clock_enable                                                                                                                                                                     ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[0][19]                                                                                                                                                      ; Stuck at GND due to stuck port clock_enable                                                                                                                                                                     ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[0][18]                                                                                                                                                      ; Stuck at GND due to stuck port clock_enable                                                                                                                                                                     ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[0][17]                                                                                                                                                      ; Stuck at GND due to stuck port clock_enable                                                                                                                                                                     ;
 ; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[0][16]                                                                                                                                                      ; Stuck at GND due to stuck port clock_enable                                                                                                                                                                     ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[0][17]                                                                                                                                                      ; Stuck at GND due to stuck port clock_enable                                                                                                                                                                     ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[0][18]                                                                                                                                                      ; Stuck at GND due to stuck port clock_enable                                                                                                                                                                     ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[0][19]                                                                                                                                                      ; Stuck at GND due to stuck port clock_enable                                                                                                                                                                     ;
 ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem[1][104]                                                                              ; Stuck at GND due to stuck port data_in                                                                                                                                                                          ;
 ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem[1][104]                                                                          ; Stuck at GND due to stuck port data_in                                                                                                                                                                          ;
 ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:onchip_memory2_0_s2_agent_rsp_fifo|mem[1][104]                                                                  ; Stuck at GND due to stuck port data_in                                                                                                                                                                          ;
@@ -706,10 +706,10 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 1289  ;
-; Number of registers using Synchronous Clear  ; 7     ;
-; Number of registers using Synchronous Load   ; 66    ;
-; Number of registers using Asynchronous Clear ; 1268  ;
+; Total registers                              ; 2475  ;
+; Number of registers using Synchronous Clear  ; 9     ;
+; Number of registers using Synchronous Load   ; 68    ;
+; Number of registers using Asynchronous Clear ; 2454  ;
 ; Number of registers using Asynchronous Load  ; 0     ;
 ; Number of registers using Clock Enable       ; 1052  ;
 ; Number of registers using Preset             ; 0     ;
@@ -721,14 +721,14 @@ Encoding Type:  One-Hot
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
 ; Inverted Register                                                                                                                                         ; Fan out ;
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
-; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_master_agent:rv32ui_fsmd_0_data_agent|hold_waitrequest                     ; 14      ;
+; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_master_agent:rv32ui_fsmd_0_data_agent|hold_waitrequest                     ; 13      ;
 ; riscv_system:u0|altera_reset_controller:rst_controller|r_sync_rst_chain[1]                                                                                ; 1       ;
-; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:leds_s1_translator|waitrequest_reset_override             ; 4       ;
+; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:leds_s1_translator|waitrequest_reset_override             ; 3       ;
 ; riscv_system:u0|altera_reset_controller:rst_controller|altera_reset_synchronizer_int_chain[3]                                                             ; 1       ;
 ; riscv_system:u0|altera_reset_controller:rst_controller|altera_reset_synchronizer_int_chain[2]                                                             ; 4       ;
 ; riscv_system:u0|altera_reset_controller:rst_controller|r_sync_rst_chain[2]                                                                                ; 2       ;
 ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:switches_s1_translator|waitrequest_reset_override         ; 3       ;
-; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:onchip_memory2_0_s2_translator|waitrequest_reset_override ; 4       ;
+; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:onchip_memory2_0_s2_translator|waitrequest_reset_override ; 2       ;
 ; riscv_system:u0|altera_reset_controller:rst_controller|altera_reset_synchronizer_int_chain[1]                                                             ; 1       ;
 ; riscv_system:u0|altera_reset_controller:rst_controller|r_sync_rst_chain[3]                                                                                ; 1       ;
 ; riscv_system:u0|altera_reset_controller:rst_controller|altera_reset_synchronizer_int_chain[0]                                                             ; 1       ;
@@ -744,42 +744,78 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                                                                                 ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:leds_s1_translator|wait_latency_counter[1]     ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:leds_s1_translator|wait_latency_counter[0]     ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 0 LEs                ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.aluData1[3]                                                                                               ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:switches_s1_translator|wait_latency_counter[0] ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.memRead                                                                                                   ;
-; 4:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.curPC[21]                                                                                                 ;
-; 10:1               ; 8 bits    ; 48 LEs        ; 16 LEs               ; 32 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.regWriteData[4]                                                                                           ;
-; 10:1               ; 8 bits    ; 48 LEs        ; 16 LEs               ; 32 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.regWriteData[9]                                                                                           ;
-; 10:1               ; 16 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.regWriteData[26]                                                                                          ;
-; 35:1               ; 32 bits   ; 736 LEs       ; 704 LEs              ; 32 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.aluData1[9]                                                                                               ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|\Comb:vAluSrc1[0]                                                                                           ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftLeft0                                                                                                  ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftRight0                                                                                                 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftRight1                                                                                                 ;
-; 4:1                ; 15 bits   ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftLeft0                                                                                                  ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftLeft0                                                                                                  ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftRight0                                                                                                 ;
-; 4:1                ; 51 bits   ; 102 LEs       ; 102 LEs              ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftRight1                                                                                                 ;
-; 8:1                ; 8 bits    ; 40 LEs        ; 24 LEs               ; 16 LEs                 ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux200                                                                                                      ;
-; 8:1                ; 8 bits    ; 40 LEs        ; 24 LEs               ; 16 LEs                 ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux194                                                                                                      ;
-; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux116                                                                                                      ;
-; 128:1              ; 6 bits    ; 510 LEs       ; 72 LEs               ; 438 LEs                ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux145                                                                                                      ;
-; 128:1              ; 4 bits    ; 340 LEs       ; 64 LEs               ; 276 LEs                ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux150                                                                                                      ;
-; 128:1              ; 11 bits   ; 935 LEs       ; 176 LEs              ; 759 LEs                ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux127                                                                                                      ;
-; 128:1              ; 8 bits    ; 680 LEs       ; 144 LEs              ; 536 LEs                ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux138                                                                                                      ;
-; 129:1              ; 6 bits    ; 516 LEs       ; 36 LEs               ; 480 LEs                ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|NxR.aluOp.ALUOpOr                                                                                           ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.memWrite                                                                                                  ;
+; 4:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.curPC[20]                                                                                                 ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[32][17]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[33][0]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[34][21]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[35][23]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[28][15]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[29][3]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[30][21]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[31][30]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[24][11]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][22]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[26][6]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[27][31]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[20][6]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[21][0]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[22][18]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[23][26]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[16][0]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[17][27]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[18][28]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[19][28]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[12][27]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[13][23]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[14][16]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[15][31]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[8][31]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[9][2]                                                                                              ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[10][26]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[11][31]                                                                                            ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[4][13]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[5][9]                                                                                              ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[6][10]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[7][29]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[0][20]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[1][30]                                                                                             ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[2][7]                                                                                              ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[3][14]                                                                                             ;
+; 11:1               ; 8 bits    ; 56 LEs        ; 16 LEs               ; 40 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.regWriteData[6]                                                                                           ;
+; 11:1               ; 8 bits    ; 56 LEs        ; 16 LEs               ; 40 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.regWriteData[15]                                                                                          ;
+; 11:1               ; 16 bits   ; 112 LEs       ; 64 LEs               ; 48 LEs                 ; Yes        ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|R.regWriteData[23]                                                                                          ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|\Comb:vAluSrc1[1]                                                                                           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftLeft0                                                                                                  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftLeft0                                                                                                  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftRight0                                                                                                 ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 26 LEs               ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftLeft0                                                                                                  ;
+; 4:1                ; 52 bits   ; 104 LEs       ; 104 LEs              ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|ShiftRight0                                                                                                 ;
+; 7:1                ; 6 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux151                                                                                                      ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux157                                                                                                      ;
+; 7:1                ; 11 bits   ; 44 LEs        ; 22 LEs               ; 22 LEs                 ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux130                                                                                                      ;
+; 8:1                ; 8 bits    ; 40 LEs        ; 24 LEs               ; 16 LEs                 ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux1390                                                                                                     ;
+; 8:1                ; 8 bits    ; 40 LEs        ; 24 LEs               ; 16 LEs                 ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux1376                                                                                                     ;
+; 8:1                ; 8 bits    ; 40 LEs        ; 16 LEs               ; 24 LEs                 ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux146                                                                                                      ;
+; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux117                                                                                                      ;
+; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Mux94                                                                                                       ;
+; 37:1               ; 32 bits   ; 768 LEs       ; 768 LEs              ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|vCsrReadData                                                                                                ;
+; 129:1              ; 6 bits    ; 516 LEs       ; 36 LEs               ; 480 LEs                ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|NxR.aluOp.ALUOpSLL                                                                                          ;
 ; 129:1              ; 2 bits    ; 172 LEs       ; 12 LEs               ; 160 LEs                ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|NxR.aluOp.ALUOpSub                                                                                          ;
 ; 129:1              ; 2 bits    ; 172 LEs       ; 12 LEs               ; 160 LEs                ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|NxR.aluOp.ALUOpSRA                                                                                          ;
-; 15:1               ; 12 bits   ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Selector13                                                                                                  ;
-; 14:1               ; 12 bits   ; 108 LEs       ; 108 LEs              ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Selector22                                                                                                  ;
-; 18:1               ; 2 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Selector3                                                                                                   ;
-; 17:1               ; 3 bits    ; 33 LEs        ; 33 LEs               ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Selector30                                                                                                  ;
+; 14:1               ; 12 bits   ; 108 LEs       ; 108 LEs              ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Selector25                                                                                                  ;
+; 14:1               ; 12 bits   ; 108 LEs       ; 108 LEs              ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Selector10                                                                                                  ;
+; 17:1               ; 3 bits    ; 33 LEs        ; 33 LEs               ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Selector29                                                                                                  ;
+; 17:1               ; 3 bits    ; 33 LEs        ; 33 LEs               ; 0 LEs                  ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|Selector3                                                                                                   ;
 ; 265:1              ; 6 bits    ; 1056 LEs      ; 84 LEs               ; 972 LEs                ; No         ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0|NxR.ctrlState.ReadReg                                                                                       ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 +------------------------------------------------------------------------------------------------------------------------------------------------+
-; Source assignments for riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_k2d2:auto_generated ;
+; Source assignments for riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated ;
 +---------------------------------+--------------------+------+----------------------------------------------------------------------------------+
 ; Assignment                      ; Value              ; From ; To                                                                               ;
 +---------------------------------+--------------------+------+----------------------------------------------------------------------------------+
@@ -882,72 +918,72 @@ Encoding Type:  One-Hot
 
 +-------------------------------------------------------------------------------------------------------------+
 ; Parameter Settings for User Entity Instance: riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0 ;
-+----------------+-------------------------------------------------+------------------------------------------+
-; Parameter Name ; Value                                           ; Type                                     ;
-+----------------+-------------------------------------------------+------------------------------------------+
-; INIT_FILE      ; X:/src/grpSystem/unitSystemFPGA/checkSystem.hex ; String                                   ;
-+----------------+-------------------------------------------------+------------------------------------------+
++----------------+------------------------------------------------------------+-------------------------------+
+; Parameter Name ; Value                                                      ; Type                          ;
++----------------+------------------------------------------------------------+-------------------------------+
+; INIT_FILE      ; X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex ; String                        ;
++----------------+------------------------------------------------------------+-------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
 +---------------------------------------------------------------------------------------------------------------------------------------+
 ; Parameter Settings for User Entity Instance: riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram ;
-+------------------------------------+-------------------------------------------------+------------------------------------------------+
-; Parameter Name                     ; Value                                           ; Type                                           ;
-+------------------------------------+-------------------------------------------------+------------------------------------------------+
-; BYTE_SIZE_BLOCK                    ; 8                                               ; Untyped                                        ;
-; AUTO_CARRY_CHAINS                  ; ON                                              ; AUTO_CARRY                                     ;
-; IGNORE_CARRY_BUFFERS               ; OFF                                             ; IGNORE_CARRY                                   ;
-; AUTO_CASCADE_CHAINS                ; ON                                              ; AUTO_CASCADE                                   ;
-; IGNORE_CASCADE_BUFFERS             ; OFF                                             ; IGNORE_CASCADE                                 ;
-; WIDTH_BYTEENA                      ; 1                                               ; Untyped                                        ;
-; OPERATION_MODE                     ; BIDIR_DUAL_PORT                                 ; Untyped                                        ;
-; WIDTH_A                            ; 32                                              ; Signed Integer                                 ;
-; WIDTHAD_A                          ; 13                                              ; Signed Integer                                 ;
-; NUMWORDS_A                         ; 8192                                            ; Signed Integer                                 ;
-; OUTDATA_REG_A                      ; UNREGISTERED                                    ; Untyped                                        ;
-; ADDRESS_ACLR_A                     ; NONE                                            ; Untyped                                        ;
-; OUTDATA_ACLR_A                     ; NONE                                            ; Untyped                                        ;
-; WRCONTROL_ACLR_A                   ; NONE                                            ; Untyped                                        ;
-; INDATA_ACLR_A                      ; NONE                                            ; Untyped                                        ;
-; BYTEENA_ACLR_A                     ; NONE                                            ; Untyped                                        ;
-; WIDTH_B                            ; 32                                              ; Signed Integer                                 ;
-; WIDTHAD_B                          ; 13                                              ; Signed Integer                                 ;
-; NUMWORDS_B                         ; 8192                                            ; Signed Integer                                 ;
-; INDATA_REG_B                       ; CLOCK0                                          ; Untyped                                        ;
-; WRCONTROL_WRADDRESS_REG_B          ; CLOCK0                                          ; Untyped                                        ;
-; RDCONTROL_REG_B                    ; CLOCK1                                          ; Untyped                                        ;
-; ADDRESS_REG_B                      ; CLOCK0                                          ; Untyped                                        ;
-; OUTDATA_REG_B                      ; UNREGISTERED                                    ; Untyped                                        ;
-; BYTEENA_REG_B                      ; CLOCK0                                          ; Untyped                                        ;
-; INDATA_ACLR_B                      ; NONE                                            ; Untyped                                        ;
-; WRCONTROL_ACLR_B                   ; NONE                                            ; Untyped                                        ;
-; ADDRESS_ACLR_B                     ; NONE                                            ; Untyped                                        ;
-; OUTDATA_ACLR_B                     ; NONE                                            ; Untyped                                        ;
-; RDCONTROL_ACLR_B                   ; NONE                                            ; Untyped                                        ;
-; BYTEENA_ACLR_B                     ; NONE                                            ; Untyped                                        ;
-; WIDTH_BYTEENA_A                    ; 4                                               ; Signed Integer                                 ;
-; WIDTH_BYTEENA_B                    ; 4                                               ; Signed Integer                                 ;
-; RAM_BLOCK_TYPE                     ; AUTO                                            ; Untyped                                        ;
-; BYTE_SIZE                          ; 8                                               ; Signed Integer                                 ;
-; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                                        ; Untyped                                        ;
-; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ                            ; Untyped                                        ;
-; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ                            ; Untyped                                        ;
-; INIT_FILE                          ; X:/src/grpSystem/unitSystemFPGA/checkSystem.hex ; Untyped                                        ;
-; INIT_FILE_LAYOUT                   ; PORT_A                                          ; Untyped                                        ;
-; MAXIMUM_DEPTH                      ; 8192                                            ; Signed Integer                                 ;
-; CLOCK_ENABLE_INPUT_A               ; NORMAL                                          ; Untyped                                        ;
-; CLOCK_ENABLE_INPUT_B               ; NORMAL                                          ; Untyped                                        ;
-; CLOCK_ENABLE_OUTPUT_A              ; NORMAL                                          ; Untyped                                        ;
-; CLOCK_ENABLE_OUTPUT_B              ; NORMAL                                          ; Untyped                                        ;
-; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN                                 ; Untyped                                        ;
-; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN                                 ; Untyped                                        ;
-; ENABLE_ECC                         ; FALSE                                           ; Untyped                                        ;
-; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                                           ; Untyped                                        ;
-; WIDTH_ECCSTATUS                    ; 3                                               ; Untyped                                        ;
-; DEVICE_FAMILY                      ; Cyclone V                                       ; Untyped                                        ;
-; CBXI_PARAMETER                     ; altsyncram_k2d2                                 ; Untyped                                        ;
-+------------------------------------+-------------------------------------------------+------------------------------------------------+
++------------------------------------+------------------------------------------------------------+-------------------------------------+
+; Parameter Name                     ; Value                                                      ; Type                                ;
++------------------------------------+------------------------------------------------------------+-------------------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                                                          ; Untyped                             ;
+; AUTO_CARRY_CHAINS                  ; ON                                                         ; AUTO_CARRY                          ;
+; IGNORE_CARRY_BUFFERS               ; OFF                                                        ; IGNORE_CARRY                        ;
+; AUTO_CASCADE_CHAINS                ; ON                                                         ; AUTO_CASCADE                        ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                                                        ; IGNORE_CASCADE                      ;
+; WIDTH_BYTEENA                      ; 1                                                          ; Untyped                             ;
+; OPERATION_MODE                     ; BIDIR_DUAL_PORT                                            ; Untyped                             ;
+; WIDTH_A                            ; 32                                                         ; Signed Integer                      ;
+; WIDTHAD_A                          ; 13                                                         ; Signed Integer                      ;
+; NUMWORDS_A                         ; 8192                                                       ; Signed Integer                      ;
+; OUTDATA_REG_A                      ; UNREGISTERED                                               ; Untyped                             ;
+; ADDRESS_ACLR_A                     ; NONE                                                       ; Untyped                             ;
+; OUTDATA_ACLR_A                     ; NONE                                                       ; Untyped                             ;
+; WRCONTROL_ACLR_A                   ; NONE                                                       ; Untyped                             ;
+; INDATA_ACLR_A                      ; NONE                                                       ; Untyped                             ;
+; BYTEENA_ACLR_A                     ; NONE                                                       ; Untyped                             ;
+; WIDTH_B                            ; 32                                                         ; Signed Integer                      ;
+; WIDTHAD_B                          ; 13                                                         ; Signed Integer                      ;
+; NUMWORDS_B                         ; 8192                                                       ; Signed Integer                      ;
+; INDATA_REG_B                       ; CLOCK0                                                     ; Untyped                             ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK0                                                     ; Untyped                             ;
+; RDCONTROL_REG_B                    ; CLOCK1                                                     ; Untyped                             ;
+; ADDRESS_REG_B                      ; CLOCK0                                                     ; Untyped                             ;
+; OUTDATA_REG_B                      ; UNREGISTERED                                               ; Untyped                             ;
+; BYTEENA_REG_B                      ; CLOCK0                                                     ; Untyped                             ;
+; INDATA_ACLR_B                      ; NONE                                                       ; Untyped                             ;
+; WRCONTROL_ACLR_B                   ; NONE                                                       ; Untyped                             ;
+; ADDRESS_ACLR_B                     ; NONE                                                       ; Untyped                             ;
+; OUTDATA_ACLR_B                     ; NONE                                                       ; Untyped                             ;
+; RDCONTROL_ACLR_B                   ; NONE                                                       ; Untyped                             ;
+; BYTEENA_ACLR_B                     ; NONE                                                       ; Untyped                             ;
+; WIDTH_BYTEENA_A                    ; 4                                                          ; Signed Integer                      ;
+; WIDTH_BYTEENA_B                    ; 4                                                          ; Signed Integer                      ;
+; RAM_BLOCK_TYPE                     ; AUTO                                                       ; Untyped                             ;
+; BYTE_SIZE                          ; 8                                                          ; Signed Integer                      ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                                                   ; Untyped                             ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ                                       ; Untyped                             ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ                                       ; Untyped                             ;
+; INIT_FILE                          ; X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex ; Untyped                             ;
+; INIT_FILE_LAYOUT                   ; PORT_A                                                     ; Untyped                             ;
+; MAXIMUM_DEPTH                      ; 8192                                                       ; Signed Integer                      ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL                                                     ; Untyped                             ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL                                                     ; Untyped                             ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL                                                     ; Untyped                             ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL                                                     ; Untyped                             ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN                                            ; Untyped                             ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN                                            ; Untyped                             ;
+; ENABLE_ECC                         ; FALSE                                                      ; Untyped                             ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                                                      ; Untyped                             ;
+; WIDTH_ECCSTATUS                    ; 3                                                          ; Untyped                             ;
+; DEVICE_FAMILY                      ; Cyclone V                                                  ; Untyped                             ;
+; CBXI_PARAMETER                     ; altsyncram_e7e2                                            ; Untyped                             ;
++------------------------------------+------------------------------------------------------------+-------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -2329,39 +2365,39 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 1289                        ;
-;     CLR               ; 155                         ;
+; arriav_ff             ; 2475                        ;
+;     CLR               ; 1339                        ;
 ;     CLR SCLR          ; 3                           ;
-;     CLR SCLR SLD      ; 4                           ;
+;     CLR SCLR SLD      ; 6                           ;
 ;     CLR SLD           ; 62                          ;
 ;     ENA               ; 8                           ;
 ;     ENA CLR           ; 1044                        ;
 ;     plain             ; 13                          ;
-; arriav_lcell_comb     ; 1578                        ;
-;     arith             ; 95                          ;
-;         0 data inputs ; 2                           ;
-;         1 data inputs ; 29                          ;
-;         2 data inputs ; 32                          ;
-;         4 data inputs ; 31                          ;
-;         5 data inputs ; 1                           ;
-;     extend            ; 457                         ;
-;         7 data inputs ; 457                         ;
-;     normal            ; 993                         ;
-;         0 data inputs ; 2                           ;
-;         1 data inputs ; 1                           ;
-;         2 data inputs ; 71                          ;
-;         3 data inputs ; 86                          ;
-;         4 data inputs ; 202                         ;
-;         5 data inputs ; 172                         ;
-;         6 data inputs ; 459                         ;
-;     shared            ; 33                          ;
+; arriav_lcell_comb     ; 4288                        ;
+;     arith             ; 96                          ;
 ;         0 data inputs ; 1                           ;
+;         1 data inputs ; 31                          ;
+;         2 data inputs ; 1                           ;
+;         3 data inputs ; 33                          ;
+;         4 data inputs ; 22                          ;
+;         5 data inputs ; 8                           ;
+;     extend            ; 455                         ;
+;         7 data inputs ; 455                         ;
+;     normal            ; 3705                        ;
+;         0 data inputs ; 2                           ;
+;         1 data inputs ; 2                           ;
+;         2 data inputs ; 88                          ;
+;         3 data inputs ; 1286                        ;
+;         4 data inputs ; 182                         ;
+;         5 data inputs ; 202                         ;
+;         6 data inputs ; 1943                        ;
+;     shared            ; 32                          ;
 ;         2 data inputs ; 32                          ;
 ; boundary_port         ; 22                          ;
 ; stratixv_ram_block    ; 32                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 9.00                        ;
-; Average LUT depth     ; 4.44                        ;
+; Average LUT depth     ; 6.26                        ;
 +-----------------------+-----------------------------+
 
 
@@ -2370,7 +2406,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:03     ;
+; Top            ; 00:00:11     ;
 +----------------+--------------+
 
 
@@ -2380,7 +2416,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Sat Jan 09 11:14:42 2021
+    Info: Processing started: Fri Jan 15 11:45:42 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off SystemFPGA -c SystemFPGA
 Info (16303): Aggressive Performance optimization mode selected -- timing performance will be prioritized at the potential cost of increased logic area and compilation time
 Info (20030): Parallel compilation is enabled and will use 6 of the 6 processors detected
@@ -2389,7 +2425,7 @@ Info (12021): Found 2 design units, including 0 entities, in source file /src/gr
     Info (12022): Found design unit 2: Global-body File: X:/src/grpPackages/pkgGlobal/src/Global-p.vhd Line: 50
 Info (12021): Found 2 design units, including 0 entities, in source file /src/grppackages/pkgriscv/src/riscv-p.vhd
     Info (12022): Found design unit 1: RISCV File: X:/src/grpPackages/pkgRISCV/src/RISCV-p.vhd Line: 19
-    Info (12022): Found design unit 2: RISCV-body File: X:/src/grpPackages/pkgRISCV/src/RISCV-p.vhd Line: 288
+    Info (12022): Found design unit 2: RISCV-body File: X:/src/grpPackages/pkgRISCV/src/RISCV-p.vhd Line: 342
 Info (12021): Found 2 design units, including 1 entities, in source file /src/grpsystem/unitsystemfpga/riscv_system/synthesis/riscv_system.vhd
     Info (12022): Found design unit 1: riscv_system-rtl File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/riscv_system.vhd Line: 18
     Info (12023): Found entity 1: riscv_system File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/riscv_system.vhd Line: 9
@@ -2451,12 +2487,13 @@ Info (12021): Found 1 design units, including 1 entities, in source file /src/gr
 Info (12021): Found 2 design units, including 0 entities, in source file /src/grpsystem/unitsystemfpga/riscv_system/synthesis/submodules/global-p.vhd
     Info (12022): Found design unit 1: Global (riscv_system) File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/submodules/Global-p.vhd Line: 13
     Info (12022): Found design unit 2: Global-body File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/submodules/Global-p.vhd Line: 50
-Info (12021): Found 1 design units, including 0 entities, in source file /src/grpsystem/unitsystemfpga/riscv_system/synthesis/submodules/riscv-p.vhd
+Info (12021): Found 2 design units, including 0 entities, in source file /src/grpsystem/unitsystemfpga/riscv_system/synthesis/submodules/riscv-p.vhd
     Info (12022): Found design unit 1: RISCV (riscv_system) File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/submodules/RISCV-p.vhd Line: 19
+    Info (12022): Found design unit 2: RISCV-body File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/submodules/RISCV-p.vhd Line: 342
 Info (12021): Found 1 design units, including 0 entities, in source file /src/grpsystem/unitsystemfpga/riscv_system/synthesis/submodules/core-rtl-a.vhd
     Info (12022): Found design unit 1: Core-rtl File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/submodules/Core-Rtl-a.vhd Line: 13
 Info (12021): Found 1 design units, including 1 entities, in source file /src/grpsystem/unitsystemfpga/riscv_system/synthesis/submodules/core-e.vhd
-    Info (12023): Found entity 1: Core File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/submodules/Core-e.vhd Line: 21
+    Info (12023): Found entity 1: Core File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/submodules/Core-e.vhd Line: 22
 Info (12021): Found 1 design units, including 1 entities, in source file /src/grpsystem/unitsystemfpga/riscv_system/synthesis/submodules/riscv_system_onchip_memory2_0.v
     Info (12023): Found entity 1: riscv_system_onchip_memory2_0 File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/submodules/riscv_system_onchip_memory2_0.v Line: 21
 Info (12021): Found 1 design units, including 1 entities, in source file /src/grpsystem/unitsystemfpga/riscv_system/synthesis/submodules/riscv_system_leds.v
@@ -2477,7 +2514,7 @@ Info (12133): Instantiated megafunction "riscv_system:u0|riscv_system_onchip_mem
     Info (12134): Parameter "byte_size" = "8"
     Info (12134): Parameter "byteena_reg_b" = "CLOCK0"
     Info (12134): Parameter "indata_reg_b" = "CLOCK0"
-    Info (12134): Parameter "init_file" = "X:/src/grpSystem/unitSystemFPGA/checkSystem.hex"
+    Info (12134): Parameter "init_file" = "X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex"
     Info (12134): Parameter "lpm_type" = "altsyncram"
     Info (12134): Parameter "maximum_depth" = "8192"
     Info (12134): Parameter "numwords_a" = "8192"
@@ -2494,9 +2531,10 @@ Info (12133): Instantiated megafunction "riscv_system:u0|riscv_system_onchip_mem
     Info (12134): Parameter "widthad_a" = "13"
     Info (12134): Parameter "widthad_b" = "13"
     Info (12134): Parameter "wrcontrol_wraddress_reg_b" = "CLOCK0"
-Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_k2d2.tdf
-    Info (12023): Found entity 1: altsyncram_k2d2 File: X:/src/grpSystem/unitSystemFPGA/synlayResults/db/altsyncram_k2d2.tdf Line: 27
-Info (12128): Elaborating entity "altsyncram_k2d2" for hierarchy "riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_k2d2:auto_generated" File: d:/intelfpga_lite/18.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 791
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_e7e2.tdf
+    Info (12023): Found entity 1: altsyncram_e7e2 File: X:/src/grpSystem/unitSystemFPGA/synlayResults/db/altsyncram_e7e2.tdf Line: 27
+Info (12128): Elaborating entity "altsyncram_e7e2" for hierarchy "riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated" File: d:/intelfpga_lite/18.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 791
+Critical Warning (127005): Memory depth (8192) in the design file differs from memory depth (13) in the Memory Initialization File "X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex" -- setting initial value for remaining addresses to 0 File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/submodules/riscv_system_onchip_memory2_0.v Line: 97
 Info (12128): Elaborating entity "Core" for hierarchy "riscv_system:u0|Core:rv32ui_fsmd_0" File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/riscv_system.vhd Line: 269
 Info (12128): Elaborating entity "riscv_system_switches" for hierarchy "riscv_system:u0|riscv_system_switches:switches" File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/riscv_system.vhd Line: 286
 Info (12128): Elaborating entity "riscv_system_mm_interconnect_0" for hierarchy "riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0" File: X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/riscv_system.vhd Line: 295
@@ -2545,16 +2583,16 @@ Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
 Warning (21074): Design contains 2 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "KEY_0" File: X:/src/grpSystem/unitSystemFPGA/src/SystemFPGA-e.vhd Line: 24
     Warning (15610): No output dependent on input pin "SW[8]" File: X:/src/grpSystem/unitSystemFPGA/src/SystemFPGA-e.vhd Line: 25
-Info (21057): Implemented 2744 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 5470 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 12 input pins
     Info (21059): Implemented 10 output pins
-    Info (21061): Implemented 2690 logic cells
+    Info (21061): Implemented 5416 logic cells
     Info (21064): Implemented 32 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 7 warnings
-    Info: Peak virtual memory: 4950 megabytes
-    Info: Processing ended: Sat Jan 09 11:14:58 2021
-    Info: Elapsed time: 00:00:16
-    Info: Total CPU time (on all processors): 00:00:23
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 8 warnings
+    Info: Peak virtual memory: 4956 megabytes
+    Info: Processing ended: Fri Jan 15 11:46:05 2021
+    Info: Elapsed time: 00:00:23
+    Info: Total CPU time (on all processors): 00:00:33
 
 
 +------------------------------------------+

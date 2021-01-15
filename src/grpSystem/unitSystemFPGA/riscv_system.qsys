@@ -305,7 +305,7 @@
   <parameter name="enPRInitMode" value="false" />
   <parameter name="enableDiffWidth" value="false" />
   <parameter name="initMemContent" value="true" />
-  <parameter name="initializationFileName">X:/src/grpSystem/unitSystemFPGA/checkSystem.hex</parameter>
+  <parameter name="initializationFileName">X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex</parameter>
   <parameter name="instanceID" value="NONE" />
   <parameter name="memorySize" value="32768" />
   <parameter name="readDuringWriteMode" value="OLD_DATA" />

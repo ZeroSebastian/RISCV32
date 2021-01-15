@@ -80,6 +80,7 @@ append ExtraLibraries {
 append Packages {
     {Packages Global}
 	{Packages RISCV}
+	{Packages ToString}
 }
 
 

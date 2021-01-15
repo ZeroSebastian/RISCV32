@@ -24,6 +24,6 @@ architecture bhv of tbCore is
 begin
 
 -- Clock Gen
-clk <= not(clk) after 10 ns;
+--clk <= not(clk) after 10 ns;
 
 end architecture bhv;
