@@ -20,28 +20,18 @@ architecture rtl of Core is
     constant cInitValRegFile  : aRegFile := (others => (others => '0'));
 
     -- bussignals for remapping
-    signal i_readdata_remapped  : std_logic_vector(cBitWidth - 1 downto 0);
-    signal d_readdata_remapped  : std_logic_vector(cBitWidth - 1 downto 0);
-    signal d_writedata_remapped : std_logic_vector(cBitWidth - 1 downto 0);
+    signal i_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
+    signal d_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
+    signal d_writedata_remapped : std_ulogic_vector(cBitWidth - 1 downto 0);
 
 begin
 
-    -- remap bus signals to internal representation
-    -- instruction bus
-    i_readdata_remapped(31 downto 24) <= avm_i_readdata(7 downto 0);
-    i_readdata_remapped(23 downto 16) <= avm_i_readdata(15 downto 8);
-    i_readdata_remapped(15 downto 8)  <= avm_i_readdata(23 downto 16);
-    i_readdata_remapped(7 downto 0)   <= avm_i_readdata(31 downto 24);
-
+    -- remap bus signals to internal representation (memory is little endian, cpu uses big endian)
+    -- instrucion bus
+    i_readdata_remapped <= swapEndianess(to_stdULogicVector(avm_i_readdata));
     -- data bus
-    d_readdata_remapped(31 downto 24) <= avm_d_readdata(7 downto 0);
-    d_readdata_remapped(23 downto 16) <= avm_d_readdata(15 downto 8);
-    d_readdata_remapped(15 downto 8)  <= avm_d_readdata(23 downto 16);
-    d_readdata_remapped(7 downto 0)   <= avm_d_readdata(31 downto 24);
-    avm_d_writedata(31 downto 24)     <= d_writedata_remapped(7 downto 0);
-    avm_d_writedata(23 downto 16)     <= d_writedata_remapped(15 downto 8);
-    avm_d_writedata(15 downto 8)      <= d_writedata_remapped(23 downto 16);
-    avm_d_writedata(7 downto 0)       <= d_writedata_remapped(31 downto 24);
+    d_readdata_remapped <= swapEndianess(to_stdULogicVector(avm_d_readdata));
+    avm_d_writedata     <= to_StdLogicVector(swapEndianess(d_writedata_remapped));
 
     Registers : process(csi_clk, rsi_reset_n)
     begin
@@ -55,19 +45,19 @@ begin
     end process;
 
     Comb : process(R, RegFile, i_readdata_remapped, d_readdata_remapped)
-        variable vRegReadData1      : aRegValue                    := (others => '0');
-        variable vRegReadData2      : aRegValue                    := (others => '0');
-        variable vAluSrc1           : aCtrl2Signal                 := (others => '0');
-        variable vAluSrc2           : aCtrlSignal                  := '0';
-        variable vImm               : aImm                         := (others => '0');
-        variable vPCPlus4           : aPCValue                     := (others => '0');
-        variable vNextPC            : aPCValue                     := (others => '0');
-        variable vJumpAdr           : aPCValue                     := (others => '0');
-        variable vDataMemReadData   : aWord                        := (others => '0');
-        variable vDataMemWriteData  : aWord                        := (others => '0');
-        variable vDataMemByteEnable : std_logic_vector(3 downto 0) := (others => '0');
-        variable vCsrAddrMapped     : integer                      := 255;
-        variable vCsrReadData       : aRegValue                    := (others => '0');
+        variable vRegReadData1      : aRegValue      := (others => '0');
+        variable vRegReadData2      : aRegValue      := (others => '0');
+        variable vAluSrc1           : aCtrl2Signal   := (others => '0');
+        variable vAluSrc2           : aCtrlSignal    := '0';
+        variable vImm               : aImm           := (others => '0');
+        variable vPCPlus4           : aPCValue       := (others => '0');
+        variable vNextPC            : aPCValue       := (others => '0');
+        variable vJumpAdr           : aPCValue       := (others => '0');
+        variable vDataMemReadData   : aWord          := (others => '0');
+        variable vDataMemWriteData  : aWord          := (others => '0');
+        variable vDataMemByteEnable : aMemByteselect := (others => '0');
+        variable vCsrAddrMapped     : integer        := 255;
+        variable vCsrReadData       : aRegValue      := (others => '0');
         variable vALUValues         : aALUValues;
 
     begin
@@ -119,10 +109,10 @@ begin
                     -- ALU OpCode
                     case R.curInst(aFunct3Range) is
                         when cFunct3addsub => -- add/sub
-                            if R.curInst(cFunct7OtherInstrPos) = '0' then
-                                NxR.aluOp <= ALUOpAdd;
-                            else
+                            if R.curInst(aOPCodeRange) = cOpRType and R.curInst(cFunct7OtherInstrPos) = '1' then
                                 NxR.aluOp <= ALUOpSub;
+                            else
+                                NxR.aluOp <= ALUOpAdd;
                             end if;
                         when cFunct3sll  => NxR.aluOp <= ALUOpSLL; -- shift left logical
                         when cFunct3slt  => NxR.aluOp <= ALUOpSLT; -- signed less than
@@ -444,7 +434,6 @@ begin
         NxR.statusReg(cStatusZeroBit)  <= nor_reduce(vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1 downto 0));
         NxR.statusReg(cStatusNegBit)   <= vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1);
         NxR.statusReg(cStatusCarryBit) <= vALUValues.aluRawRes(vALUValues.aluRawRes'high);
-        NxR.statusReg(cStatusCarryBit) <= vALUValues.aluRawRes(vALUValues.aluRawRes'high);
 
         -------------------------------------------------------------------------------
         -- Jump Adress Calculation
@@ -521,10 +510,10 @@ begin
                 vDataMemByteEnable := (others => '0');
         end case;
 
-        avm_d_address        <= std_logic_vector(vALUValues.aluRes);
-        avm_d_byteenable     <= vDataMemByteEnable;
+        avm_d_address        <= to_StdLogicVector(vALUValues.aluRes);
+        avm_d_byteenable     <= to_StdLogicVector(vDataMemByteEnable);
         avm_d_write          <= std_logic(R.memWrite);
-        d_writedata_remapped <= std_logic_vector(vDataMemWriteData);
+        d_writedata_remapped <= (vDataMemWriteData);
         avm_d_read           <= std_logic(R.memRead);
 
         -------------------------------------------------------------------------------

@@ -1,11 +1,11 @@
-Fitter Status : Successful - Fri Jan 15 11:49:11 2021
+Fitter Status : Successful - Fri Jan 15 14:59:26 2021
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : SystemFPGA
 Top-level Entity Name : SystemFPGA
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 2,847 / 32,070 ( 9 % )
+Logic utilization (in ALMs) : 2,872 / 32,070 ( 9 % )
 Total registers : 2475
 Total pins : 22 / 457 ( 5 % )
 Total virtual pins : 0

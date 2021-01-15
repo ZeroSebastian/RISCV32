@@ -3,19 +3,19 @@ Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1100mV 85C Model Setup 'CLOCK_50'
-Slack : -3.574
-TNS   : -4635.863
+Slack : -3.692
+TNS   : -4979.665
 
 Type  : Slow 1100mV 85C Model Hold 'CLOCK_50'
-Slack : 0.360
+Slack : 0.318
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Recovery 'CLOCK_50'
-Slack : 0.871
+Slack : 0.399
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Removal 'CLOCK_50'
-Slack : 0.869
+Slack : 0.720
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'CLOCK_50'
@@ -23,19 +23,19 @@ Slack : 1.364
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'CLOCK_50'
-Slack : -3.405
-TNS   : -4232.318
+Slack : -3.633
+TNS   : -4591.229
 
 Type  : Slow 1100mV 0C Model Hold 'CLOCK_50'
-Slack : 0.374
+Slack : 0.298
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Recovery 'CLOCK_50'
-Slack : 1.034
+Slack : 0.581
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Removal 'CLOCK_50'
-Slack : 0.829
+Slack : 0.657
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'CLOCK_50'
@@ -43,19 +43,19 @@ Slack : 1.364
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'CLOCK_50'
-Slack : -0.277
-TNS   : -1.007
+Slack : -0.222
+TNS   : -2.558
 
 Type  : Fast 1100mV 85C Model Hold 'CLOCK_50'
 Slack : 0.176
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Recovery 'CLOCK_50'
-Slack : 2.219
+Slack : 1.801
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Removal 'CLOCK_50'
-Slack : 0.464
+Slack : 0.398
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'CLOCK_50'
@@ -63,19 +63,19 @@ Slack : 0.978
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'CLOCK_50'
-Slack : 0.247
+Slack : 0.265
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'CLOCK_50'
-Slack : 0.169
+Slack : 0.165
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Recovery 'CLOCK_50'
-Slack : 2.524
+Slack : 2.176
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Removal 'CLOCK_50'
-Slack : 0.419
+Slack : 0.340
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'CLOCK_50'

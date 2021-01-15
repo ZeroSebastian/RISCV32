@@ -91,17 +91,6 @@ package RISCV is
     constant cOpFence    : aOpCode := "0001111";
     constant cOpSys      : aOpCode := "1110011";
 
-    -- Memory Funct3
-    constant cMemByte             : aFunct3 := "000";
-    constant cMemHalfWord         : aFunct3 := "001";
-    constant cMemWord             : aFunct3 := "010";
-    constant cMemUnsignedByte     : aFunct3 := "100";
-    constant cMemUnsignedHalfWord : aFunct3 := "101";
-
-    constant cEnableByte     : std_logic_vector(3 downto 0) := "0001";
-    constant cEnableHalfWord : std_logic_vector(3 downto 0) := "0011";
-    constant cEnableWord     : std_logic_vector(3 downto 0) := "1111";
-
     -- Branch Funct3
     constant cCondEq  : aFunct3 := "000";
     constant cCondNe  : aFunct3 := "001";
@@ -208,7 +197,22 @@ package RISCV is
     constant cFunct3and    : aFunct3 := "111";
 
     constant cFunct7OtherInstrPos : natural := 30;
+    
+    -------------------------------------------------------------------------------
+    -- Memory
+    -------------------------------------------------------------------------------
+    subtype aMemByteselect is std_ulogic_vector(3 downto 0);
+    -- Memory Funct3
+    constant cMemByte             : aFunct3 := "000";
+    constant cMemHalfWord         : aFunct3 := "001";
+    constant cMemWord             : aFunct3 := "010";
+    constant cMemUnsignedByte     : aFunct3 := "100";
+    constant cMemUnsignedHalfWord : aFunct3 := "101";
 
+    constant cEnableByte     : aMemByteselect := "0001";
+    constant cEnableHalfWord : aMemByteselect := "0011";
+    constant cEnableWord     : aMemByteselect := "1111";
+    
     -------------------------------------------------------------------------------
     -- CSR
     -------------------------------------------------------------------------------
