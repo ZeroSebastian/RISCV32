@@ -114,8 +114,8 @@ package RISCV is
     -------------------------------------------------------------------------------
     -- Control Unit
     -------------------------------------------------------------------------------
-    type aControlUnitState is (Fetch, ReadReg, Calc, DataAccess0, DataAccess1,
-                               CheckJump, WriteReg, Wait0, Wait1, Trap);
+    type aControlUnitState is (Fetch, ReadReg, DataAccess0, DataAccess1,
+                               CheckJump, WriteReg, Wait0, Wait1, Trap, CalculateUpperimmediate, CalculateJump, CalculateLoad, CalculateALUOp, CalculateStore, CalculateBranch, CalculateSys);
 
     constant cMemToRegALU : aCtrlSignal := '0';
     constant cMemToRegMem : aCtrlSignal := '1';

@@ -100,12 +100,12 @@ begin
 
             NxR.incPC     <= cIncPC;
             NxR.aluCalc   <= '1';
-            NxR.ctrlState <= Calc;
             vAluSrc1      := cALUSrc1RegFile;
 
             case R.curInst(aOPCodeRange) is
 
                 when cOpRType | cOpIArith =>
+                    NxR.ctrlState <= CalculateALUOp;
                     -- ALU OpCode
                     case R.curInst(aFunct3Range) is
                         when cFunct3addsub => -- add/sub
@@ -137,37 +137,38 @@ begin
                     end if;
 
                 when cOpILoad =>
-                    NxR.aluOp <= ALUOpAdd;
-                    NxR.incPC <= cNoIncPC;
-                    vAluSrc2  := cALUSrc2ImmGen;
+                    NxR.aluOp     <= ALUOpAdd;
+                    NxR.incPC     <= cNoIncPC;
+                    vAluSrc2      := cALUSrc2ImmGen;
+                    NxR.ctrlState <= CalculateLoad;
 
                 when cOpSType =>
-                    NxR.aluOp <= ALUOpAdd;
-                    vAluSrc2  := cALUSrc2ImmGen;
+                    NxR.aluOp     <= ALUOpAdd;
+                    vAluSrc2      := cALUSrc2ImmGen;
+                    NxR.ctrlState <= CalculateStore;
 
-                when cOpJType =>
-                    NxR.aluOp     <= ALUOpNOP;
-                    NxR.jumpToAdr <= cJump;
-
-                when cOpIJumpReg =>
+                when cOpJType | cOpIJumpReg =>
+                    -- alu config only needed for Jump Reg
                     NxR.aluOp     <= ALUOpAdd;
                     vAluSrc2      := cALUSrc2ImmGen;
                     NxR.jumpToAdr <= cJump;
+                    NxR.ctrlState <= CalculateJump;
 
                 when cOpBType =>
                     NxR.aluOp <= ALUOpSub;
                     vAluSrc2  := cALUSrc2RegFile;
                     NxR.incPC <= cNoIncPC;
+                    NxR.ctrlState <= CalculateBranch;
 
-                when cOpLUI =>
-                    NxR.aluOp <= ALUOpAdd;
-                    vAluSrc1  := cALUSrc1Zero;
-                    vAluSrc2  := cALUSrc2ImmGen;
-
-                when cOpAUIPC =>
-                    NxR.aluOp <= ALUOpAdd;
-                    vAluSrc1  := cALUSrc1PC;
-                    vAluSrc2  := cALUSrc2ImmGen;
+                when cOpLUI | cOpAUIPC =>
+                    NxR.aluOp     <= ALUOpAdd;
+                    NxR.ctrlState <= CalculateUpperimmediate;
+                    if R.curInst(aOPCodeRange) = cOpLUI then
+                        vAluSrc1 := cALUSrc1Zero;
+                    else
+                        vAluSrc1 := cALUSrc1PC;
+                    end if;
+                    vAluSrc2      := cALUSrc2ImmGen;
 
                 when cOpFence =>        -- implemented as NOP
                     NxR.aluCalc   <= '0';
@@ -179,7 +180,7 @@ begin
                             NxR.ctrlState <= Trap;
                         when others =>
                             NxR.incPC     <= cNoIncPC;
-                            NxR.ctrlState <= Calc;
+                            NxR.ctrlState <= CalculateSys;
                     end case;
 
                 when others =>
@@ -187,66 +188,64 @@ begin
 
             end case;
 
-        elsif R.ctrlState = Calc then
-            case R.curInst(aOPCodeRange) is -- check opcode
-            -- R-Type or I-Type Register Instruction
-                when cOpRType | cOpIArith =>
-                    NxR.regWriteEn <= '1';
-                    NxR.ctrlState  <= WriteReg;
-                -- I-Type Load Instruction
-                when cOpILoad =>
-                    NxR.memRead   <= '1';
-                    NxR.incPC     <= cIncPC;
-                    --NxR.memToReg    <= cMemToRegMem;
-                    NxR.ctrlState <= DataAccess0;
-                -- S-Type Store Instruction
-                when cOpSType =>
-                    NxR.memWrite  <= '1';
-                    NxR.ctrlState <= DataAccess0;
-                -- J-Type Jump Instruction
-                when cOpJType | cOpIJumpReg =>
-                    NxR.regWriteEn <= '1';
-                    NxR.ctrlState  <= WriteReg;
-                    null;
-                -- B-Type Conditional Branch
-                when cOpBType =>
-                    NxR.ctrlState <= CheckJump;
-                -- U-Type Load Immediate
-                when cOpLUI | cOpAUIPC =>
-                    NxR.regWriteEn <= '1';
-                    NxR.ctrlState  <= WriteReg;
-                -- CSR Instruction
-                when cOpSys =>
-                    case R.curInst(aFunct3Range) is
-                        when cSysRW | cSysRWI =>
-                            if R.curInst(11 downto 7) = "00000" then
-                                NxR.csrRead <= '0';
-                            else
-                                NxR.csrRead <= '1';
-                            end if;
-                            NxR.csrWriteMode <= cModeWrite;
-                        when cSysRS | cSysRSI =>
-                            NxR.csrRead <= '1';
-                            if R.curInst(19 downto 15) = "00000" then
-                                NxR.csrWriteMode <= cModeNoWrite;
-                            else
-                                NxR.csrWriteMode <= cModeSet;
-                            end if;
-                        when cSysRC | cSysRCI =>
-                            NxR.csrRead <= '1';
-                            if R.curInst(19 downto 15) = "00000" then
-                                NxR.csrWriteMode <= cModeNoWrite;
-                            else
-                                NxR.csrWriteMode <= cModeClear;
-                            end if;
-                        when others => null;
-                    end case;
-                    NxR.incPC     <= cIncPC;
-                    NxR.ctrlState <= DataAccess0;
-                when others =>
-                    null;
+        -- U-Type Load Immediate
+        elsif R.ctrlState = CalculateUpperimmediate then
+            NxR.regWriteEn <= '1';
+            NxR.ctrlState  <= WriteReg;
 
+        -- J-Type Jump Instruction
+        elsif R.ctrlState = CalculateJump then
+            NxR.regWriteEn <= '1';
+            NxR.ctrlState  <= WriteReg;
+
+        -- B-Type Conditional Branch
+        elsif R.ctrlState = CalculateBranch then
+            NxR.ctrlState <= CheckJump;
+
+        -- I-Type Load Instruction
+        elsif R.ctrlState = CalculateLoad then
+            NxR.memRead   <= '1';
+            NxR.incPC     <= cIncPC;
+            NxR.ctrlState <= DataAccess0;
+
+        -- S-Type Store Instruction
+        elsif R.ctrlState = CalculateStore then
+            NxR.memWrite  <= '1';
+            NxR.ctrlState <= DataAccess0;
+
+        -- R-Type or I-Type Register Instruction
+        elsif R.ctrlState = CalculateALUOp then
+            NxR.regWriteEn <= '1';
+            NxR.ctrlState  <= WriteReg;
+
+        -- CSR Instruction
+        elsif R.ctrlState = CalculateSys then
+            case R.curInst(aFunct3Range) is
+                when cSysRW | cSysRWI =>
+                    if R.curInst(11 downto 7) = "00000" then
+                        NxR.csrRead <= '0';
+                    else
+                        NxR.csrRead <= '1';
+                    end if;
+                    NxR.csrWriteMode <= cModeWrite;
+                when cSysRS | cSysRSI =>
+                    NxR.csrRead <= '1';
+                    if R.curInst(19 downto 15) = "00000" then
+                        NxR.csrWriteMode <= cModeNoWrite;
+                    else
+                        NxR.csrWriteMode <= cModeSet;
+                    end if;
+                when cSysRC | cSysRCI =>
+                    NxR.csrRead <= '1';
+                    if R.curInst(19 downto 15) = "00000" then
+                        NxR.csrWriteMode <= cModeNoWrite;
+                    else
+                        NxR.csrWriteMode <= cModeClear;
+                    end if;
+                when others => null;
             end case;
+            NxR.incPC     <= cIncPC;
+            NxR.ctrlState <= DataAccess0;        
 
         elsif R.ctrlState = DataAccess0 then
             case R.curInst(aOPCodeRange) is
@@ -376,7 +375,6 @@ begin
         -------------------------------------------------------------------------------
         -- ALU
         -------------------------------------------------------------------------------
-
         -- add and substract from alu needed for other operations
         if (R.aluOp = ALUOpAdd) then
             vALUValues.addsubRes := std_ulogic_vector(unsigned('0' & R.aluData1) + unsigned('0' & R.aluData2));
