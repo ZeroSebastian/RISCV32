@@ -116,16 +116,13 @@ package RISCV is
     -- Control Unit
     -------------------------------------------------------------------------------
     type aControlUnitState is (Fetch, ReadReg, DataAccess0, DataAccess1,
-                               CheckJump, PerformJump, WriteReg, Wait0, Wait1, Trap, CalculateUpperimmediate, CalculateJump, CalculateLoad, CalculateALUOp, CalculateStore, CalculateBranch, CalculateSys);
+                               CheckJump, PerformJump, WriteReg, Wait0, Wait1, EnterTrap, Trap, CalculateUpperimmediate, CalculateJump, CalculateLoad, CalculateALUOp, CalculateStore, CalculateBranch, CalculateSys);
 
     constant cMemToRegALU : aCtrlSignal := '0';
     constant cMemToRegMem : aCtrlSignal := '1';
 
     constant cNoJump : aCtrlSignal := '0';
     constant cJump   : aCtrlSignal := '1';
-
-    constant cNoIncPC : aCtrlSignal := '0';
-    constant cIncPC   : aCtrlSignal := '1';
 
     constant cALUSrc1RegFile : aCtrl2Signal := "00";
     constant cALUSrc1Zero    : aCtrl2Signal := "01";
@@ -293,11 +290,6 @@ package RISCV is
 
         -- signals for program counter
         curPC        : aPCValue;
-        incPC        : aCtrlSignal;
-
-        -- signals for writing register file
-        regWriteEn   : aCtrlSignal;
-        regWriteData : aRegValue;
 
         -- signals for ALU
         aluRes       : aALUValue;
@@ -319,9 +311,6 @@ package RISCV is
         memWriteData => (others => '0'),
         memReadData  => (others => '0'),
         curPC        => (others => '0'),
-        incPC        => '0',
-        regWriteEn   => '0',
-        regWriteData => (others => '0'),
         aluRes       => (others => '0'),
         csrReg       => (others => (others => '0')),
         csrRead      => '0',
