@@ -6,7 +6,7 @@ JedecChain;
 	P ActionCode(Ign)
 		Device PartName(SOCVHPS) MfrSpec(OpMask(0));
 	P ActionCode(Cfg)
-		Device PartName(5CSEMA5F31) Path("X:/src/grpSystem/unitSystemFPGA/synlayResults/") File("SystemFPGA.sof") MfrSpec(OpMask(1));
+		Device PartName(5CSEMA5F31) Path("D:/Data/Documents/Bachelorarbeit/RISCV32/src/grpSystem/unitSystemFPGA/synlayResults/") File("SystemFPGA.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

@@ -114,8 +114,8 @@ package RISCV is
     -------------------------------------------------------------------------------
     -- Control Unit
     -------------------------------------------------------------------------------
-    type aControlUnitState is (Fetch, ReadReg, Calc, DataAccess0, DataAccess1,
-                               CheckJump, WriteReg, Wait0, Wait1, Trap);
+    type aControlUnitState is (Fetch, ReadReg, DataAccess0, DataAccess1,
+                               CheckJump, WriteReg, Wait0, Wait1, Trap, CalculateUpperimmediate, CalculateJump, CalculateLoad, CalculateALUOp, CalculateStore, CalculateBranch, CalculateSys);
 
     constant cMemToRegALU : aCtrlSignal := '0';
     constant cMemToRegMem : aCtrlSignal := '1';
@@ -130,8 +130,9 @@ package RISCV is
     constant cALUSrc1Zero    : aCtrl2Signal := "01";
     constant cALUSrc1PC      : aCtrl2Signal := "10";
 
-    constant cALUSrc2RegFile : aCtrlSignal := '0';
-    constant cALUSrc2ImmGen  : aCtrlSignal := '1';
+    constant cALUSrc2RegFile : aCtrl2Signal := "00";
+    constant cALUSrc2ImmGen  : aCtrl2Signal := "01";
+    constant cALUSrc2Const4  : aCtrl2Signal := "10";
 
     constant cCsrDataReg  : aCtrlSignal := '0';
     constant cCsrDataImm  : aCtrlSignal := '1';
@@ -177,6 +178,9 @@ package RISCV is
     subtype aALUValue is std_ulogic_vector(cALUWidth - 1 downto 0);
 
     type aALUValues is record
+        aluCalc : std_ulogic;
+        aluData1    : aALUValue;
+        aluData2    : aALUValue;
         addsubRes   : aRawALUValue;
         addsubCarry : std_ulogic;
         srValue     : std_ulogic;
@@ -185,7 +189,7 @@ package RISCV is
         aluRes      : aALUValue;
     end record;
 
-    constant cALUValuesZero : aALUValues := ((others => '0'), '0', '0', 0, (others => '0'), (others => '0'));
+    constant cALUValuesDefault : aALUValues := ('0', (others => '0'), (others => '0'), (others => '0'), '0', '0', 0, (others => '0'), (others => '0'));
 
     constant cFunct3addsub : aFunct3 := "000";
     constant cFunct3sll    : aFunct3 := "001";
@@ -197,7 +201,7 @@ package RISCV is
     constant cFunct3and    : aFunct3 := "111";
 
     constant cFunct7OtherInstrPos : natural := 30;
-    
+
     -------------------------------------------------------------------------------
     -- Memory
     -------------------------------------------------------------------------------
@@ -212,7 +216,7 @@ package RISCV is
     constant cEnableByte     : aMemByteselect := "0001";
     constant cEnableHalfWord : aMemByteselect := "0011";
     constant cEnableWord     : aMemByteselect := "1111";
-    
+
     -------------------------------------------------------------------------------
     -- CSR
     -------------------------------------------------------------------------------
@@ -292,10 +296,6 @@ package RISCV is
         regWriteData : aRegValue;
 
         -- signals for ALU
-        aluCalc      : aCtrlSignal;
-        aluOp        : aALUOp;
-        aluData1     : aALUValue;
-        aluData2     : aALUValue;
         aluRes       : aALUValue;
 
         -- signals for CSR
@@ -320,10 +320,6 @@ package RISCV is
         incPC        => '0',
         regWriteEn   => '0',
         regWriteData => (others => '0'),
-        aluCalc      => '0',
-        aluOp        => ALUOpNOP,
-        aluData1     => (others => '0'),
-        aluData2     => (others => '0'),
         aluRes       => (others => '0'),
         csrReg       => (others => (others => '0')),
         csrRead      => '0',
@@ -348,9 +344,9 @@ package body RISCV is
     function swapEndianess(vec : aWord) return aWord is
         variable swappedVec : aWord;
     begin
-        swappedVec(7 downto 0) := vec(cBitWidth - 1 downto 24);
-        swappedVec(15 downto 8) := vec(23 downto 16);
-        swappedVec(23 downto 16) := vec(15 downto 8);
+        swappedVec(7 downto 0)              := vec(cBitWidth - 1 downto 24);
+        swappedVec(15 downto 8)             := vec(23 downto 16);
+        swappedVec(23 downto 16)            := vec(15 downto 8);
         swappedVec(cBitWidth - 1 downto 24) := vec(7 downto 0);
         return swappedVec;
     end function;
