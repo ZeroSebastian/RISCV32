@@ -116,7 +116,7 @@ package RISCV is
     -- Control Unit
     -------------------------------------------------------------------------------
     type aControlUnitState is (Fetch, ReadReg, DataAccess0, DataAccess1,
-                               CheckJump, PerformJump, WriteReg, Wait0, Wait1, EnterTrap, Trap, CalculateUpperimmediate, CalculateJump, CalculateLoad, CalculateALUOp, CalculateStore, CalculateBranch, CalculateSys);
+                               CheckJump, PerformJump, WriteReg, Wait0, WaitFence, Wait1, EnterTrap, Trap, CalculateUpperimmediate, CalculateJump, CalculateLoad, CalculateALUOp, CalculateStore, CalculateBranch, CalculateSys);
 
     constant cMemToRegALU : aCtrlSignal := '0';
     constant cMemToRegMem : aCtrlSignal := '1';
@@ -126,7 +126,8 @@ package RISCV is
 
     constant cALUSrc1RegFile : aCtrl2Signal := "00";
     constant cALUSrc1Zero    : aCtrl2Signal := "01";
-    constant cALUSrc1PC      : aCtrl2Signal := "10";
+    constant cALUSrc1PrevPC      : aCtrl2Signal := "10";
+    constant cALUSrc1PC      : aCtrl2Signal := "11";
 
     constant cALUSrc2RegFile : aCtrl2Signal := "00";
     constant cALUSrc2ImmGen  : aCtrl2Signal := "01";
@@ -134,7 +135,7 @@ package RISCV is
 
     constant cRegWritedataALUSrc     : aCtrl2Signal := "00";
     constant cRegWritedataMemRdSrc   : aCtrl2Signal := "01";
-    constant cRegWritedataPCPlus4Src : aCtrl2Signal := "10";
+    constant cRegWritedataPCSrc : aCtrl2Signal := "10";
     constant cRegWritedataCSRSrc     : aCtrl2Signal := "11";
 
     constant cCsrDataReg  : aCtrlSignal := '0';
@@ -219,7 +220,9 @@ package RISCV is
     constant cEnableByte     : aMemByteselect := "0001";
     constant cEnableHalfWord : aMemByteselect := "0011";
     constant cEnableWord     : aMemByteselect := "1111";
-
+    
+    constant cInstrAddrPCSrc : aCtrlSignal := '0';
+    constant cInstrAddrALUSrc : aCtrlSignal := '1';
     -------------------------------------------------------------------------------
     -- CSR
     -------------------------------------------------------------------------------
