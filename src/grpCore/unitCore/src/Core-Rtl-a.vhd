@@ -164,7 +164,11 @@ begin
             vRegFileWriteEN    := '1';
             -- alu config only needed for Jump Reg
             vALUOp             := ALUOpAdd;
-            vAluSrc1           := cALUSrc1RegFile;
+            if (R.curInst(aOPCodeRange) = cOpIJumpReg) then
+                vAluSrc1 := cALUSrc1RegFile;
+            else
+                vAluSrc1 := cALUSrc1PrevPC;
+            end if;
             vAluSrc2           := cALUSrc2ImmGen;
             vALUValues.aluCalc := '1';
             vRegWritedataSrc   := cRegWritedataPCSrc;
@@ -286,6 +290,7 @@ begin
 
         elsif R.ctrlState = CheckJump then
             NxR.ctrlState <= Wait0;
+
             -- check if condition is met
             case R.curInst(aFunct3Range) is
                 when cCondEq | cCondGe | cCondGeu =>
@@ -303,6 +308,12 @@ begin
         elsif R.ctrlState = PerformJump then
             vRegWritedataSrc := cRegWritedataPCSrc;
             NxR.ctrlState    <= Wait1;
+
+            -- alu config for new pc
+            vALUOp             := ALUOpAdd;
+            vAluSrc1           := cALUSrc1PrevPC;
+            vAluSrc2           := cALUSrc2ImmGen;
+            vALUValues.aluCalc := '1';
 
         elsif R.ctrlState = WriteReg then
             NxR.ctrlState <= Fetch;
@@ -413,7 +424,6 @@ begin
             when ALUOpSLT =>
                 vALUValues.aluRawRes    := (others => '0');
                 vALUValues.aluRawRes(0) := (vALUValues.addsubRes(vALUValues.addsubRes'high - 1) or vALUValues.addsubCarry) and not (not vALUValues.aluData1(vALUValues.aluData1'high) and vALUValues.aluData2(vALUValues.aluData2'high));
-
             when ALUOpSLTU =>
                 vALUValues.aluRawRes := (0 => vALUValues.addsubRes(vALUValues.addsubRes'high), others => '0');
             when ALUOpAnd =>
@@ -448,15 +458,6 @@ begin
         NxR.statusReg(cStatusZeroBit)  <= nor_reduce(vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1 downto 0));
         NxR.statusReg(cStatusNegBit)   <= vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1);
         NxR.statusReg(cStatusCarryBit) <= vALUValues.aluRawRes(vALUValues.aluRawRes'high);
-
-        -------------------------------------------------------------------------------
-        -- Jump Adress Calculation
-        -------------------------------------------------------------------------------
-        if R.curInst(aOPCodeRange) = cOpIJumpReg then -- JAL or JALR
-            vJumpAdr := vALUValues.aluRes;
-        else
-            vJumpAdr := std_ulogic_vector(resize(unsigned(vImm) + unsigned(R.curPC) - 4, cImmLen));
-        end if;
 
         -------------------------------------------------------------------------------
         -- CSR Unit
@@ -550,9 +551,7 @@ begin
         -- Multiplexer
         -------------------------------------------------------------------------------   
         -- Select next PC
-        if vRegWritedataSrc = cRegWritedataPCSrc then
-            NxR.curPC <= vJumpAdr;
-        elsif vPCInc = '1' then
+        if vRegWritedataSrc = cRegWritedataPCSrc or vPCInc = '1' then
             NxR.curPC <= vALUValues.aluRes;
         else
             NxR.curPC <= R.curPC;
