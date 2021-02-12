@@ -32,6 +32,7 @@ package RISCV is
     subtype aCsrAddr is std_ulogic_vector(cCsrAddrWidth - 1 downto 0);
     subtype aCtrlSignal is std_ulogic;
     subtype aCtrl2Signal is std_ulogic_vector(1 downto 0);
+    subtype aCtrl3Signal is std_ulogic_vector(2 downto 0);
 
     constant cStatusZeroBit  : natural := 0;
     constant cStatusNegBit   : natural := 1;
@@ -115,16 +116,13 @@ package RISCV is
     -- Control Unit
     -------------------------------------------------------------------------------
     type aControlUnitState is (Fetch, ReadReg, DataAccess0, DataAccess1,
-                               CheckJump, WriteReg, Wait0, Wait1, Trap, CalculateUpperimmediate, CalculateJump, CalculateLoad, CalculateALUOp, CalculateStore, CalculateBranch, CalculateSys);
+                               CheckJump, PerformJump, WriteReg, Wait0, Wait1, EnterTrap, Trap, CalculateUpperimmediate, CalculateJump, CalculateLoad, CalculateALUOp, CalculateStore, CalculateBranch, CalculateSys);
 
     constant cMemToRegALU : aCtrlSignal := '0';
     constant cMemToRegMem : aCtrlSignal := '1';
 
     constant cNoJump : aCtrlSignal := '0';
     constant cJump   : aCtrlSignal := '1';
-
-    constant cNoIncPC : aCtrlSignal := '0';
-    constant cIncPC   : aCtrlSignal := '1';
 
     constant cALUSrc1RegFile : aCtrl2Signal := "00";
     constant cALUSrc1Zero    : aCtrl2Signal := "01";
@@ -133,6 +131,11 @@ package RISCV is
     constant cALUSrc2RegFile : aCtrl2Signal := "00";
     constant cALUSrc2ImmGen  : aCtrl2Signal := "01";
     constant cALUSrc2Const4  : aCtrl2Signal := "10";
+
+    constant cRegWritedataALUSrc     : aCtrl2Signal := "00";
+    constant cRegWritedataMemRdSrc   : aCtrl2Signal := "01";
+    constant cRegWritedataPCPlus4Src : aCtrl2Signal := "10";
+    constant cRegWritedataCSRSrc     : aCtrl2Signal := "11";
 
     constant cCsrDataReg  : aCtrlSignal := '0';
     constant cCsrDataImm  : aCtrlSignal := '1';
@@ -178,7 +181,7 @@ package RISCV is
     subtype aALUValue is std_ulogic_vector(cALUWidth - 1 downto 0);
 
     type aALUValues is record
-        aluCalc : std_ulogic;
+        aluCalc     : std_ulogic;
         aluData1    : aALUValue;
         aluData2    : aALUValue;
         addsubRes   : aRawALUValue;
@@ -284,16 +287,9 @@ package RISCV is
         memAddr      : aWord;
         memWriteData : aWord;
         memReadData  : aWord;
-        memToReg     : aCtrlSignal;
-        jumpToAdr    : aCtrlSignal;
 
         -- signals for program counter
         curPC        : aPCValue;
-        incPC        : aCtrlSignal;
-
-        -- signals for writing register file
-        regWriteEn   : aCtrlSignal;
-        regWriteData : aRegValue;
 
         -- signals for ALU
         aluRes       : aALUValue;
@@ -314,12 +310,7 @@ package RISCV is
         memAddr      => (others => '0'),
         memWriteData => (others => '0'),
         memReadData  => (others => '0'),
-        memToReg     => '0',
-        jumpToAdr    => '0',
         curPC        => (others => '0'),
-        incPC        => '0',
-        regWriteEn   => '0',
-        regWriteData => (others => '0'),
         aluRes       => (others => '0'),
         csrReg       => (others => (others => '0')),
         csrRead      => '0',
