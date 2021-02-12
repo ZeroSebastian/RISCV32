@@ -166,7 +166,12 @@ begin
         -- B-Type Conditional Branch
         elsif R.ctrlState = CalculateBranch then
             NxR.ctrlState      <= CheckJump;
-            vALUOp             := ALUOpSub;
+            case R.curInst(aFunct3Range) is
+                when cCondEq | cCondNe   => vALUOp := ALUOpSub;
+                when cCondLt | cCondGe   => vALUOp := ALUOpSLT;
+                when cCondLtu | cCondGeu => vALUOp := ALUOpSLTU;
+                when others              => null;
+            end case;
             vAluSrc1           := cALUSrc1RegFile;
             vAluSrc2           := cALUSrc2RegFile;
             vALUValues.aluCalc := '1';
@@ -276,32 +281,15 @@ begin
             vRegWritedataSrc := cRegWritedataMemRdSrc;
 
         elsif R.ctrlState = CheckJump then
-
             NxR.ctrlState <= Wait0;
-
+            -- check if condition is met
             case R.curInst(aFunct3Range) is
-                when cCondEq =>
+                when cCondEq | cCondGe | cCondGeu =>
                     if R.statusReg(cStatusZeroBit) = '1' then
                         NxR.ctrlState <= PerformJump;
                     end if;
-                when cCondNe =>
+                when cCondNe | cCondLt | cCondLtu =>
                     if R.statusReg(cStatusZeroBit) = '0' then
-                        NxR.ctrlState <= PerformJump;
-                    end if;
-                when cCondLt =>
-                    if R.statusReg(cStatusNegBit) = '1' then
-                        NxR.ctrlState <= PerformJump;
-                    end if;
-                when cCondGe =>
-                    if R.statusReg(cStatusNegBit) = '0' then
-                        NxR.ctrlState <= PerformJump;
-                    end if;
-                when cCondLtu =>
-                    if R.statusReg(cStatusCarryBit) = '1' then
-                        NxR.ctrlState <= PerformJump;
-                    end if;
-                when cCondGeu =>
-                    if R.statusReg(cStatusCarryBit) = '0' then
                         NxR.ctrlState <= PerformJump;
                     end if;
                 when others =>
