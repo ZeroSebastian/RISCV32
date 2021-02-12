@@ -115,8 +115,23 @@ package RISCV is
     -------------------------------------------------------------------------------
     -- Control Unit
     -------------------------------------------------------------------------------
-    type aControlUnitState is (Fetch, ReadReg, DataAccess0, DataAccess1,
-                               CheckJump, PerformJump, WriteReg, Wait0, Wait1, EnterTrap, Trap, CalculateUpperimmediate, CalculateJump, CalculateLoad, CalculateALUOp, CalculateStore, CalculateBranch, CalculateSys);
+    type aControlUnitState is (
+        Fetch,
+        ReadReg,
+        DataAccess0,
+        DataAccess1,
+        PerformBranch,
+        WriteReg,
+        Wait0,
+        Wait1,
+        Trap,
+        CalculateUpperimmediate,
+        CalculateJump,
+        CalculateLoad,
+        CalculateALUOp,
+        CalculateStore,
+        CalculateBranch,
+        CalculateSys);
 
     constant cMemToRegALU : aCtrlSignal := '0';
     constant cMemToRegMem : aCtrlSignal := '1';
@@ -126,16 +141,17 @@ package RISCV is
 
     constant cALUSrc1RegFile : aCtrl2Signal := "00";
     constant cALUSrc1Zero    : aCtrl2Signal := "01";
-    constant cALUSrc1PC      : aCtrl2Signal := "10";
+    constant cALUSrc1PrevPC  : aCtrl2Signal := "10";
+    constant cALUSrc1PC      : aCtrl2Signal := "11";
 
     constant cALUSrc2RegFile : aCtrl2Signal := "00";
     constant cALUSrc2ImmGen  : aCtrl2Signal := "01";
     constant cALUSrc2Const4  : aCtrl2Signal := "10";
 
-    constant cRegWritedataALUSrc     : aCtrl2Signal := "00";
-    constant cRegWritedataMemRdSrc   : aCtrl2Signal := "01";
-    constant cRegWritedataPCPlus4Src : aCtrl2Signal := "10";
-    constant cRegWritedataCSRSrc     : aCtrl2Signal := "11";
+    constant cRegWritedataALUSrc   : aCtrl2Signal := "00";
+    constant cRegWritedataMemRdSrc : aCtrl2Signal := "01";
+    constant cRegWritedataPCSrc    : aCtrl2Signal := "10";
+    constant cRegWritedataCSRSrc   : aCtrl2Signal := "11";
 
     constant cCsrDataReg  : aCtrlSignal := '0';
     constant cCsrDataImm  : aCtrlSignal := '1';
@@ -190,9 +206,35 @@ package RISCV is
         shiftAmount : natural;
         aluRawRes   : aRawALUValue;
         aluRes      : aALUValue;
+        zero        : std_ulogic;
+        negative    : std_ulogic;
+        carry       : std_ulogic;
     end record;
 
-    constant cALUValuesDefault : aALUValues := ('0', (others => '0'), (others => '0'), (others => '0'), '0', '0', 0, (others => '0'), (others => '0'));
+    type aALUFlags is record
+        zero     : std_ulogic;
+        negative : std_ulogic;
+        carry    : std_ulogic;
+    end record;
+
+    constant cALUValuesDefault : aALUValues := (
+        aluCalc     => '0',
+        aluData1    => (others => '0'),
+        aluData2    => (others => '0'),
+        addsubRes   => (others => '0'),
+        addsubCarry => '0',
+        srValue     => '0',
+        shiftAmount => 0,
+        aluRawRes   => (others => '0'),
+        aluRes      => (others => '0'),
+        zero        => '0',
+        negative    => '0',
+        carry       => '0');
+
+    constant cALUFLagsDefault : aALUFlags := (
+        zero     => '0',
+        negative => '0',
+        carry    => '0');
 
     constant cFunct3addsub : aFunct3 := "000";
     constant cFunct3sll    : aFunct3 := "001";
@@ -220,13 +262,15 @@ package RISCV is
     constant cEnableHalfWord : aMemByteselect := "0011";
     constant cEnableWord     : aMemByteselect := "1111";
 
+    constant cInstrAddrPCSrc  : aCtrlSignal  := '0';
+    constant cInstrAddrALUSrc : aCtrlSignal  := '1';
     -------------------------------------------------------------------------------
     -- CSR
     -------------------------------------------------------------------------------
-    constant cModeNoWrite : aCtrl2Signal := "00";
-    constant cModeClear   : aCtrl2Signal := "01";
-    constant cModeSet     : aCtrl2Signal := "10";
-    constant cModeWrite   : aCtrl2Signal := "11";
+    constant cModeNoWrite     : aCtrl2Signal := "00";
+    constant cModeClear       : aCtrl2Signal := "01";
+    constant cModeSet         : aCtrl2Signal := "10";
+    constant cModeWrite       : aCtrl2Signal := "11";
 
     -- machine information registers
     constant cCsrMVendorId  : aCsrAddr := x"F11";
@@ -278,7 +322,6 @@ package RISCV is
     type aRegSet is record
         -- common signals
         curInst      : aInst;
-        statusReg    : aRegValue;
 
         -- control signals
         ctrlState    : aControlUnitState;
@@ -303,7 +346,6 @@ package RISCV is
 
     constant cInitValRegSet : aRegSet := (
         curInst      => (others => '0'),
-        statusReg    => (others => '0'),
         ctrlState    => Wait1,
         memWrite     => '0',
         memRead      => '0',

@@ -20,7 +20,7 @@
 #*******************************************************************************
 
 # Clock constraints
-create_clock -name "CLOCK_50" -period 5.000 [get_ports {CLOCK_50}] 
+create_clock -name "CLOCK_50" -period 20 [get_ports {CLOCK_50}] 
 
 # HPS inputs
 #create_clock -name "HPS_I2C1_SCLK" -period 2500ns [get_ports {HPS_I2C1_SCLK}] -waveform {0.000ns 1250.000ns}

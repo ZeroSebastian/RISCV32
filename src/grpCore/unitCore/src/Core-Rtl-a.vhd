@@ -18,7 +18,7 @@ architecture rtl of Core is
     -- Register File
     signal RegFile, NxRegFile : aRegFile;
     constant cInitValRegFile  : aRegFile := (others => (others => '0'));
-
+    
     -- bussignals for remapping
     signal i_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
     signal d_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
@@ -50,8 +50,6 @@ begin
         variable vAluSrc1           : aCtrl2Signal   := (others => '0');
         variable vAluSrc2           : aCtrl2Signal   := (others => '0');
         variable vImm               : aImm           := (others => '0');
-        variable vPCPlus4           : aPCValue       := (others => '0');
-        variable vJumpAdr           : aPCValue       := (others => '0');
         variable vDataMemReadData   : aWord          := (others => '0');
         variable vDataMemWriteData  : aWord          := (others => '0');
         variable vDataMemByteEnable : aMemByteselect := (others => '0');
@@ -75,8 +73,6 @@ begin
         vAluSrc1           := cALUSrc1RegFile; -- alu input 1 mux
         vAluSrc2           := (others => '0'); -- alu input 2 mux
         vImm               := (others => '0'); -- extended Immediate
-        vPCPlus4           := (others => '0'); -- current program counter plus 4
-        vJumpAdr           := (others => '0'); -- calculated jump address from instruction
         vDataMemReadData   := (others => '0'); -- data memory read data
         vDataMemWriteData  := (others => '0'); -- data memory write data
         vDataMemByteEnable := (others => '0'); -- data memory byte enable
@@ -175,7 +171,9 @@ begin
 
         -- B-Type Conditional Branch
         elsif R.ctrlState = CalculateBranch then
-            NxR.ctrlState      <= CheckJump;
+            NxR.ctrlState      <= Wait0;
+            
+            -- configure ALU
             case R.curInst(aFunct3Range) is
                 when cCondEq | cCondNe   => vALUOp := ALUOpSub;
                 when cCondLt | cCondGe   => vALUOp := ALUOpSLT;
@@ -184,7 +182,7 @@ begin
             end case;
             vAluSrc1           := cALUSrc1RegFile;
             vAluSrc2           := cALUSrc2RegFile;
-            vALUValues.aluCalc := '1';
+            vALUValues.aluCalc := '1';     
 
         -- I-Type Load Instruction
         elsif R.ctrlState = CalculateLoad then
@@ -288,24 +286,7 @@ begin
             vRegFileWriteEN  := '1';
             vRegWritedataSrc := cRegWritedataMemRdSrc;
 
-        elsif R.ctrlState = CheckJump then
-            NxR.ctrlState <= Wait0;
-
-            -- check if condition is met
-            case R.curInst(aFunct3Range) is
-                when cCondEq | cCondGe | cCondGeu =>
-                    if R.statusReg(cStatusZeroBit) = '1' then
-                        NxR.ctrlState <= PerformJump;
-                    end if;
-                when cCondNe | cCondLt | cCondLtu =>
-                    if R.statusReg(cStatusZeroBit) = '0' then
-                        NxR.ctrlState <= PerformJump;
-                    end if;
-                when others =>
-                    null;
-            end case;
-
-        elsif R.ctrlState = PerformJump then
+        elsif R.ctrlState = PerformBranch then
             vRegWritedataSrc := cRegWritedataPCSrc;
             NxR.ctrlState    <= Wait1;
 
@@ -446,6 +427,11 @@ begin
                 vALUValues.aluRawRes := (others => '-');
         end case;
 
+        -- Set Status Registers
+        vALUValues.zero     := nor_reduce(vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1 downto 0));
+        vALUValues.negative := vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1);
+        vALUValues.carry    := vALUValues.aluRawRes(vALUValues.aluRawRes'high);
+
         -- Remove Carry Bit and Store New Value
         if (vALUValues.aluCalc = '1') then
             vALUValues.aluRes := vALUValues.aluRawRes(vALUValues.aluRes'range);
@@ -453,11 +439,26 @@ begin
         else
             vALUValues.aluRes := R.aluRes;
         end if;
+        
+        -------------------------------------------------------------------------------
+        -- BranchCheck Unit
+        -------------------------------------------------------------------------------
+        if(R.ctrlState = CalculateBranch) then
+            -- check if condition is met
+            case R.curInst(aFunct3Range) is
+                when cCondEq | cCondGe | cCondGeu =>
+                    if vALUValues.zero = '1' then
+                        NxR.ctrlState <= PerformBranch;
+                    end if;
+                when cCondNe | cCondLt | cCondLtu =>
+                    if vALUValues.zero = '0' then
+                        NxR.ctrlState <= PerformBranch;
+                    end if;
+                when others =>
+                    null;
+            end case;
+        end if;
 
-        -- Set Status Registers
-        NxR.statusReg(cStatusZeroBit)  <= nor_reduce(vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1 downto 0));
-        NxR.statusReg(cStatusNegBit)   <= vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1);
-        NxR.statusReg(cStatusCarryBit) <= vALUValues.aluRawRes(vALUValues.aluRawRes'high);
 
         -------------------------------------------------------------------------------
         -- CSR Unit

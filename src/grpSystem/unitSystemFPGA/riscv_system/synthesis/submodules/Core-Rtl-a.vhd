@@ -18,7 +18,7 @@ architecture rtl of Core is
     -- Register File
     signal RegFile, NxRegFile : aRegFile;
     constant cInitValRegFile  : aRegFile := (others => (others => '0'));
-
+    
     -- bussignals for remapping
     signal i_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
     signal d_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
@@ -50,8 +50,6 @@ begin
         variable vAluSrc1           : aCtrl2Signal   := (others => '0');
         variable vAluSrc2           : aCtrl2Signal   := (others => '0');
         variable vImm               : aImm           := (others => '0');
-        variable vPCPlus4           : aPCValue       := (others => '0');
-        variable vJumpAdr           : aPCValue       := (others => '0');
         variable vDataMemReadData   : aWord          := (others => '0');
         variable vDataMemWriteData  : aWord          := (others => '0');
         variable vDataMemByteEnable : aMemByteselect := (others => '0');
@@ -75,8 +73,6 @@ begin
         vAluSrc1           := cALUSrc1RegFile; -- alu input 1 mux
         vAluSrc2           := (others => '0'); -- alu input 2 mux
         vImm               := (others => '0'); -- extended Immediate
-        vPCPlus4           := (others => '0'); -- current program counter plus 4
-        vJumpAdr           := (others => '0'); -- calculated jump address from instruction
         vDataMemReadData   := (others => '0'); -- data memory read data
         vDataMemWriteData  := (others => '0'); -- data memory write data
         vDataMemByteEnable := (others => '0'); -- data memory byte enable
@@ -102,6 +98,14 @@ begin
             NxR.ctrlState <= ReadReg;
 
         elsif R.ctrlState = ReadReg then
+            -- increment pc with alu
+            vPCInc             := '1';
+            vAluSrc1           := cALUSrc1PC;
+            vAluSrc2           := cALUSrc2Const4;
+            vALUOp             := ALUOpAdd;
+            vALUValues.aluCalc := '1';
+
+            -- decode instruction
             case R.curInst(aOPCodeRange) is
                 when cOpRType | cOpIArith =>
                     NxR.ctrlState <= CalculateALUOp;
@@ -127,7 +131,7 @@ begin
                 when cOpSys =>
                     case R.curInst(aFunct3Range) is
                         when cSysEnv =>
-                            NxR.ctrlState <= EnterTrap;
+                            NxR.ctrlState <= Trap;
                         when others =>
                             NxR.ctrlState <= CalculateSys;
                     end case;
@@ -142,11 +146,10 @@ begin
             NxR.ctrlState      <= WriteReg;
             vRegFileWriteEN    := '1';
             vALUOp             := ALUOpAdd;
-            vPCInc             := '1';
             if R.curInst(aOPCodeRange) = cOpLUI then
                 vAluSrc1 := cALUSrc1Zero;
             else
-                vAluSrc1 := cALUSrc1PC;
+                vAluSrc1 := cALUSrc1PrevPC;
             end if;
             vAluSrc2           := cALUSrc2ImmGen;
             vALUValues.aluCalc := '1';
@@ -155,17 +158,22 @@ begin
         elsif R.ctrlState = CalculateJump then
             NxR.ctrlState      <= WriteReg;
             vRegFileWriteEN    := '1';
-            vPCInc             := '1';
             -- alu config only needed for Jump Reg
             vALUOp             := ALUOpAdd;
-            vAluSrc1           := cALUSrc1RegFile;
+            if (R.curInst(aOPCodeRange) = cOpIJumpReg) then
+                vAluSrc1 := cALUSrc1RegFile;
+            else
+                vAluSrc1 := cALUSrc1PrevPC;
+            end if;
             vAluSrc2           := cALUSrc2ImmGen;
             vALUValues.aluCalc := '1';
-            vRegWritedataSrc   := cRegWritedataPCPlus4Src;
+            vRegWritedataSrc   := cRegWritedataPCSrc;
 
         -- B-Type Conditional Branch
         elsif R.ctrlState = CalculateBranch then
-            NxR.ctrlState      <= CheckJump;
+            NxR.ctrlState      <= Wait0;
+            
+            -- configure ALU
             case R.curInst(aFunct3Range) is
                 when cCondEq | cCondNe   => vALUOp := ALUOpSub;
                 when cCondLt | cCondGe   => vALUOp := ALUOpSLT;
@@ -174,7 +182,7 @@ begin
             end case;
             vAluSrc1           := cALUSrc1RegFile;
             vAluSrc2           := cALUSrc2RegFile;
-            vALUValues.aluCalc := '1';
+            vALUValues.aluCalc := '1';     
 
         -- I-Type Load Instruction
         elsif R.ctrlState = CalculateLoad then
@@ -197,7 +205,6 @@ begin
         -- R-Type or I-Type Register Instruction
         elsif R.ctrlState = CalculateALUOp then
             NxR.ctrlState      <= WriteReg;
-            vPCInc             := '1';
             vRegFileWriteEN    := '1';
             vALUValues.aluCalc := '1';
 
@@ -261,7 +268,6 @@ begin
             NxR.ctrlState <= DataAccess0;
 
         elsif R.ctrlState = DataAccess0 then
-            vPCInc := '1';
             case R.curInst(aOPCodeRange) is
                 when cOpILoad =>
                     NxR.ctrlState <= DataAccess1;
@@ -280,47 +286,31 @@ begin
             vRegFileWriteEN  := '1';
             vRegWritedataSrc := cRegWritedataMemRdSrc;
 
-        elsif R.ctrlState = CheckJump then
-            NxR.ctrlState <= Wait0;
-            -- check if condition is met
-            case R.curInst(aFunct3Range) is
-                when cCondEq | cCondGe | cCondGeu =>
-                    if R.statusReg(cStatusZeroBit) = '1' then
-                        NxR.ctrlState <= PerformJump;
-                    end if;
-                when cCondNe | cCondLt | cCondLtu =>
-                    if R.statusReg(cStatusZeroBit) = '0' then
-                        NxR.ctrlState <= PerformJump;
-                    end if;
-                when others =>
-                    null;
-            end case;
-
-        elsif R.ctrlState = PerformJump then
-            vRegWritedataSrc := cRegWritedataPCPlus4Src;
+        elsif R.ctrlState = PerformBranch then
+            vRegWritedataSrc := cRegWritedataPCSrc;
             NxR.ctrlState    <= Wait1;
-            vPCInc           := '1';
+
+            -- alu config for new pc
+            vALUOp             := ALUOpAdd;
+            vAluSrc1           := cALUSrc1PrevPC;
+            vAluSrc2           := cALUSrc2ImmGen;
+            vALUValues.aluCalc := '1';
 
         elsif R.ctrlState = WriteReg then
             NxR.ctrlState <= Fetch;
 
         elsif R.ctrlState = Wait0 then
-            vPCInc        := '1';
             NxR.ctrlState <= Wait1;
 
         elsif R.ctrlState = Wait1 then
             NxR.ctrlState <= Fetch;
 
-        elsif R.ctrlState = EnterTrap then
-            vPCInc := '1';
+        elsif R.ctrlState = Trap then
             if R.curInst(31 downto 20) = cMTrapRet then
                 NxR.ctrlState <= Wait1;
             else
                 NxR.ctrlState <= Trap;
             end if;
-
-        elsif R.ctrlState = Trap then
-            NxR.ctrlState <= Trap;
 
         else
             null;
@@ -370,15 +360,10 @@ begin
         case vAluSrc1 is
             when cALUSrc1RegFile => vALUValues.aluData1 := vRegReadData1;
             when cALUSrc1Zero    => vALUValues.aluData1 := (others => '0');
+            when cALUSrc1PrevPC  => vALUValues.aluData1 := std_ulogic_vector(unsigned(R.curPC) - 4);
             when cALUSrc1PC      => vALUValues.aluData1 := R.curPC;
             when others          => null;
         end case;
-
-        -------------------------------------------------------------------------------
-        -- Program Counter
-        -------------------------------------------------------------------------------
-        vPCPlus4 := std_ulogic_vector(to_unsigned(
-            to_integer(unsigned(R.curPC)) + cPCIncrement, cPCWidth));
 
         -------------------------------------------------------------------------------
         -- Instruction Memory
@@ -420,7 +405,6 @@ begin
             when ALUOpSLT =>
                 vALUValues.aluRawRes    := (others => '0');
                 vALUValues.aluRawRes(0) := (vALUValues.addsubRes(vALUValues.addsubRes'high - 1) or vALUValues.addsubCarry) and not (not vALUValues.aluData1(vALUValues.aluData1'high) and vALUValues.aluData2(vALUValues.aluData2'high));
-
             when ALUOpSLTU =>
                 vALUValues.aluRawRes := (0 => vALUValues.addsubRes(vALUValues.addsubRes'high), others => '0');
             when ALUOpAnd =>
@@ -443,6 +427,11 @@ begin
                 vALUValues.aluRawRes := (others => '-');
         end case;
 
+        -- Set Status Registers
+        vALUValues.zero     := nor_reduce(vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1 downto 0));
+        vALUValues.negative := vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1);
+        vALUValues.carry    := vALUValues.aluRawRes(vALUValues.aluRawRes'high);
+
         -- Remove Carry Bit and Store New Value
         if (vALUValues.aluCalc = '1') then
             vALUValues.aluRes := vALUValues.aluRawRes(vALUValues.aluRes'range);
@@ -450,20 +439,26 @@ begin
         else
             vALUValues.aluRes := R.aluRes;
         end if;
-
-        -- Set Status Registers
-        NxR.statusReg(cStatusZeroBit)  <= nor_reduce(vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1 downto 0));
-        NxR.statusReg(cStatusNegBit)   <= vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1);
-        NxR.statusReg(cStatusCarryBit) <= vALUValues.aluRawRes(vALUValues.aluRawRes'high);
-
+        
         -------------------------------------------------------------------------------
-        -- Jump Adress Calculation
+        -- BranchCheck Unit
         -------------------------------------------------------------------------------
-        if R.curInst(aOPCodeRange) = cOpIJumpReg then -- JAL or JALR
-            vJumpAdr := vALUValues.aluRes;
-        else
-            vJumpAdr := std_ulogic_vector(resize(unsigned(vImm) + unsigned(R.curPC), cImmLen));
+        if(R.ctrlState = CalculateBranch) then
+            -- check if condition is met
+            case R.curInst(aFunct3Range) is
+                when cCondEq | cCondGe | cCondGeu =>
+                    if vALUValues.zero = '1' then
+                        NxR.ctrlState <= PerformBranch;
+                    end if;
+                when cCondNe | cCondLt | cCondLtu =>
+                    if vALUValues.zero = '0' then
+                        NxR.ctrlState <= PerformBranch;
+                    end if;
+                when others =>
+                    null;
+            end case;
         end if;
+
 
         -------------------------------------------------------------------------------
         -- CSR Unit
@@ -542,11 +537,11 @@ begin
         -------------------------------------------------------------------------------
         -- MUX RegWriteData
         case vRegWritedataSrc is
-            when cRegWritedataPCPlus4Src => vRegWriteData := vPCPlus4;
-            when cRegWritedataMemRdSrc   => vRegWriteData := vDataMemReadData;
-            when cRegWritedataCSRSrc     => vRegWriteData := vCsrReadData;
-            when cRegWritedataALUSrc     => vRegWriteData := vALUValues.aluRes;
-            when others                  => null;
+            when cRegWritedataPCSrc    => vRegWriteData := R.curPC;
+            when cRegWritedataMemRdSrc => vRegWriteData := vDataMemReadData;
+            when cRegWritedataCSRSrc   => vRegWriteData := vCsrReadData;
+            when cRegWritedataALUSrc   => vRegWriteData := vALUValues.aluRes;
+            when others                => null;
         end case;
 
         if vRegFileWriteEN = '1' and R.curInst(aRdAddrRange) /= "00000" then
@@ -557,10 +552,8 @@ begin
         -- Multiplexer
         -------------------------------------------------------------------------------   
         -- Select next PC
-        if vRegWritedataSrc = cRegWritedataPCPlus4Src then
-            NxR.curPC <= vJumpAdr;
-        elsif vPCInc = '1' then
-            NxR.curPC <= vPCPlus4;
+        if vRegWritedataSrc = cRegWritedataPCSrc or vPCInc = '1' then
+            NxR.curPC <= vALUValues.aluRes;
         else
             NxR.curPC <= R.curPC;
         end if;
