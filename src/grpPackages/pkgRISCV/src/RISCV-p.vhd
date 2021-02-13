@@ -116,14 +116,13 @@ package RISCV is
     -- Control Unit
     -------------------------------------------------------------------------------
     type aControlUnitState is (
+        InitState,
         Fetch,
         ReadReg,
         DataAccess0,
         DataAccess1,
         PerformBranch,
-        WriteReg,
         Wait0,
-        Wait1,
         Trap,
         CalculateUpperimmediate,
         CalculateJump,
@@ -264,6 +263,8 @@ package RISCV is
 
     constant cInstrAddrPCSrc  : aCtrlSignal  := '0';
     constant cInstrAddrALUSrc : aCtrlSignal  := '1';
+    
+    
     -------------------------------------------------------------------------------
     -- CSR
     -------------------------------------------------------------------------------
@@ -346,7 +347,7 @@ package RISCV is
 
     constant cInitValRegSet : aRegSet := (
         curInst      => (others => '0'),
-        ctrlState    => Wait1,
+        ctrlState    => InitState,
         memWrite     => '0',
         memRead      => '0',
         memAddr      => (others => '0'),

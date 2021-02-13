@@ -1,5 +1,5 @@
 Fitter report for SystemFPGA
-Fri Feb 12 17:22:34 2021
+Sat Feb 13 13:25:13 2021
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -63,15 +63,15 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Fitter Summary                                                                ;
 +---------------------------------+---------------------------------------------+
-; Fitter Status                   ; Successful - Fri Feb 12 17:22:34 2021       ;
+; Fitter Status                   ; Successful - Sat Feb 13 13:25:13 2021       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; SystemFPGA                                  ;
 ; Top-level Entity Name           ; SystemFPGA                                  ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSEMA5F31C6                                ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 2,841 / 32,070 ( 9 % )                      ;
-; Total registers                 ; 2367                                        ;
+; Logic utilization (in ALMs)     ; 2,880 / 32,070 ( 9 % )                      ;
+; Total registers                 ; 2366                                        ;
 ; Total pins                      ; 22 / 457 ( 5 % )                            ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 262,144 / 4,065,280 ( 6 % )                 ;
@@ -155,16 +155,16 @@ refer to the applicable agreement for further details.
 ; Number detected on machine ; 12          ;
 ; Maximum allowed            ; 6           ;
 ;                            ;             ;
-; Average used               ; 1.21        ;
+; Average used               ; 1.22        ;
 ; Maximum used               ; 6           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   4.6%      ;
-;     Processor 3            ;   4.3%      ;
-;     Processor 4            ;   4.1%      ;
-;     Processor 5            ;   4.0%      ;
-;     Processor 6            ;   3.9%      ;
+;     Processor 2            ;   4.7%      ;
+;     Processor 3            ;   4.5%      ;
+;     Processor 4            ;   4.3%      ;
+;     Processor 5            ;   4.2%      ;
+;     Processor 6            ;   4.1%      ;
 +----------------------------+-------------+
 
 
@@ -183,8 +183,8 @@ refer to the applicable agreement for further details.
 ; Type                ; Total [A + B]       ; From Design Partitions [A] ; From Rapid Recompile [B] ;
 +---------------------+---------------------+----------------------------+--------------------------+
 ; Placement (by node) ;                     ;                            ;                          ;
-;     -- Requested    ; 0.00 % ( 0 / 6726 ) ; 0.00 % ( 0 / 6726 )        ; 0.00 % ( 0 / 6726 )      ;
-;     -- Achieved     ; 0.00 % ( 0 / 6726 ) ; 0.00 % ( 0 / 6726 )        ; 0.00 % ( 0 / 6726 )      ;
+;     -- Requested    ; 0.00 % ( 0 / 6767 ) ; 0.00 % ( 0 / 6767 )        ; 0.00 % ( 0 / 6767 )      ;
+;     -- Achieved     ; 0.00 % ( 0 / 6767 ) ; 0.00 % ( 0 / 6767 )        ; 0.00 % ( 0 / 6767 )      ;
 ;                     ;                     ;                            ;                          ;
 ; Routing (by net)    ;                     ;                            ;                          ;
 ;     -- Requested    ; 0.00 % ( 0 / 0 )    ; 0.00 % ( 0 / 0 )           ; 0.00 % ( 0 / 0 )         ;
@@ -207,7 +207,7 @@ refer to the applicable agreement for further details.
 +--------------------------------+-----------------------+-------------------------+-------------------+---------------------+-------+
 ; Partition Name                 ; Preservation Achieved ; Preservation Level Used ; Netlist Type Used ; Preservation Method ; Notes ;
 +--------------------------------+-----------------------+-------------------------+-------------------+---------------------+-------+
-; Top                            ; 0.00 % ( 0 / 6726 )   ; N/A                     ; Source File       ; N/A                 ;       ;
+; Top                            ; 0.00 % ( 0 / 6767 )   ; N/A                     ; Source File       ; N/A                 ;       ;
 ; hard_block:auto_generated_inst ; 0.00 % ( 0 / 0 )      ; N/A                     ; Source File       ; N/A                 ;       ;
 +--------------------------------+-----------------------+-------------------------+-------------------+---------------------+-------+
 
@@ -223,40 +223,40 @@ The pin-out file can be found in X:/src/grpSystem/unitSystemFPGA/synlayResults/S
 +-------------------------------------------------------------+-----------------------+-------+
 ; Resource                                                    ; Usage                 ; %     ;
 +-------------------------------------------------------------+-----------------------+-------+
-; Logic utilization (ALMs needed / total ALMs on device)      ; 2,841 / 32,070        ; 9 %   ;
-; ALMs needed [=A-B+C]                                        ; 2,841                 ;       ;
-;     [A] ALMs used in final placement [=a+b+c+d]             ; 3,202 / 32,070        ; 10 %  ;
-;         [a] ALMs used for LUT logic and registers           ; 753                   ;       ;
-;         [b] ALMs used for LUT logic                         ; 2,026                 ;       ;
-;         [c] ALMs used for registers                         ; 423                   ;       ;
+; Logic utilization (ALMs needed / total ALMs on device)      ; 2,880 / 32,070        ; 9 %   ;
+; ALMs needed [=A-B+C]                                        ; 2,880                 ;       ;
+;     [A] ALMs used in final placement [=a+b+c+d]             ; 3,232 / 32,070        ; 10 %  ;
+;         [a] ALMs used for LUT logic and registers           ; 749                   ;       ;
+;         [b] ALMs used for LUT logic                         ; 2,066                 ;       ;
+;         [c] ALMs used for registers                         ; 417                   ;       ;
 ;         [d] ALMs used for memory (up to half of total ALMs) ; 0                     ;       ;
-;     [B] Estimate of ALMs recoverable by dense packing       ; 406 / 32,070          ; 1 %   ;
-;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 45 / 32,070           ; < 1 % ;
+;     [B] Estimate of ALMs recoverable by dense packing       ; 402 / 32,070          ; 1 %   ;
+;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 50 / 32,070           ; < 1 % ;
 ;         [a] Due to location constrained logic               ; 0                     ;       ;
-;         [b] Due to LAB-wide signal conflicts                ; 24                    ;       ;
-;         [c] Due to LAB input limits                         ; 21                    ;       ;
+;         [b] Due to LAB-wide signal conflicts                ; 21                    ;       ;
+;         [c] Due to LAB input limits                         ; 29                    ;       ;
 ;         [d] Due to virtual I/Os                             ; 0                     ;       ;
 ;                                                             ;                       ;       ;
 ; Difficulty packing design                                   ; Low                   ;       ;
 ;                                                             ;                       ;       ;
-; Total LABs:  partially or completely used                   ; 411 / 3,207           ; 13 %  ;
-;     -- Logic LABs                                           ; 411                   ;       ;
+; Total LABs:  partially or completely used                   ; 408 / 3,207           ; 13 %  ;
+;     -- Logic LABs                                           ; 408                   ;       ;
 ;     -- Memory LABs (up to half of total LABs)               ; 0                     ;       ;
 ;                                                             ;                       ;       ;
-; Combinational ALUT usage for logic                          ; 4,287                 ;       ;
+; Combinational ALUT usage for logic                          ; 4,330                 ;       ;
 ;     -- 7 input functions                                    ; 488                   ;       ;
-;     -- 6 input functions                                    ; 2,038                 ;       ;
-;     -- 5 input functions                                    ; 261                   ;       ;
-;     -- 4 input functions                                    ; 126                   ;       ;
-;     -- <=3 input functions                                  ; 1,374                 ;       ;
-; Combinational ALUT usage for route-throughs                 ; 563                   ;       ;
+;     -- 6 input functions                                    ; 2,067                 ;       ;
+;     -- 5 input functions                                    ; 250                   ;       ;
+;     -- 4 input functions                                    ; 143                   ;       ;
+;     -- <=3 input functions                                  ; 1,382                 ;       ;
+; Combinational ALUT usage for route-throughs                 ; 541                   ;       ;
 ;                                                             ;                       ;       ;
-; Dedicated logic registers                                   ; 2,367                 ;       ;
+; Dedicated logic registers                                   ; 2,366                 ;       ;
 ;     -- By type:                                             ;                       ;       ;
-;         -- Primary logic registers                          ; 2,352 / 64,140        ; 4 %   ;
-;         -- Secondary logic registers                        ; 15 / 64,140           ; < 1 % ;
+;         -- Primary logic registers                          ; 2,330 / 64,140        ; 4 %   ;
+;         -- Secondary logic registers                        ; 36 / 64,140           ; < 1 % ;
 ;     -- By function:                                         ;                       ;       ;
-;         -- Design implementation registers                  ; 2,367                 ;       ;
+;         -- Design implementation registers                  ; 2,366                 ;       ;
 ;         -- Routing optimization registers                   ; 0                     ;       ;
 ;                                                             ;                       ;       ;
 ; Virtual pins                                                ; 0                     ;       ;
@@ -312,12 +312,12 @@ The pin-out file can be found in X:/src/grpSystem/unitSystemFPGA/synlayResults/S
 ; Oscillator blocks                                           ; 0 / 1                 ; 0 %   ;
 ; Impedance control blocks                                    ; 0 / 4                 ; 0 %   ;
 ; Hard Memory Controllers                                     ; 0 / 2                 ; 0 %   ;
-; Average interconnect usage (total/H/V)                      ; 2.8% / 2.9% / 2.3%    ;       ;
-; Peak interconnect usage (total/H/V)                         ; 26.3% / 26.7% / 25.1% ;       ;
-; Maximum fan-out                                             ; 2399                  ;       ;
-; Highest non-global fan-out                                  ; 2344                  ;       ;
-; Total fan-out                                               ; 31339                 ;       ;
-; Average fan-out                                             ; 4.30                  ;       ;
+; Average interconnect usage (total/H/V)                      ; 2.9% / 3.1% / 2.4%    ;       ;
+; Peak interconnect usage (total/H/V)                         ; 34.2% / 36.2% / 27.9% ;       ;
+; Maximum fan-out                                             ; 2398                  ;       ;
+; Highest non-global fan-out                                  ; 2343                  ;       ;
+; Total fan-out                                               ; 31510                 ;       ;
+; Average fan-out                                             ; 4.31                  ;       ;
 +-------------------------------------------------------------+-----------------------+-------+
 
 
@@ -326,43 +326,43 @@ The pin-out file can be found in X:/src/grpSystem/unitSystemFPGA/synlayResults/S
 +-------------------------------------------------------------+-----------------------+--------------------------------+
 ; Statistic                                                   ; Top                   ; hard_block:auto_generated_inst ;
 +-------------------------------------------------------------+-----------------------+--------------------------------+
-; Logic utilization (ALMs needed / total ALMs on device)      ; 2841 / 32070 ( 9 % )  ; 0 / 32070 ( 0 % )              ;
-; ALMs needed [=A-B+C]                                        ; 2841                  ; 0                              ;
-;     [A] ALMs used in final placement [=a+b+c+d]             ; 3202 / 32070 ( 10 % ) ; 0 / 32070 ( 0 % )              ;
-;         [a] ALMs used for LUT logic and registers           ; 753                   ; 0                              ;
-;         [b] ALMs used for LUT logic                         ; 2026                  ; 0                              ;
-;         [c] ALMs used for registers                         ; 423                   ; 0                              ;
+; Logic utilization (ALMs needed / total ALMs on device)      ; 2880 / 32070 ( 9 % )  ; 0 / 32070 ( 0 % )              ;
+; ALMs needed [=A-B+C]                                        ; 2880                  ; 0                              ;
+;     [A] ALMs used in final placement [=a+b+c+d]             ; 3232 / 32070 ( 10 % ) ; 0 / 32070 ( 0 % )              ;
+;         [a] ALMs used for LUT logic and registers           ; 749                   ; 0                              ;
+;         [b] ALMs used for LUT logic                         ; 2066                  ; 0                              ;
+;         [c] ALMs used for registers                         ; 417                   ; 0                              ;
 ;         [d] ALMs used for memory (up to half of total ALMs) ; 0                     ; 0                              ;
-;     [B] Estimate of ALMs recoverable by dense packing       ; 406 / 32070 ( 1 % )   ; 0 / 32070 ( 0 % )              ;
-;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 45 / 32070 ( < 1 % )  ; 0 / 32070 ( 0 % )              ;
+;     [B] Estimate of ALMs recoverable by dense packing       ; 402 / 32070 ( 1 % )   ; 0 / 32070 ( 0 % )              ;
+;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 50 / 32070 ( < 1 % )  ; 0 / 32070 ( 0 % )              ;
 ;         [a] Due to location constrained logic               ; 0                     ; 0                              ;
-;         [b] Due to LAB-wide signal conflicts                ; 24                    ; 0                              ;
-;         [c] Due to LAB input limits                         ; 21                    ; 0                              ;
+;         [b] Due to LAB-wide signal conflicts                ; 21                    ; 0                              ;
+;         [c] Due to LAB input limits                         ; 29                    ; 0                              ;
 ;         [d] Due to virtual I/Os                             ; 0                     ; 0                              ;
 ;                                                             ;                       ;                                ;
 ; Difficulty packing design                                   ; Low                   ; Low                            ;
 ;                                                             ;                       ;                                ;
-; Total LABs:  partially or completely used                   ; 411 / 3207 ( 13 % )   ; 0 / 3207 ( 0 % )               ;
-;     -- Logic LABs                                           ; 411                   ; 0                              ;
+; Total LABs:  partially or completely used                   ; 408 / 3207 ( 13 % )   ; 0 / 3207 ( 0 % )               ;
+;     -- Logic LABs                                           ; 408                   ; 0                              ;
 ;     -- Memory LABs (up to half of total LABs)               ; 0                     ; 0                              ;
 ;                                                             ;                       ;                                ;
-; Combinational ALUT usage for logic                          ; 4287                  ; 0                              ;
+; Combinational ALUT usage for logic                          ; 4330                  ; 0                              ;
 ;     -- 7 input functions                                    ; 488                   ; 0                              ;
-;     -- 6 input functions                                    ; 2038                  ; 0                              ;
-;     -- 5 input functions                                    ; 261                   ; 0                              ;
-;     -- 4 input functions                                    ; 126                   ; 0                              ;
-;     -- <=3 input functions                                  ; 1374                  ; 0                              ;
-; Combinational ALUT usage for route-throughs                 ; 563                   ; 0                              ;
+;     -- 6 input functions                                    ; 2067                  ; 0                              ;
+;     -- 5 input functions                                    ; 250                   ; 0                              ;
+;     -- 4 input functions                                    ; 143                   ; 0                              ;
+;     -- <=3 input functions                                  ; 1382                  ; 0                              ;
+; Combinational ALUT usage for route-throughs                 ; 541                   ; 0                              ;
 ; Memory ALUT usage                                           ; 0                     ; 0                              ;
 ;     -- 64-address deep                                      ; 0                     ; 0                              ;
 ;     -- 32-address deep                                      ; 0                     ; 0                              ;
 ;                                                             ;                       ;                                ;
 ; Dedicated logic registers                                   ; 0                     ; 0                              ;
 ;     -- By type:                                             ;                       ;                                ;
-;         -- Primary logic registers                          ; 2352 / 64140 ( 4 % )  ; 0 / 64140 ( 0 % )              ;
-;         -- Secondary logic registers                        ; 15 / 64140 ( < 1 % )  ; 0 / 64140 ( 0 % )              ;
+;         -- Primary logic registers                          ; 2330 / 64140 ( 4 % )  ; 0 / 64140 ( 0 % )              ;
+;         -- Secondary logic registers                        ; 36 / 64140 ( < 1 % )  ; 0 / 64140 ( 0 % )              ;
 ;     -- By function:                                         ;                       ;                                ;
-;         -- Design implementation registers                  ; 2367                  ; 0                              ;
+;         -- Design implementation registers                  ; 2366                  ; 0                              ;
 ;         -- Routing optimization registers                   ; 0                     ; 0                              ;
 ;                                                             ;                       ;                                ;
 ;                                                             ;                       ;                                ;
@@ -381,8 +381,8 @@ The pin-out file can be found in X:/src/grpSystem/unitSystemFPGA/synlayResults/S
 ;     -- Registered Output Connections                        ; 0                     ; 0                              ;
 ;                                                             ;                       ;                                ;
 ; Internal Connections                                        ;                       ;                                ;
-;     -- Total Connections                                    ; 32299                 ; 0                              ;
-;     -- Registered Connections                               ; 14425                 ; 0                              ;
+;     -- Total Connections                                    ; 32470                 ; 0                              ;
+;     -- Registered Connections                               ; 14076                 ; 0                              ;
 ;                                                             ;                       ;                                ;
 ; External Connections                                        ;                       ;                                ;
 ;     -- Top                                                  ; 0                     ; 0                              ;
@@ -414,7 +414,7 @@ The pin-out file can be found in X:/src/grpSystem/unitSystemFPGA/synlayResults/S
 +----------+-------+----------+--------------+--------------+--------------+-----------------------+--------------------+--------+----------------+-----------------+----------+--------------+--------------+-------------+---------------------------+----------------------+-----------+
 ; Name     ; Pin # ; I/O Bank ; X coordinate ; Y coordinate ; Z coordinate ; Combinational Fan-Out ; Registered Fan-Out ; Global ; Input Register ; PCI I/O Enabled ; Bus Hold ; Weak Pull Up ; I/O Standard ; Termination ; Termination Control Block ; Location assigned by ; Slew Rate ;
 +----------+-------+----------+--------------+--------------+--------------+-----------------------+--------------------+--------+----------------+-----------------+----------+--------------+--------------+-------------+---------------------------+----------------------+-----------+
-; CLOCK_50 ; AF14  ; 3B       ; 32           ; 0            ; 0            ; 2399                  ; 0                  ; yes    ; no             ; no              ; no       ; Off          ; 3.3-V LVTTL  ; Off         ; --                        ; User                 ; no        ;
+; CLOCK_50 ; AF14  ; 3B       ; 32           ; 0            ; 0            ; 2398                  ; 0                  ; yes    ; no             ; no              ; no       ; Off          ; 3.3-V LVTTL  ; Off         ; --                        ; User                 ; no        ;
 ; KEY_0    ; AA14  ; 3B       ; 36           ; 0            ; 0            ; 0                     ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 3.3-V LVTTL  ; Off         ; --                        ; User                 ; no        ;
 ; SW[0]    ; AB12  ; 3A       ; 12           ; 0            ; 17           ; 1                     ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 3.3-V LVTTL  ; Off         ; --                        ; User                 ; no        ;
 ; SW[1]    ; AC12  ; 3A       ; 16           ; 0            ; 0            ; 1                     ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 3.3-V LVTTL  ; Off         ; --                        ; User                 ; no        ;
@@ -1379,28 +1379,28 @@ Note: Pin directions (input, output or bidir) are based on device operating in u
 +--------------------------------------------------------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------+--------------+
 ; Compilation Hierarchy Node                                               ; ALMs needed [=A-B+C] ; [A] ALMs used in final placement ; [B] Estimate of ALMs recoverable by dense packing ; [C] Estimate of ALMs unavailable ; ALMs used for memory ; Combinational ALUTs ; Dedicated Logic Registers ; I/O Registers ; Block Memory Bits ; M10Ks ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                        ; Entity Name                           ; Library Name ;
 +--------------------------------------------------------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------+--------------+
-; |SystemFPGA                                                              ; 2840.5 (0.5)         ; 3201.5 (4.5)                     ; 405.5 (4.0)                                       ; 44.5 (0.0)                       ; 0.0 (0.0)            ; 4287 (1)            ; 2367 (8)                  ; 0 (0)         ; 262144            ; 32    ; 0          ; 22   ; 0            ; |SystemFPGA                                                                                                                                ; SystemFPGA                            ; work         ;
-;    |riscv_system:u0|                                                     ; 2840.0 (0.0)         ; 3197.0 (0.0)                     ; 401.5 (0.0)                                       ; 44.5 (0.0)                       ; 0.0 (0.0)            ; 4286 (0)            ; 2359 (0)                  ; 0 (0)         ; 262144            ; 32    ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0                                                                                                                ; riscv_system                          ; riscv_system ;
-;       |Core:rv32ui_fsmd_0|                                               ; 2780.5 (2780.5)      ; 3128.8 (3128.8)                  ; 392.8 (392.8)                                     ; 44.5 (44.5)                      ; 0.0 (0.0)            ; 4203 (4203)         ; 2293 (2293)               ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0                                                                                             ; Core                                  ; riscv_system ;
-;       |altera_reset_controller:rst_controller|                           ; 3.5 (2.5)            ; 8.5 (5.2)                        ; 5.0 (2.7)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 7 (5)               ; 16 (10)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|altera_reset_controller:rst_controller                                                                         ; altera_reset_controller               ; riscv_system ;
-;          |altera_reset_synchronizer:alt_rst_req_sync_uq1|                ; 1.0 (1.0)            ; 1.8 (1.8)                        ; 0.8 (0.8)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 1 (1)               ; 3 (3)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|altera_reset_controller:rst_controller|altera_reset_synchronizer:alt_rst_req_sync_uq1                          ; altera_reset_synchronizer             ; riscv_system ;
+; |SystemFPGA                                                              ; 2879.5 (0.3)         ; 3231.0 (4.5)                     ; 401.0 (4.2)                                       ; 49.5 (0.0)                       ; 0.0 (0.0)            ; 4330 (1)            ; 2366 (8)                  ; 0 (0)         ; 262144            ; 32    ; 0          ; 22   ; 0            ; |SystemFPGA                                                                                                                                ; SystemFPGA                            ; work         ;
+;    |riscv_system:u0|                                                     ; 2879.2 (0.0)         ; 3226.5 (0.0)                     ; 396.8 (0.0)                                       ; 49.5 (0.0)                       ; 0.0 (0.0)            ; 4329 (0)            ; 2358 (0)                  ; 0 (0)         ; 262144            ; 32    ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0                                                                                                                ; riscv_system                          ; riscv_system ;
+;       |Core:rv32ui_fsmd_0|                                               ; 2821.4 (2821.4)      ; 3163.2 (3163.2)                  ; 391.2 (391.2)                                     ; 49.4 (49.4)                      ; 0.0 (0.0)            ; 4250 (4250)         ; 2292 (2292)               ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|Core:rv32ui_fsmd_0                                                                                             ; Core                                  ; riscv_system ;
+;       |altera_reset_controller:rst_controller|                           ; 3.0 (2.5)            ; 8.5 (5.2)                        ; 5.5 (2.7)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 7 (5)               ; 16 (10)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|altera_reset_controller:rst_controller                                                                         ; altera_reset_controller               ; riscv_system ;
+;          |altera_reset_synchronizer:alt_rst_req_sync_uq1|                ; 0.5 (0.5)            ; 1.8 (1.8)                        ; 1.3 (1.3)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 1 (1)               ; 3 (3)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|altera_reset_controller:rst_controller|altera_reset_synchronizer:alt_rst_req_sync_uq1                          ; altera_reset_synchronizer             ; riscv_system ;
 ;          |altera_reset_synchronizer:alt_rst_sync_uq1|                    ; 0.0 (0.0)            ; 1.5 (1.5)                        ; 1.5 (1.5)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 1 (1)               ; 3 (3)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|altera_reset_controller:rst_controller|altera_reset_synchronizer:alt_rst_sync_uq1                              ; altera_reset_synchronizer             ; riscv_system ;
-;       |riscv_system_leds:leds|                                           ; 8.5 (8.5)            ; 9.0 (9.0)                        ; 0.5 (0.5)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 13 (13)             ; 8 (8)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_leds:leds                                                                                         ; riscv_system_leds                     ; riscv_system ;
-;       |riscv_system_mm_interconnect_0:mm_interconnect_0|                 ; 41.3 (0.0)           ; 42.8 (0.0)                       ; 1.5 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 52 (0)              ; 34 (0)                    ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0                                                               ; riscv_system_mm_interconnect_0        ; riscv_system ;
-;          |altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|                  ; 3.0 (3.0)            ; 3.2 (3.2)                        ; 0.2 (0.2)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 4 (4)               ; 2 (2)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo                  ; altera_avalon_sc_fifo                 ; riscv_system ;
+;       |riscv_system_leds:leds|                                           ; 7.7 (7.7)            ; 7.7 (7.7)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 13 (13)             ; 8 (8)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_leds:leds                                                                                         ; riscv_system_leds                     ; riscv_system ;
+;       |riscv_system_mm_interconnect_0:mm_interconnect_0|                 ; 39.8 (0.0)           ; 41.3 (0.0)                       ; 1.6 (0.0)                                         ; 0.1 (0.0)                        ; 0.0 (0.0)            ; 48 (0)              ; 34 (0)                    ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0                                                               ; riscv_system_mm_interconnect_0        ; riscv_system ;
+;          |altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|                  ; 3.0 (3.0)            ; 3.0 (3.0)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 4 (4)               ; 2 (2)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo                  ; altera_avalon_sc_fifo                 ; riscv_system ;
 ;          |altera_avalon_sc_fifo:onchip_memory2_0_s2_agent_rsp_fifo|      ; 2.0 (2.0)            ; 2.5 (2.5)                        ; 0.5 (0.5)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 3 (3)               ; 2 (2)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:onchip_memory2_0_s2_agent_rsp_fifo      ; altera_avalon_sc_fifo                 ; riscv_system ;
 ;          |altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|              ; 2.0 (2.0)            ; 2.0 (2.0)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 3 (3)               ; 2 (2)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo              ; altera_avalon_sc_fifo                 ; riscv_system ;
-;          |altera_merlin_master_agent:rv32ui_fsmd_0_data_agent|           ; 0.3 (0.3)            ; 1.2 (1.2)                        ; 0.8 (0.8)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 2 (2)               ; 1 (1)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_master_agent:rv32ui_fsmd_0_data_agent           ; altera_merlin_master_agent            ; riscv_system ;
-;          |altera_merlin_master_translator:rv32ui_fsmd_0_data_translator| ; 3.5 (3.5)            ; 3.5 (3.5)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 5 (5)               ; 1 (1)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_master_translator:rv32ui_fsmd_0_data_translator ; altera_merlin_master_translator       ; riscv_system ;
-;          |altera_merlin_slave_agent:switches_s1_agent|                   ; 0.8 (0.8)            ; 0.8 (0.8)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 2 (2)               ; 0 (0)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_agent:switches_s1_agent                   ; altera_merlin_slave_agent             ; riscv_system ;
-;          |altera_merlin_slave_translator:leds_s1_translator|             ; 7.5 (7.5)            ; 7.7 (7.7)                        ; 0.2 (0.2)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 7 (7)               ; 12 (12)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:leds_s1_translator             ; altera_merlin_slave_translator        ; riscv_system ;
-;          |altera_merlin_slave_translator:onchip_memory2_0_s2_translator| ; 1.8 (1.8)            ; 2.3 (2.3)                        ; 0.5 (0.5)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 3 (3)               ; 2 (2)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:onchip_memory2_0_s2_translator ; altera_merlin_slave_translator        ; riscv_system ;
-;          |altera_merlin_slave_translator:switches_s1_translator|         ; 8.7 (8.7)            ; 9.5 (9.5)                        ; 0.8 (0.8)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 10 (10)             ; 12 (12)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:switches_s1_translator         ; altera_merlin_slave_translator        ; riscv_system ;
-;          |riscv_system_mm_interconnect_0_router:router|                  ; 10.2 (10.2)          ; 10.2 (10.2)                      ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 13 (13)             ; 0 (0)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|riscv_system_mm_interconnect_0_router:router                  ; riscv_system_mm_interconnect_0_router ; riscv_system ;
-;       |riscv_system_onchip_memory2_0:onchip_memory2_0|                   ; 1.5 (1.5)            ; 1.8 (1.8)                        ; 0.3 (0.3)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 3 (3)               ; 0 (0)                     ; 0 (0)         ; 262144            ; 32    ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0                                                                 ; riscv_system_onchip_memory2_0         ; riscv_system ;
+;          |altera_merlin_master_agent:rv32ui_fsmd_0_data_agent|           ; 0.5 (0.5)            ; 1.2 (1.2)                        ; 0.7 (0.7)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 2 (2)               ; 1 (1)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_master_agent:rv32ui_fsmd_0_data_agent           ; altera_merlin_master_agent            ; riscv_system ;
+;          |altera_merlin_master_translator:rv32ui_fsmd_0_data_translator| ; 3.7 (3.7)            ; 3.7 (3.7)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 5 (5)               ; 1 (1)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_master_translator:rv32ui_fsmd_0_data_translator ; altera_merlin_master_translator       ; riscv_system ;
+;          |altera_merlin_slave_agent:switches_s1_agent|                   ; 1.0 (1.0)            ; 1.0 (1.0)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 2 (2)               ; 0 (0)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_agent:switches_s1_agent                   ; altera_merlin_slave_agent             ; riscv_system ;
+;          |altera_merlin_slave_translator:leds_s1_translator|             ; 7.8 (7.8)            ; 8.0 (8.0)                        ; 0.3 (0.3)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 7 (7)               ; 12 (12)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:leds_s1_translator             ; altera_merlin_slave_translator        ; riscv_system ;
+;          |altera_merlin_slave_translator:onchip_memory2_0_s2_translator| ; 1.8 (1.8)            ; 2.5 (2.5)                        ; 0.7 (0.7)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 3 (3)               ; 2 (2)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:onchip_memory2_0_s2_translator ; altera_merlin_slave_translator        ; riscv_system ;
+;          |altera_merlin_slave_translator:switches_s1_translator|         ; 9.6 (9.6)            ; 9.7 (9.7)                        ; 0.2 (0.2)                                         ; 0.1 (0.1)                        ; 0.0 (0.0)            ; 10 (10)             ; 12 (12)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_slave_translator:switches_s1_translator         ; altera_merlin_slave_translator        ; riscv_system ;
+;          |riscv_system_mm_interconnect_0_router:router|                  ; 7.8 (7.8)            ; 7.8 (7.8)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 9 (9)               ; 0 (0)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|riscv_system_mm_interconnect_0_router:router                  ; riscv_system_mm_interconnect_0_router ; riscv_system ;
+;       |riscv_system_onchip_memory2_0:onchip_memory2_0|                   ; 1.2 (1.2)            ; 1.2 (1.2)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 3 (3)               ; 0 (0)                     ; 0 (0)         ; 262144            ; 32    ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0                                                                 ; riscv_system_onchip_memory2_0         ; riscv_system ;
 ;          |altsyncram:the_altsyncram|                                     ; 0.0 (0.0)            ; 0.0 (0.0)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 0 (0)               ; 0 (0)                     ; 0 (0)         ; 262144            ; 32    ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram                                       ; altsyncram                            ; work         ;
 ;             |altsyncram_e7e2:auto_generated|                             ; 0.0 (0.0)            ; 0.0 (0.0)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 0 (0)               ; 0 (0)                     ; 0 (0)         ; 262144            ; 32    ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated        ; altsyncram_e7e2                       ; work         ;
-;       |riscv_system_switches:switches|                                   ; 4.7 (4.7)            ; 6.0 (6.0)                        ; 1.3 (1.3)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 8 (8)               ; 8 (8)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_switches:switches                                                                                 ; riscv_system_switches                 ; riscv_system ;
+;       |riscv_system_switches:switches|                                   ; 4.7 (4.7)            ; 4.7 (4.7)                        ; 0.0 (0.0)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 8 (8)               ; 8 (8)                     ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |SystemFPGA|riscv_system:u0|riscv_system_switches:switches                                                                                 ; riscv_system_switches                 ; riscv_system ;
 +--------------------------------------------------------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -1423,11 +1423,11 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; LEDR[8]  ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
 ; LEDR[9]  ; Output   ; -- ; --   ; --   ; -- ; (0)  ; (31)  ; --     ; --                     ; --                       ;
 ; CLOCK_50 ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
-; SW[5]    ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
+; SW[5]    ; Input    ; -- ; --   ; (0)  ; -- ; --   ; --    ; --     ; --                     ; --                       ;
 ; SW[0]    ; Input    ; -- ; --   ; (0)  ; -- ; --   ; --    ; --     ; --                     ; --                       ;
 ; SW[1]    ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
-; SW[2]    ; Input    ; -- ; --   ; (0)  ; -- ; --   ; --    ; --     ; --                     ; --                       ;
-; SW[3]    ; Input    ; -- ; --   ; (0)  ; -- ; --   ; --    ; --     ; --                     ; --                       ;
+; SW[2]    ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
+; SW[3]    ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
 ; SW[4]    ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
 ; SW[6]    ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
 ; SW[7]    ; Input    ; -- ; (0)  ; --   ; -- ; --   ; --    ; --     ; --                     ; --                       ;
@@ -1444,23 +1444,23 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; SW[8]                                                                                                                                            ;                   ;         ;
 ; CLOCK_50                                                                                                                                         ;                   ;         ;
 ; SW[5]                                                                                                                                            ;                   ;         ;
-;      - LEDR[0]~reg0                                                                                                                              ; 0                 ; 0       ;
-;      - LEDR[1]~reg0                                                                                                                              ; 0                 ; 0       ;
-;      - LEDR[2]~reg0                                                                                                                              ; 0                 ; 0       ;
-;      - LEDR[3]~reg0                                                                                                                              ; 0                 ; 0       ;
-;      - LEDR[4]~reg0                                                                                                                              ; 0                 ; 0       ;
-;      - LEDR[5]~reg0                                                                                                                              ; 0                 ; 0       ;
-;      - LEDR[6]~reg0                                                                                                                              ; 0                 ; 0       ;
-;      - LEDR[7]~reg0                                                                                                                              ; 0                 ; 0       ;
-;      - riscv_system:u0|riscv_system_switches:switches|read_mux_out[5]                                                                            ; 0                 ; 0       ;
+;      - LEDR[0]~reg0                                                                                                                              ; 1                 ; 0       ;
+;      - LEDR[1]~reg0                                                                                                                              ; 1                 ; 0       ;
+;      - LEDR[2]~reg0                                                                                                                              ; 1                 ; 0       ;
+;      - LEDR[3]~reg0                                                                                                                              ; 1                 ; 0       ;
+;      - LEDR[4]~reg0                                                                                                                              ; 1                 ; 0       ;
+;      - LEDR[5]~reg0                                                                                                                              ; 1                 ; 0       ;
+;      - LEDR[6]~reg0                                                                                                                              ; 1                 ; 0       ;
+;      - LEDR[7]~reg0                                                                                                                              ; 1                 ; 0       ;
+;      - riscv_system:u0|riscv_system_switches:switches|read_mux_out[5]                                                                            ; 1                 ; 0       ;
 ; SW[0]                                                                                                                                            ;                   ;         ;
 ;      - riscv_system:u0|riscv_system_switches:switches|read_mux_out[0]                                                                            ; 1                 ; 0       ;
 ; SW[1]                                                                                                                                            ;                   ;         ;
 ;      - riscv_system:u0|riscv_system_switches:switches|read_mux_out[1]                                                                            ; 0                 ; 0       ;
 ; SW[2]                                                                                                                                            ;                   ;         ;
-;      - riscv_system:u0|riscv_system_switches:switches|read_mux_out[2]                                                                            ; 1                 ; 0       ;
+;      - riscv_system:u0|riscv_system_switches:switches|read_mux_out[2]                                                                            ; 0                 ; 0       ;
 ; SW[3]                                                                                                                                            ;                   ;         ;
-;      - riscv_system:u0|riscv_system_switches:switches|read_mux_out[3]                                                                            ; 1                 ; 0       ;
+;      - riscv_system:u0|riscv_system_switches:switches|read_mux_out[3]                                                                            ; 0                 ; 0       ;
 ; SW[4]                                                                                                                                            ;                   ;         ;
 ;      - riscv_system:u0|riscv_system_switches:switches|read_mux_out[4]                                                                            ; 0                 ; 0       ;
 ; SW[6]                                                                                                                                            ;                   ;         ;
@@ -1474,55 +1474,55 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+---------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Control Signals                                                                                                                                                                                                    ;
-+------------------------------------------------------------------------+----------------------+---------+---------------------------+--------+----------------------+------------------+---------------------------+
-; Name                                                                   ; Location             ; Fan-Out ; Usage                     ; Global ; Global Resource Used ; Global Line Name ; Enable Signal Source Name ;
-+------------------------------------------------------------------------+----------------------+---------+---------------------------+--------+----------------------+------------------+---------------------------+
-; CLOCK_50                                                               ; PIN_AF14             ; 2399    ; Clock                     ; yes    ; Global Clock         ; GCLK6            ; --                        ;
-; SW[5]                                                                  ; PIN_AD12             ; 9       ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; SW[9]                                                                  ; PIN_AE12             ; 3       ; Async. clear              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~1                          ; LABCELL_X70_Y6_N42   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~10                         ; LABCELL_X70_Y6_N54   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~11                         ; LABCELL_X70_Y6_N12   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~14                         ; LABCELL_X77_Y11_N12  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~15                         ; LABCELL_X77_Y11_N15  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~16                         ; LABCELL_X77_Y11_N45  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~17                         ; LABCELL_X77_Y11_N3   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~18                         ; LABCELL_X70_Y6_N30   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~19                         ; LABCELL_X70_Y6_N6    ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~20                         ; LABCELL_X70_Y6_N27   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~21                         ; LABCELL_X70_Y14_N42  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~22                         ; LABCELL_X77_Y11_N30  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~23                         ; LABCELL_X77_Y11_N33  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~24                         ; LABCELL_X77_Y11_N54  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~25                         ; LABCELL_X77_Y11_N57  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~26                         ; LABCELL_X77_Y11_N42  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~27                         ; LABCELL_X77_Y11_N24  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~28                         ; LABCELL_X77_Y11_N18  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~29                         ; LABCELL_X77_Y11_N21  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~3                          ; LABCELL_X70_Y6_N33   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~30                         ; LABCELL_X70_Y6_N18   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~31                         ; LABCELL_X70_Y6_N9    ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~32                         ; LABCELL_X70_Y6_N36   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~33                         ; LABCELL_X70_Y14_N15  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~34                         ; LABCELL_X77_Y11_N36  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~35                         ; LABCELL_X77_Y11_N39  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~36                         ; LABCELL_X77_Y11_N6   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~37                         ; LABCELL_X77_Y11_N9   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~5                          ; LABCELL_X70_Y14_N9   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~7                          ; MLABCELL_X72_Y6_N36  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~8                          ; LABCELL_X70_Y14_N48  ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.ctrlState.CalculateBranch         ; FF_X59_Y7_N44        ; 48      ; Sync. clear               ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.ctrlState.Fetch                   ; FF_X57_Y7_N23        ; 66      ; Clock enable, Sync. clear ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.ctrlState.ReadReg                 ; FF_X57_Y7_N26        ; 164     ; Sync. load                ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|\Comb:vALUValues.aluCalc~0          ; LABCELL_X60_Y7_N0    ; 83      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|comb~0                              ; LABCELL_X71_Y10_N0   ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|altera_reset_controller:rst_controller|r_early_rst     ; FF_X52_Y7_N26        ; 32      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|altera_reset_controller:rst_controller|r_sync_rst      ; FF_X57_Y6_N32        ; 2344    ; Async. clear              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|riscv_system_leds:leds|always0~2                       ; LABCELL_X60_Y11_N54  ; 8       ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|wren2~0 ; MLABCELL_X59_Y10_N24 ; 32      ; Write enable              ; no     ; --                   ; --               ; --                        ;
-+------------------------------------------------------------------------+----------------------+---------+---------------------------+--------+----------------------+------------------+---------------------------+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Control Signals                                                                                                                                                                                                  ;
++------------------------------------------------------------------------+---------------------+---------+--------------------------+--------+----------------------+------------------+---------------------------+
+; Name                                                                   ; Location            ; Fan-Out ; Usage                    ; Global ; Global Resource Used ; Global Line Name ; Enable Signal Source Name ;
++------------------------------------------------------------------------+---------------------+---------+--------------------------+--------+----------------------+------------------+---------------------------+
+; CLOCK_50                                                               ; PIN_AF14            ; 2398    ; Clock                    ; yes    ; Global Clock         ; GCLK6            ; --                        ;
+; SW[5]                                                                  ; PIN_AD12            ; 9       ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; SW[9]                                                                  ; PIN_AE12            ; 3       ; Async. clear             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~1                          ; LABCELL_X74_Y8_N12  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~10                         ; LABCELL_X75_Y11_N12 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~13                         ; LABCELL_X77_Y18_N24 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~14                         ; LABCELL_X77_Y18_N9  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~15                         ; LABCELL_X77_Y18_N15 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~16                         ; LABCELL_X77_Y18_N21 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~17                         ; LABCELL_X74_Y8_N18  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~18                         ; LABCELL_X71_Y10_N36 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~19                         ; LABCELL_X74_Y8_N15  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~20                         ; LABCELL_X83_Y8_N42  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~21                         ; LABCELL_X77_Y18_N0  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~22                         ; LABCELL_X77_Y18_N45 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~23                         ; LABCELL_X77_Y18_N48 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~24                         ; LABCELL_X77_Y18_N33 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~25                         ; LABCELL_X68_Y7_N51  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~26                         ; LABCELL_X68_Y7_N24  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~27                         ; LABCELL_X68_Y7_N45  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~28                         ; LABCELL_X68_Y7_N3   ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~3                          ; LABCELL_X74_Y8_N45  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~30                         ; LABCELL_X75_Y7_N36  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~31                         ; LABCELL_X75_Y11_N42 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~32                         ; LABCELL_X75_Y7_N15  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~33                         ; LABCELL_X83_Y8_N39  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~34                         ; LABCELL_X68_Y7_N12  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~35                         ; LABCELL_X68_Y7_N15  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~36                         ; LABCELL_X68_Y7_N54  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~37                         ; LABCELL_X68_Y7_N57  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~5                          ; LABCELL_X68_Y7_N0   ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~7                          ; LABCELL_X75_Y11_N45 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~8                          ; LABCELL_X83_Y8_N15  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|Decoder1~9                          ; LABCELL_X68_Y7_N36  ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.ctrlState.CalculateBranch         ; FF_X60_Y9_N20       ; 52      ; Sync. clear              ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.ctrlState.Fetch                   ; FF_X65_Y15_N26      ; 45      ; Clock enable, Sync. load ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.ctrlState.InitState               ; FF_X65_Y8_N50       ; 11      ; Sync. clear              ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|\Comb:vALUValues.aluCalc~0          ; LABCELL_X62_Y9_N12  ; 94      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|comb~0                              ; LABCELL_X70_Y12_N27 ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|altera_reset_controller:rst_controller|r_early_rst     ; FF_X60_Y8_N44       ; 32      ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|altera_reset_controller:rst_controller|r_sync_rst      ; FF_X50_Y6_N26       ; 2343    ; Async. clear             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|riscv_system_leds:leds|always0~2                       ; LABCELL_X62_Y14_N54 ; 8       ; Clock enable             ; no     ; --                   ; --               ; --                        ;
+; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|wren2~0 ; LABCELL_X63_Y12_N48 ; 32      ; Write enable             ; no     ; --                   ; --               ; --                        ;
++------------------------------------------------------------------------+---------------------+---------+--------------------------+--------+----------------------+------------------+---------------------------+
 
 
 +-----------------------------------------------------------------------------------------------------+
@@ -1530,7 +1530,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------+----------+---------+----------------------+------------------+---------------------------+
 ; Name     ; Location ; Fan-Out ; Global Resource Used ; Global Line Name ; Enable Signal Source Name ;
 +----------+----------+---------+----------------------+------------------+---------------------------+
-; CLOCK_50 ; PIN_AF14 ; 2399    ; Global Clock         ; GCLK6            ; --                        ;
+; CLOCK_50 ; PIN_AF14 ; 2398    ; Global Clock         ; GCLK6            ; --                        ;
 +----------+----------+---------+----------------------+------------------+---------------------------+
 
 
@@ -1539,7 +1539,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-------------------------------------------------------------------+---------+
 ; Name                                                              ; Fan-Out ;
 +-------------------------------------------------------------------+---------+
-; riscv_system:u0|altera_reset_controller:rst_controller|r_sync_rst ; 2344    ;
+; riscv_system:u0|altera_reset_controller:rst_controller|r_sync_rst ; 2343    ;
 ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrWriteMode[1]              ; 1153    ;
 ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrWriteMode[0]              ; 1153    ;
 ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[3][0]~0               ; 1152    ;
@@ -1547,13 +1547,13 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-------------------------------------------------------------------+---------+
 
 
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Fitter RAM Summary                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ;
-+------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------------+------------------------+-------------------------+------------------------+-------------------------+--------+-----------------------------+-----------------------------+-----------------------------+-----------------------------+---------------------+-------------+-------+------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+-----------------+-----------------+----------+------------------------+-----------------------+
-; Name                                                                                                                               ; Type ; Mode           ; Clock Mode   ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Port A Input Registers ; Port A Output Registers ; Port B Input Registers ; Port B Output Registers ; Size   ; Implementation Port A Depth ; Implementation Port A Width ; Implementation Port B Depth ; Implementation Port B Width ; Implementation Bits ; M10K blocks ; MLABs ; MIF                                                        ; Location                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Mixed Width RDW Mode ; Port A RDW Mode ; Port B RDW Mode ; ECC Mode ; ECC Pipeline Registers ; Fits in MLABs         ;
-+------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------------+------------------------+-------------------------+------------------------+-------------------------+--------+-----------------------------+-----------------------------+-----------------------------+-----------------------------+---------------------+-------------+-------+------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+-----------------+-----------------+----------+------------------------+-----------------------+
-; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated|ALTSYNCRAM ; AUTO ; True Dual Port ; Single Clock ; 8192         ; 32           ; 8192         ; 32           ; yes                    ; no                      ; yes                    ; no                      ; 262144 ; 8192                        ; 32                          ; 8192                        ; 32                          ; 262144              ; 32          ; 0     ; X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex ; M10K_X69_Y9_N0, M10K_X58_Y12_N0, M10K_X58_Y14_N0, M10K_X49_Y14_N0, M10K_X58_Y7_N0, M10K_X49_Y9_N0, M10K_X69_Y12_N0, M10K_X69_Y7_N0, M10K_X58_Y6_N0, M10K_X58_Y11_N0, M10K_X69_Y11_N0, M10K_X58_Y4_N0, M10K_X58_Y3_N0, M10K_X69_Y5_N0, M10K_X49_Y11_N0, M10K_X58_Y8_N0, M10K_X76_Y8_N0, M10K_X69_Y13_N0, M10K_X49_Y12_N0, M10K_X58_Y13_N0, M10K_X58_Y16_N0, M10K_X76_Y11_N0, M10K_X58_Y15_N0, M10K_X49_Y10_N0, M10K_X58_Y9_N0, M10K_X58_Y10_N0, M10K_X69_Y10_N0, M10K_X58_Y5_N0, M10K_X49_Y8_N0, M10K_X76_Y10_N0, M10K_X69_Y8_N0, M10K_X69_Y6_N0 ; Old data             ; New data        ; New data        ; Off      ; No                     ; No - Unsupported Mode ;
-+------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------------+------------------------+-------------------------+------------------------+-------------------------+--------+-----------------------------+-----------------------------+-----------------------------+-----------------------------+---------------------+-------------+-------+------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+-----------------+-----------------+----------+------------------------+-----------------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Fitter RAM Summary                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ;
++------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------------+------------------------+-------------------------+------------------------+-------------------------+--------+-----------------------------+-----------------------------+-----------------------------+-----------------------------+---------------------+-------------+-------+------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+-----------------+-----------------+----------+------------------------+-----------------------+
+; Name                                                                                                                               ; Type ; Mode           ; Clock Mode   ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Port A Input Registers ; Port A Output Registers ; Port B Input Registers ; Port B Output Registers ; Size   ; Implementation Port A Depth ; Implementation Port A Width ; Implementation Port B Depth ; Implementation Port B Width ; Implementation Bits ; M10K blocks ; MLABs ; MIF                                                        ; Location                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ; Mixed Width RDW Mode ; Port A RDW Mode ; Port B RDW Mode ; ECC Mode ; ECC Pipeline Registers ; Fits in MLABs         ;
++------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------------+------------------------+-------------------------+------------------------+-------------------------+--------+-----------------------------+-----------------------------+-----------------------------+-----------------------------+---------------------+-------------+-------+------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+-----------------+-----------------+----------+------------------------+-----------------------+
+; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated|ALTSYNCRAM ; AUTO ; True Dual Port ; Single Clock ; 8192         ; 32           ; 8192         ; 32           ; yes                    ; no                      ; yes                    ; no                      ; 262144 ; 8192                        ; 32                          ; 8192                        ; 32                          ; 262144              ; 32          ; 0     ; X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex ; M10K_X69_Y11_N0, M10K_X58_Y9_N0, M10K_X76_Y11_N0, M10K_X69_Y15_N0, M10K_X69_Y14_N0, M10K_X58_Y7_N0, M10K_X69_Y17_N0, M10K_X76_Y13_N0, M10K_X49_Y14_N0, M10K_X58_Y13_N0, M10K_X69_Y16_N0, M10K_X69_Y12_N0, M10K_X58_Y15_N0, M10K_X76_Y14_N0, M10K_X58_Y16_N0, M10K_X76_Y12_N0, M10K_X58_Y8_N0, M10K_X69_Y8_N0, M10K_X58_Y10_N0, M10K_X49_Y11_N0, M10K_X69_Y10_N0, M10K_X58_Y14_N0, M10K_X49_Y13_N0, M10K_X58_Y12_N0, M10K_X58_Y17_N0, M10K_X69_Y9_N0, M10K_X58_Y11_N0, M10K_X76_Y10_N0, M10K_X58_Y18_N0, M10K_X69_Y7_N0, M10K_X69_Y13_N0, M10K_X49_Y12_N0 ; Old data             ; New data        ; New data        ; Off      ; No                     ; No - Unsupported Mode ;
++------------------------------------------------------------------------------------------------------------------------------------+------+----------------+--------------+--------------+--------------+--------------+--------------+------------------------+-------------------------+------------------------+-------------------------+--------+-----------------------------+-----------------------------+-----------------------------+-----------------------------+---------------------+-------------+-------+------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+-----------------+-----------------+----------+------------------------+-----------------------+
 Note: Fitter may spread logical memories into multiple blocks to improve timing. The actual required RAM blocks can be found in the Fitter Resource Usage section.
 
 
@@ -1562,14 +1562,14 @@ Note: Fitter may spread logical memories into multiple blocks to improve timing.
 +---------------------------------------------+--------------------------+
 ; Routing Resource Type                       ; Usage                    ;
 +---------------------------------------------+--------------------------+
-; Block interconnects                         ; 10,555 / 289,320 ( 4 % ) ;
-; C12 interconnects                           ; 100 / 13,420 ( < 1 % )   ;
-; C2 interconnects                            ; 3,131 / 119,108 ( 3 % )  ;
-; C4 interconnects                            ; 1,500 / 56,300 ( 3 % )   ;
+; Block interconnects                         ; 10,849 / 289,320 ( 4 % ) ;
+; C12 interconnects                           ; 104 / 13,420 ( < 1 % )   ;
+; C2 interconnects                            ; 3,216 / 119,108 ( 3 % )  ;
+; C4 interconnects                            ; 1,542 / 56,300 ( 3 % )   ;
 ; DQS bus muxes                               ; 0 / 25 ( 0 % )           ;
 ; DQS-18 I/O buses                            ; 0 / 25 ( 0 % )           ;
 ; DQS-9 I/O buses                             ; 0 / 25 ( 0 % )           ;
-; Direct links                                ; 541 / 289,320 ( < 1 % )  ;
+; Direct links                                ; 538 / 289,320 ( < 1 % )  ;
 ; Global clocks                               ; 1 / 16 ( 6 % )           ;
 ; HPS SDRAM PLL inputs                        ; 0 / 1 ( 0 % )            ;
 ; HPS SDRAM PLL outputs                       ; 0 / 1 ( 0 % )            ;
@@ -1625,13 +1625,13 @@ Note: Fitter may spread logical memories into multiple blocks to improve timing.
 ; HPS_INTERFACE_TPIU_TRACE_INPUTs             ; 0 / 2 ( 0 % )            ;
 ; HPS_INTERFACE_TPIU_TRACE_OUTPUTs            ; 0 / 33 ( 0 % )           ;
 ; Horizontal periphery clocks                 ; 0 / 72 ( 0 % )           ;
-; Local interconnects                         ; 2,923 / 84,580 ( 3 % )   ;
+; Local interconnects                         ; 2,948 / 84,580 ( 3 % )   ;
 ; Quadrant clocks                             ; 0 / 66 ( 0 % )           ;
-; R14 interconnects                           ; 298 / 12,676 ( 2 % )     ;
-; R14/C12 interconnect drivers                ; 342 / 20,720 ( 2 % )     ;
-; R3 interconnects                            ; 4,358 / 130,992 ( 3 % )  ;
-; R6 interconnects                            ; 6,602 / 266,960 ( 2 % )  ;
-; Spine clocks                                ; 7 / 360 ( 2 % )          ;
+; R14 interconnects                           ; 334 / 12,676 ( 3 % )     ;
+; R14/C12 interconnect drivers                ; 380 / 20,720 ( 2 % )     ;
+; R3 interconnects                            ; 4,359 / 130,992 ( 3 % )  ;
+; R6 interconnects                            ; 6,465 / 266,960 ( 2 % )  ;
+; Spine clocks                                ; 6 / 360 ( 2 % )          ;
 ; Wire stub REs                               ; 0 / 15,858 ( 0 % )       ;
 +---------------------------------------------+--------------------------+
 
@@ -1767,118 +1767,118 @@ Note: Fitter may spread logical memories into multiple blocks to improve timing.
 +-----------------+----------------------+-------------------+
 ; Source Clock(s) ; Destination Clock(s) ; Delay Added in ns ;
 +-----------------+----------------------+-------------------+
-; CLOCK_50        ; CLOCK_50             ; 66.0              ;
+; CLOCK_50        ; CLOCK_50             ; 47.2              ;
 +-----------------+----------------------+-------------------+
 Note: For more information on problematic transfers, consider running the Fitter again with the Optimize hold timing option (Settings Menu) turned off.
 This will disable optimization of problematic paths and expose them for further analysis using the Timing Analyzer.
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Estimated Delay Added for Hold Timing Details                                                                                                                                                                                        ;
-+-------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
-; Source Register                                       ; Destination Register                                                                                                                                     ; Delay Added in ns ;
-+-------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[10]       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.545             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[12]       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.524             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curPC[10]        ; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated|ram_block1a4~porta_address_reg0  ; 0.518             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curPC[14]        ; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated|ram_block1a14~porta_address_reg0 ; 0.496             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.memWrite         ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.477             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[5]        ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.448             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[6]        ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_merlin_master_translator:rv32ui_fsmd_0_data_translator|read_accepted             ; 0.419             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curPC[2]         ; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated|ram_block1a4~porta_address_reg0  ; 0.405             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[11]       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.403             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[35][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[34][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[33][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[32][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[3][23]    ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[2][23]    ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[1][23]    ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[0][23]    ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[7][23]    ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[6][23]    ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[5][23]    ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[4][23]    ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[11][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[10][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[9][23]    ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[8][23]    ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[15][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[14][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[13][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[12][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[19][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[23][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[27][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[31][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[18][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[22][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[26][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[30][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[17][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[21][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[29][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[16][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[20][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[24][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrWriteData[23] ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[28][23]   ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[26]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[27]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[25]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[22]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrWriteMode[1]  ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrWriteMode[0]  ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[28]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[30]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[29]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[31]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrRead          ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[20]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[21]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[23]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[24]      ; riscv_system:u0|Core:rv32ui_fsmd_0|R.csrReg[25][23]                                                                                                      ; 0.392             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curPC[13]        ; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated|ram_block1a16~porta_address_reg0 ; 0.388             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[18]      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.383             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[13]      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.383             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|R.curPC[12]        ; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated|ram_block1a4~porta_address_reg0  ; 0.368             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[3][15]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[2][15]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[4][15]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[5][15]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[6][15]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[7][15]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[1][15]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[13][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[15][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[14][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[9][15]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[11][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[10][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[8][15]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[12][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[21][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[23][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[22][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[17][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[19][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[18][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[16][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[20][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[29][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[31][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[30][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[25][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[27][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[26][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[24][15]    ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[3][18]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[2][18]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[4][18]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[5][18]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[6][18]     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[1]                            ; 0.360             ;
-+-------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Estimated Delay Added for Hold Timing Details                                                                                                                                                                                                         ;
++------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
+; Source Register                                                        ; Destination Register                                                                                                                                     ; Delay Added in ns ;
++------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.ctrlState.CalculateJump           ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 1.150             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[7]                         ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 1.047             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[4]                         ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 1.020             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[5]                         ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.980             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[1]                        ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.953             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[0]                        ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.886             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.ctrlState.CalculateALUOp          ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.795             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[6]                        ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.791             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[11]                        ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.784             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[4]                        ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.779             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.ctrlState.CalculateUpperimmediate ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.731             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[12]                        ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.693             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[9]                         ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:switches_s1_agent_rsp_fifo|mem_used[0]                            ; 0.678             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[2]                         ; riscv_system:u0|riscv_system_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_e7e2:auto_generated|ram_block1a24~porta_address_reg0 ; 0.655             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[10]                        ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.635             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.aluRes[14]                        ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.627             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|R.curInst[13]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.559             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[3][2]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[2][2]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[4][2]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[5][2]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[6][2]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[7][2]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[1][2]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[13][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[15][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[14][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[9][2]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[11][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[10][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[8][2]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[12][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[21][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[23][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[22][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[17][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[19][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[18][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[16][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[20][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[29][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[31][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[30][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[25][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[27][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[26][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[24][2]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[3][18]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[2][18]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[4][18]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[5][18]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[6][18]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[7][18]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[1][18]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[13][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[15][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[14][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[9][18]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[11][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[10][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[8][18]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[12][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[21][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[23][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[22][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[17][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[19][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[18][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[16][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[20][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[29][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[31][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[30][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[25][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[27][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[26][18]                     ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[3][7]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[2][7]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[4][7]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[5][7]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[6][7]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[7][7]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[1][7]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[13][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[15][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[14][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[9][7]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[11][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[10][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[8][7]                       ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[12][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[21][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[23][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[22][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[17][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[19][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[18][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[16][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[20][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
+; riscv_system:u0|Core:rv32ui_fsmd_0|RegFile[29][7]                      ; riscv_system:u0|riscv_system_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:leds_s1_agent_rsp_fifo|mem_used[1]                                ; 0.542             ;
++------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
 Note: This table only shows the top 100 path(s) that have the largest delay added for hold.
 
 
@@ -1894,7 +1894,7 @@ Info (171004): Fitter is performing a Standard Fit compilation using maximum Fit
 Info (176045): Design uses memory blocks. Violating setup or hold times of memory block address registers for either read or write operations could cause memory contents to be corrupted. Make sure that all memory block address registers meet the setup and hold time requirements.
 Info (184020): Starting Fitter periphery placement operations
 Info (11191): Automatically promoted 1 clock (1 global)
-    Info (11162): CLOCK_50~inputCLKENA0 with 2399 fanout uses global clock CLKCTRL_G6
+    Info (11162): CLOCK_50~inputCLKENA0 with 2398 fanout uses global clock CLKCTRL_G6
 Info (184021): Fitter periphery placement operations ending: elapsed time is 00:00:00
 Info (176233): Starting register packing
 Info (332104): Reading SDC File: '../riscv_system/synthesis/submodules/altera_reset_controller.sdc'
@@ -1920,15 +1920,15 @@ Info (176235): Finished register packing
 Info (11798): Fitter preparation operations ending: elapsed time is 00:00:13
 Info (170189): Fitter placement preparation operations beginning
 Info (14951): The Fitter is using Advanced Physical Optimization.
-Info (170190): Fitter placement preparation operations ending: elapsed time is 00:01:02
+Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:56
 Info (170191): Fitter placement operations beginning
 Info (170137): Fitter placement was successful
-Info (170192): Fitter placement operations ending: elapsed time is 00:00:12
+Info (170192): Fitter placement operations ending: elapsed time is 00:00:10
 Info (170193): Fitter routing operations beginning
 Info (170195): Router estimated average interconnect usage is 2% of the available device resources
-    Info (170196): Router estimated peak interconnect usage is 20% of the available device resources in the region that extends from location X56_Y0 to location X66_Y10
+    Info (170196): Router estimated peak interconnect usage is 28% of the available device resources in the region that extends from location X56_Y11 to location X66_Y22
 Info (170194): Fitter routing operations ending: elapsed time is 00:00:30
-Info (11888): Total time spent on timing analysis during the Fitter is 9.41 seconds.
+Info (11888): Total time spent on timing analysis during the Fitter is 8.44 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
@@ -1936,10 +1936,10 @@ Info (334004): Delay annotation completed successfully
 Info (11801): Fitter post-fit operations ending: elapsed time is 00:00:10
 Info (144001): Generated suppressed messages file X:/src/grpSystem/unitSystemFPGA/synlayResults/SystemFPGA.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 6839 megabytes
-    Info: Processing ended: Fri Feb 12 17:22:36 2021
-    Info: Elapsed time: 00:03:23
-    Info: Total CPU time (on all processors): 00:14:54
+    Info: Peak virtual memory: 6835 megabytes
+    Info: Processing ended: Sat Feb 13 13:25:15 2021
+    Info: Elapsed time: 00:03:16
+    Info: Total CPU time (on all processors): 00:14:21
 
 
 +----------------------------+
