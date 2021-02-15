@@ -16,8 +16,14 @@ architecture rtl of Core is
     signal R, NxR : aRegSet;
 
     -- Register File
-    signal RegFile, NxRegFile : aRegFile;
-    constant cInitValRegFile  : aRegFile := (others => (others => '0'));
+    constant cInitValRegFile : aRegFile := (others => (others => '0'));
+    signal RegFile           : aRegFile := cInitValRegFile;
+    attribute ramstyle       : string;
+    attribute ramstyle of RegFile : signal is "MLAB";
+
+    -- RAM data
+    signal RAM, NxRAM         : aRAM;
+    signal RAMCtrl, NxRAMCtrl : aRAMCtrl := cRAMCtrlDefault;
 
     -- bussignals for remapping
     signal i_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
@@ -33,309 +39,272 @@ begin
     d_readdata_remapped <= swapEndianess(to_stdULogicVector(avm_d_readdata));
     avm_d_writedata     <= to_StdLogicVector(swapEndianess(d_writedata_remapped));
 
-    Registers : process(csi_clk, rsi_reset_n)
+    RAMData : process(csi_clk) is
     begin
-        if (rsi_reset_n = not ('1')) then
-            R       <= cInitValRegSet;
-            RegFile <= cInitValRegFile;
-        elsif ((csi_clk'event) and (csi_clk = '1')) then
-            R       <= NxR;
-            RegFile <= NxRegFile;
+        if (rising_edge(csi_clk)) then
+            -- write
+            RegFile(NxRAMCtrl.regfileWrAddr) <= NxRAMCtrl.regfileWrData;
+            
+            -- read
+             RAMCtrl.rs1Data <= RegFile(NxRAMCtrl.regfileRs1Addr);
+             RAMCtrl.rs2Data <= RegFile(NxRAMCtrl.regfileRs2Addr);
         end if;
     end process;
 
-    Comb : process(R, RegFile, i_readdata_remapped, d_readdata_remapped)
-        variable vRegReadData1      : aRegValue      := (others => '0');
-        variable vRegReadData2      : aRegValue      := (others => '0');
-        variable vAluSrc1           : aCtrl2Signal   := (others => '0');
-        variable vAluSrc2           : aCtrl2Signal   := (others => '0');
-        variable vImm               : aImm           := (others => '0');
-        variable vDataMemReadData   : aWord          := (others => '0');
-        variable vDataMemWriteData  : aWord          := (others => '0');
-        variable vDataMemByteEnable : aMemByteselect := (others => '0');
-        variable vCsrAddrMapped     : integer        := 255;
-        variable vCsrReadData       : aRegValue      := (others => '0');
-        variable vALUValues         : aALUValues;
-        variable vALUOp             : aALUOp;
-        variable vRegWritedataSrc   : aCtrl2Signal;
-        variable vRegFileWriteEN    : std_ulogic;
-        variable vRegWriteData      : aRegValue;
-        variable vPCInc             : std_ulogic;
-        variable vReadInstr         : std_ulogic;
-        variable vInstrAddrSrc      : aCtrlSignal;
+    Registers : process(csi_clk, rsi_reset_n)
+    begin
+        if (rsi_reset_n = not ('1')) then
+            R <= cInitValRegSet;
+        elsif (rising_edge(csi_clk)) then
+            R <= NxR;
+        end if;
+    end process;
+
+    Comb : process(R, RAMCtrl, i_readdata_remapped, d_readdata_remapped)
+        variable vRegfile  : aRegfileValues;
+        variable vImm      : aImm;
+        variable vALU      : aALUValues;
+        variable vCSR      : aCSRValues;
+        variable vDataMem  : aDataMemValues;
+        variable vPCEN     : std_ulogic;
+        variable vInstrMem : aInstrMemValues;
 
     begin
         -- default signal values
         NxR       <= R;
-        NxRegFile <= RegFile;
+        NxRAMCtrl <= RAMCtrl;
 
         -- default variable values
-        vRegReadData1      := (others => '0'); -- register file read data 1
-        vRegReadData2      := (others => '0'); -- register file read data 2
-        vAluSrc1           := cALUSrc1RegFile; -- alu input 1 mux
-        vAluSrc2           := (others => '0'); -- alu input 2 mux
-        vImm               := (others => '0'); -- extended Immediate
-        vDataMemReadData   := (others => '0'); -- data memory read data
-        vDataMemWriteData  := (others => '0'); -- data memory write data
-        vDataMemByteEnable := (others => '0'); -- data memory byte enable
-        vCsrAddrMapped     := 255;      -- csr address mapped into linear space
-        vCsrReadData       := (others => '0'); -- csr register read data
-        vALUValues         := cALUValuesDefault; -- ALU values
-        vALUOp             := ALUOpAdd;
-        vRegWritedataSrc   := cRegWritedataALUSrc;
-        vRegFileWriteEN    := '0';
-        vRegWriteData      := (others => '0');
-        vPCInc             := '0';
-        vReadInstr         := '0';
-        vInstrAddrSrc      := cInstrAddrPCSrc;
+        vRegfile  := cRegfileValuesDefault;
+        vImm      := (others => '0');
+        vALU      := cALUValuesDefault;
+        vCSR      := cCSRValuesDefault;
+        vDataMem  := cDataMemDefault;
+        vPCEN     := '0';
+        vInstrMem := cInstrMemDefault;
 
         -------------------------------------------------------------------------------
         -- Control Unit
         -------------------------------------------------------------------------------
-        vALUValues.aluCalc := '0';
-        NxR.memRead        <= '0';
-        NxR.memWrite       <= '0';
-        NxR.csrRead        <= '0';
-        NxR.csrWriteMode   <= cModeNoWrite;
+        case R.ctrlState is
+            when InitState =>
+                vInstrMem.read := '1';
+                NxR.ctrlState  <= Fetch;
 
-        if R.ctrlState = InitState then
-            NxR.ctrlState      <= Fetch;
-            vReadInstr         := '1';
-            
-        elsif R.ctrlState = Fetch then
-            NxR.ctrlState <= ReadReg;
+            when Fetch =>
+                -- increment pc with alu
+                vPCEN         := '1';
+                vALU.src1     := cALUSrc1PC;
+                vALU.src2     := cALUSrc2Const4;
+                vALU.op       := ALUOpAdd;
+                vALU.aluCalc  := '1';
+                NxR.ctrlState <= ReadReg;
 
-        elsif R.ctrlState = ReadReg then
-            -- increment pc with alu
-            vPCInc             := '1';
-            vAluSrc1           := cALUSrc1PC;
-            vAluSrc2           := cALUSrc2Const4;
-            vALUOp             := ALUOpAdd;
-            vALUValues.aluCalc := '1';
+            when ReadReg =>
+                -- decode instruction
+                case R.curInst(aOPCodeRange) is
+                    when cOpLUI | cOpAUIPC =>
+                        NxR.ctrlState <= CalculateUpperimmediate;
+                    when cOpJType | cOpIJumpReg =>
+                        NxR.ctrlState <= CalculateJump;
+                    when cOpBType =>
+                        NxR.ctrlState <= CalculateBranch;
+                    when cOpILoad =>
+                        NxR.ctrlState <= CalculateLoad;
+                    when cOpSType =>
+                        NxR.ctrlState <= CalculateStore;
+                    when cOpRType | cOpIArith =>
+                        NxR.ctrlState <= CalculateALUOp;
+                    when cOpFence =>    -- implemented as NOP
+                        NxR.ctrlState <= Wait0;
+                    when cOpSys =>
+                        case R.curInst(aFunct3Range) is
+                            when cSysEnv =>
+                                NxR.ctrlState <= Trap;
+                            when others =>
+                                NxR.ctrlState <= CalculateSys;
+                        end case;
 
-            -- decode instruction
-            case R.curInst(aOPCodeRange) is
-                when cOpRType | cOpIArith =>
-                    NxR.ctrlState <= CalculateALUOp;
+                    when others =>
+                        null;           -- not implemented
+                end case;
 
-                when cOpILoad =>
-                    NxR.ctrlState <= CalculateLoad;
+            -- U-Type Load Immediate
+            when CalculateUpperimmediate =>
+                NxR.ctrlState        <= Fetch;
+                vInstrMem.read       := '1';
+                vRegfile.writeEnable := '1';
+                vALU.op              := ALUOpAdd;
+                if R.curInst(aOPCodeRange) = cOpLUI then
+                    vALU.src1 := cALUSrc1Zero;
+                else
+                    vALU.src1 := cALUSrc1PrevPC;
+                end if;
+                vALU.src2            := cALUSrc2ImmGen;
+                vALU.aluCalc         := '1';
 
-                when cOpSType =>
-                    NxR.ctrlState <= CalculateStore;
+            -- J-Type Jump Instruction
+            when CalculateJump =>
+                NxR.ctrlState        <= Fetch;
+                vRegfile.writeEnable := '1';
+                vInstrMem.read       := '1';
+                vInstrMem.src        := cInstrAddrALUSrc;
 
-                when cOpJType | cOpIJumpReg =>
-                    NxR.ctrlState <= CalculateJump;
+                -- alu config only needed for Jump Reg
+                vALU.op               := ALUOpAdd;
+                if (R.curInst(aOPCodeRange) = cOpIJumpReg) then
+                    vALU.src1 := cALUSrc1RegFile;
+                else
+                    vALU.src1 := cALUSrc1PrevPC;
+                end if;
+                vALU.src2             := cALUSrc2ImmGen;
+                vALU.aluCalc          := '1';
+                vPCEN                 := '1';
+                vRegfile.writeDataSrc := cRegWritedataPCSrc;
 
-                when cOpBType =>
-                    NxR.ctrlState <= CalculateBranch;
+            -- B-Type Conditional Branch
+            when CalculateBranch =>
+                NxR.ctrlState <= Wait0;
 
-                when cOpLUI | cOpAUIPC =>
-                    NxR.ctrlState <= CalculateUpperimmediate;
+                -- configure ALU
+                case R.curInst(aFunct3Range) is
+                    when cCondEq | cCondNe   => vALU.op := ALUOpSub;
+                    when cCondLt | cCondGe   => vALU.op := ALUOpSLT;
+                    when cCondLtu | cCondGeu => vALU.op := ALUOpSLTU;
+                    when others              => null;
+                end case;
+                vALU.src1    := cALUSrc1RegFile;
+                vALU.src2    := cALUSrc2RegFile;
+                vALU.aluCalc := '1';
 
-                when cOpFence =>        -- implemented as NOP
-                    NxR.ctrlState <= Wait0;
+            when PerformBranch =>
+                NxR.ctrlState         <= Fetch;
+                vPCEN                 := '1';
+                vRegfile.writeDataSrc := cRegWritedataPCSrc;
+                vInstrMem.read        := '1';
+                vInstrMem.src         := cInstrAddrALUSrc;
+                -- alu config for new pc
+                vALU.op               := ALUOpAdd;
+                vALU.src1             := cALUSrc1PrevPC;
+                vALU.src2             := cALUSrc2ImmGen;
+                vALU.aluCalc          := '1';
 
-                when cOpSys =>
-                    case R.curInst(aFunct3Range) is
-                        when cSysEnv =>
-                            NxR.ctrlState <= Trap;
-                        when others =>
-                            NxR.ctrlState <= CalculateSys;
-                    end case;
+            -- I-Type Load Instruction
+            when CalculateLoad =>
+                NxR.ctrlState <= WaitLoad;
+                vALU.op       := ALUOpAdd;
+                vALU.src1     := cALUSrc1RegFile;
+                vALU.src2     := cALUSrc2ImmGen;
+                vALU.aluCalc  := '1';
+                vDataMem.read := '1';
 
-                when others =>
-                    null;               -- not implemented
+            -- Read data from data mem
+            when WaitLoad =>
+                NxR.ctrlState         <= Fetch;
+                vInstrMem.read        := '1';
+                vRegfile.writeEnable  := '1';
+                vRegfile.writeDataSrc := cRegWritedataMemRdSrc;
 
-            end case;
+            -- S-Type Store Instruction
+            when CalculateStore =>
+                NxR.ctrlState  <= Wait0;
+                vDataMem.write := '1';
+                vALU.op        := ALUOpAdd;
+                vALU.src1      := cALUSrc1RegFile;
+                vALU.src2      := cALUSrc2ImmGen;
+                vALU.aluCalc   := '1';
 
-        -- U-Type Load Immediate
-        elsif R.ctrlState = CalculateUpperimmediate then
-            NxR.ctrlState      <= Fetch;
-            vReadInstr         := '1';
-            vRegFileWriteEN    := '1';
-            vALUOp             := ALUOpAdd;
-            if R.curInst(aOPCodeRange) = cOpLUI then
-                vAluSrc1 := cALUSrc1Zero;
-            else
-                vAluSrc1 := cALUSrc1PrevPC;
-            end if;
-            vAluSrc2           := cALUSrc2ImmGen;
-            vALUValues.aluCalc := '1';
+            -- R-Type or I-Type Register Instruction
+            when CalculateALUOp =>
+                NxR.ctrlState        <= Fetch;
+                vRegfile.writeEnable := '1';
+                vALU.aluCalc         := '1';
+                vInstrMem.read       := '1';
 
-        -- J-Type Jump Instruction
-        elsif R.ctrlState = CalculateJump then
-            NxR.ctrlState   <= Fetch;
-            vRegFileWriteEN := '1';
-            vReadInstr      := '1';
-            vInstrAddrSrc   := cInstrAddrALUSrc;
+                vALU.src1 := cALUSrc1RegFile;
+                -- Immediate or Register Instruction
+                if R.curInst(aOPCodeRange) = cOpRType then
+                    vALU.src2 := cALUSrc2RegFile;
+                else
+                    vALU.src2 := cALUSrc2ImmGen;
+                end if;
 
-            -- alu config only needed for Jump Reg
-            vALUOp             := ALUOpAdd;
-            if (R.curInst(aOPCodeRange) = cOpIJumpReg) then
-                vAluSrc1 := cALUSrc1RegFile;
-            else
-                vAluSrc1 := cALUSrc1PrevPC;
-            end if;
-            vAluSrc2           := cALUSrc2ImmGen;
-            vALUValues.aluCalc := '1';
-            vRegWritedataSrc   := cRegWritedataPCSrc;
+                -- ALU OpCode
+                case R.curInst(aFunct3Range) is
+                    when cFunct3addsub => -- add/sub
+                        if R.curInst(aOPCodeRange) = cOpRType and R.curInst(cFunct7OtherInstrPos) = '1' then
+                            vALU.op := ALUOpSub;
+                        else
+                            vALU.op := ALUOpAdd;
+                        end if;
+                    when cFunct3sll  => vALU.op := ALUOpSLL; -- shift left logical
+                    when cFunct3slt  => vALU.op := ALUOpSLT; -- signed less than
+                    when cFunct3sltu => vALU.op := ALUOpSLTU; -- unsigned less than
+                    when cFunct3xor  => vALU.op := ALUOpXor; -- xor
+                    when cFunct3sr =>   -- shift rigth logical/arithmetical                            
+                        if R.curInst(cFunct7OtherInstrPos) = '0' then
+                            vALU.op := ALUOpSRL;
+                        else
+                            vALU.op := ALUOpSRA;
+                        end if;
+                    when cFunct3or   => vALU.op := ALUOpOr; -- or
+                    when cFunct3and  => vALU.op := ALUOpAnd; -- and
+                    when others      => null;
+                end case;
 
-        -- B-Type Conditional Branch
-        elsif R.ctrlState = CalculateBranch then
-            NxR.ctrlState <= Wait0;
+            -- CSR Instruction
+            when CalculateSys =>
+                case R.curInst(aFunct3Range) is
+                    when cSysRW | cSysRWI =>
+                        if R.curInst(11 downto 7) /= "00000" then
+                            vCSR.read := '1';
+                        end if;
+                    when cSysRS | cSysRSI =>
+                        vCSR.read := '1';
+                        if R.curInst(19 downto 15) /= "00000" then
+                            vCSR.writeMode := cModeSet;
+                        end if;
+                    when cSysRC | cSysRCI =>
+                        vCSR.read := '1';
+                        if R.curInst(19 downto 15) /= "00000" then
+                            vCSR.writeMode := cModeClear;
+                        end if;
+                    when others => null;
+                end case;
+                vRegfile.writeDataSrc := cRegWritedataCSRSrc;
+                vRegfile.writeEnable  := '1';
+                vInstrMem.read        := '1';
+                NxR.ctrlState         <= Fetch;
 
-            -- configure ALU
-            case R.curInst(aFunct3Range) is
-                when cCondEq | cCondNe   => vALUOp := ALUOpSub;
-                when cCondLt | cCondGe   => vALUOp := ALUOpSLT;
-                when cCondLtu | cCondGeu => vALUOp := ALUOpSLTU;
-                when others              => null;
-            end case;
-            vAluSrc1           := cALUSrc1RegFile;
-            vAluSrc2           := cALUSrc2RegFile;
-            vALUValues.aluCalc := '1';
+            when Wait0 =>
+                NxR.ctrlState  <= Fetch;
+                vInstrMem.read := '1';
 
-        -- I-Type Load Instruction
-        elsif R.ctrlState = CalculateLoad then
-            NxR.memRead        <= '1';
-            NxR.ctrlState      <= DataAccess0;
-            vALUOp             := ALUOpAdd;
-            vAluSrc1           := cALUSrc1RegFile;
-            vAluSrc2           := cALUSrc2ImmGen;
-            vALUValues.aluCalc := '1';
+            when Trap =>
+                if R.curInst(31 downto 20) = cMTrapRet then
+                    NxR.ctrlState  <= Fetch;
+                    vInstrMem.read := '1';
+                else
+                    NxR.ctrlState <= Trap;
+                end if;
 
-        -- S-Type Store Instruction
-        elsif R.ctrlState = CalculateStore then
-            NxR.memWrite       <= '1';
-            NxR.ctrlState      <= DataAccess0;
-            vALUOp             := ALUOpAdd;
-            vAluSrc1           := cALUSrc1RegFile;
-            vAluSrc2           := cALUSrc2ImmGen;
-            vALUValues.aluCalc := '1';
-
-        -- R-Type or I-Type Register Instruction
-        elsif R.ctrlState = CalculateALUOp then
-            NxR.ctrlState      <= Fetch;
-            vRegFileWriteEN    := '1';
-            vALUValues.aluCalc := '1';
-            vReadInstr         := '1';
-
-            vAluSrc1 := cALUSrc1RegFile;
-            -- Immediate or Register Instruction
-            if R.curInst(aOPCodeRange) = cOpRType then
-                vAluSrc2 := cALUSrc2RegFile;
-            else
-                vAluSrc2 := cALUSrc2ImmGen;
-            end if;
-
-            -- ALU OpCode
-            case R.curInst(aFunct3Range) is
-                when cFunct3addsub =>   -- add/sub
-                    if R.curInst(aOPCodeRange) = cOpRType and R.curInst(cFunct7OtherInstrPos) = '1' then
-                        vALUOp := ALUOpSub;
-                    else
-                        vALUOp := ALUOpAdd;
-                    end if;
-                when cFunct3sll  => vALUOp := ALUOpSLL; -- shift left logical
-                when cFunct3slt  => vALUOp := ALUOpSLT; -- signed less than
-                when cFunct3sltu => vALUOp := ALUOpSLTU; -- unsigned less than
-                when cFunct3xor  => vALUOp := ALUOpXor; -- xor
-                when cFunct3sr =>       -- shift rigth logical/arithmetical                            
-                    if R.curInst(cFunct7OtherInstrPos) = '0' then
-                        vALUOp := ALUOpSRL;
-                    else
-                        vALUOp := ALUOpSRA;
-                    end if;
-                when cFunct3or   => vALUOp := ALUOpOr; -- or
-                when cFunct3and  => vALUOp := ALUOpAnd; -- and
-                when others      => null;
-            end case;
-
-        -- CSR Instruction
-        elsif R.ctrlState = CalculateSys then
-            case R.curInst(aFunct3Range) is
-                when cSysRW | cSysRWI =>
-                    if R.curInst(11 downto 7) = "00000" then
-                        NxR.csrRead <= '0';
-                    else
-                        NxR.csrRead <= '1';
-                    end if;
-                    NxR.csrWriteMode <= cModeWrite;
-                when cSysRS | cSysRSI =>
-                    NxR.csrRead <= '1';
-                    if R.curInst(19 downto 15) = "00000" then
-                        NxR.csrWriteMode <= cModeNoWrite;
-                    else
-                        NxR.csrWriteMode <= cModeSet;
-                    end if;
-                when cSysRC | cSysRCI =>
-                    NxR.csrRead <= '1';
-                    if R.curInst(19 downto 15) = "00000" then
-                        NxR.csrWriteMode <= cModeNoWrite;
-                    else
-                        NxR.csrWriteMode <= cModeClear;
-                    end if;
-                when others => null;
-            end case;
-            NxR.ctrlState <= DataAccess0;
-
-        elsif R.ctrlState = DataAccess0 then
-            case R.curInst(aOPCodeRange) is
-                when cOpILoad =>
-                    NxR.ctrlState <= DataAccess1;
-                when cOpSType =>
-                    vReadInstr    := '1';
-                    NxR.ctrlState <= Fetch;
-                when cOpSys =>
-                    vRegWritedataSrc := cRegWritedataCSRSrc;
-                    vRegFileWriteEN  := '1';
-                    vReadInstr       := '1';
-                    NxR.ctrlState    <= Fetch;
-                when others =>
-                    null;
-            end case;
-
-        elsif R.ctrlState = DataAccess1 then
-            NxR.ctrlState    <= Fetch;
-            vReadInstr       := '1';
-            vRegFileWriteEN  := '1';
-            vRegWritedataSrc := cRegWritedataMemRdSrc;
-
-        elsif R.ctrlState = PerformBranch then
-            vRegWritedataSrc := cRegWritedataPCSrc;
-            vReadInstr       := '1';
-            vInstrAddrSrc := cInstrAddrALUSrc;
-            NxR.ctrlState    <= Fetch;
-
-            -- alu config for new pc
-            vALUOp             := ALUOpAdd;
-            vAluSrc1           := cALUSrc1PrevPC;
-            vAluSrc2           := cALUSrc2ImmGen;
-            vALUValues.aluCalc := '1';
-
-        elsif R.ctrlState = Wait0 then
-            NxR.ctrlState <= Fetch;
-            vReadInstr    := '1';
-
-        elsif R.ctrlState = Trap then
-            if R.curInst(31 downto 20) = cMTrapRet then
-                NxR.ctrlState <= Fetch;
-                vReadInstr    := '1';
-            else
-                NxR.ctrlState <= Trap;
-            end if;
-
-        else
-            null;
-        end if;
+            when others => null;
+        end case;
 
         -------------------------------------------------------------------------------
         -- Register File - Read Stage
         -------------------------------------------------------------------------------
         -- read registers from regfile
-        vRegReadData1 := RegFile(to_integer(unsigned(R.curInst(aRs1AddrRange))));
-        vRegReadData2 := RegFile(to_integer(unsigned(R.curInst(aRs2AddrRange))));
+        --vRegfile.readData1 := RegFile(to_integer(unsigned(R.curInst(aRs1AddrRange))));
+        --vRegfile.readData2 := RegFile(to_integer(unsigned(R.curInst(aRs2AddrRange))));
+
+        if (R.ctrlState = ReadReg) then
+            NxRAMCtrl.regfileRs1Addr <= to_integer(unsigned(R.curInst(aRs1AddrRange)));
+            NxRAMCtrl.regfileRs2Addr <= to_integer(unsigned(R.curInst(aRs2AddrRange)));
+        end if;
+
+        vRegfile.readData1 := RAMCtrl.rs1Data;
+        vRegfile.readData2 := RAMCtrl.rs2Data;
 
         -------------------------------------------------------------------------------
         -- Immediate Extension
@@ -358,24 +327,23 @@ begin
             when cOpJType =>
                 vImm(aJTypeRangeInImmRange)                           := R.curInst(aJTypeImmsrc1Range) & R.curInst(aJTypeImmsrc2Range) & R.curInst(aJTypeImmsrc3Range) & R.curInst(aJTypeImmsrc4Range);
                 vImm(vImm'high downto aJTypeRangeInImmRange'high + 1) := (others => R.curInst(aJTypeImmsrc1Range'high));
-            when others =>
-                vImm := (others => '-');
+            when others => null;
         end case;
 
         -- MUX ALUSrc2
-        case vAluSrc2 is
-            when cALUSrc2RegFile => vALUValues.aluData2 := vRegReadData2;
-            when cALUSrc2ImmGen  => vALUValues.aluData2 := vImm;
-            when cALUSrc2Const4  => vALUValues.aluData2 := std_ulogic_vector(to_unsigned(4, vALUValues.aluData2'length));
+        case vALU.src2 is
+            when cALUSrc2RegFile => vALU.aluData2 := vRegfile.readData2;
+            when cALUSrc2ImmGen  => vALU.aluData2 := vImm;
+            when cALUSrc2Const4  => vALU.aluData2 := std_ulogic_vector(to_unsigned(4, vALU.aluData2'length));
             when others          => null;
         end case;
 
         -- Mux ALUSrc1
-        case vAluSrc1 is
-            when cALUSrc1RegFile => vALUValues.aluData1 := vRegReadData1;
-            when cALUSrc1Zero    => vALUValues.aluData1 := (others => '0');
-            when cALUSrc1PrevPC  => vALUValues.aluData1 := std_ulogic_vector(unsigned(R.curPC) - 4);
-            when cALUSrc1PC      => vALUValues.aluData1 := R.curPC;
+        case vALU.src1 is
+            when cALUSrc1RegFile => vALU.aluData1 := vRegfile.readData1;
+            when cALUSrc1Zero    => vALU.aluData1 := (others => '0');
+            when cALUSrc1PrevPC  => vALU.aluData1 := std_ulogic_vector(unsigned(R.curPC) - 4);
+            when cALUSrc1PC      => vALU.aluData1 := R.curPC;
             when others          => null;
         end case;
 
@@ -383,60 +351,60 @@ begin
         -- ALU
         -------------------------------------------------------------------------------
         -- add and substract from alu needed for other operations
-        if (vALUOp = ALUOpAdd) then
-            vALUValues.addsubRes := std_ulogic_vector(unsigned('0' & vALUValues.aluData1) + unsigned('0' & vALUValues.aluData2));
-            if ((vALUValues.aluData1(vALUValues.aluData1'high) = vALUValues.aluData2(vALUValues.aluData2'high)) and (vALUValues.aluData1(vALUValues.aluData1'high) /= vALUValues.addsubRes(vALUValues.addsubRes'high - 1))) then
-                vALUValues.addsubCarry := '1';
+        if (vALU.op = ALUOpAdd) then
+            vALU.addsubRes := std_ulogic_vector(unsigned('0' & vALU.aluData1) + unsigned('0' & vALU.aluData2));
+            if ((vALU.aluData1(vALU.aluData1'high) = vALU.aluData2(vALU.aluData2'high)) and (vALU.aluData1(vALU.aluData1'high) /= vALU.addsubRes(vALU.addsubRes'high - 1))) then
+                vALU.addsubCarry := '1';
             end if;
         else
-            vALUValues.addsubRes := std_ulogic_vector(unsigned('0' & vALUValues.aluData1) - unsigned('0' & vALUValues.aluData2));
-            if ((vALUValues.aluData1(vALUValues.aluData1'high) /= vALUValues.aluData2(vALUValues.aluData2'high)) and (vALUValues.aluData1(vALUValues.aluData1'high) /= vALUValues.addsubRes(vALUValues.addsubRes'high - 1))) then
-                vALUValues.addsubCarry := '1';
+            vALU.addsubRes := std_ulogic_vector(unsigned('0' & vALU.aluData1) - unsigned('0' & vALU.aluData2));
+            if ((vALU.aluData1(vALU.aluData1'high) /= vALU.aluData2(vALU.aluData2'high)) and (vALU.aluData1(vALU.aluData1'high) /= vALU.addsubRes(vALU.addsubRes'high - 1))) then
+                vALU.addsubCarry := '1';
             end if;
         end if;
 
         -- calculate shift amount
-        vALUValues.shiftAmount := to_integer(unsigned(vALUValues.aluData2(aALUShiftRange)));
+        vALU.shiftAmount := to_integer(unsigned(vALU.aluData2(aALUShiftRange)));
 
-        case vALUOp is
+        case vALU.op is
             when ALUOpAdd | ALUOpSub =>
-                vALUValues.aluRawRes := vALUValues.addsubRes;
+                vALU.aluRawRes := vALU.addsubRes;
             when ALUOpSLT =>
-                vALUValues.aluRawRes    := (others => '0');
-                vALUValues.aluRawRes(0) := (vALUValues.addsubRes(vALUValues.addsubRes'high - 1) or vALUValues.addsubCarry) and not (not vALUValues.aluData1(vALUValues.aluData1'high) and vALUValues.aluData2(vALUValues.aluData2'high));
+                vALU.aluRawRes    := (others => '0');
+                vALU.aluRawRes(0) := (vALU.addsubRes(vALU.addsubRes'high - 1) or vALU.addsubCarry) and not (not vALU.aluData1(vALU.aluData1'high) and vALU.aluData2(vALU.aluData2'high));
             when ALUOpSLTU =>
-                vALUValues.aluRawRes := (0 => vALUValues.addsubRes(vALUValues.addsubRes'high), others => '0');
+                vALU.aluRawRes := (0 => vALU.addsubRes(vALU.addsubRes'high), others => '0');
             when ALUOpAnd =>
-                vALUValues.aluRawRes := '0' & (vALUValues.aluData1 AND vALUValues.aluData2);
+                vALU.aluRawRes := '0' & (vALU.aluData1 AND vALU.aluData2);
             when ALUOpOr =>
-                vALUValues.aluRawRes := '0' & (vALUValues.aluData1 OR vALUValues.aluData2);
+                vALU.aluRawRes := '0' & (vALU.aluData1 OR vALU.aluData2);
             when ALUOpXor =>
-                vALUValues.aluRawRes := '0' & (vALUValues.aluData1 XOR vALUValues.aluData2);
+                vALU.aluRawRes := '0' & (vALU.aluData1 XOR vALU.aluData2);
             when ALUOpSLL =>
-                vALUValues.aluRawRes := std_ulogic_vector(
-                    shift_left(unsigned('0' & vALUValues.aluData1), vALUValues.shiftAmount));
+                vALU.aluRawRes := std_ulogic_vector(
+                    shift_left(unsigned('0' & vALU.aluData1), vALU.shiftAmount));
             when ALUOpSRL | ALUOpSRA =>
-                vALUValues.srValue   := '0';
-                if (vALUOp = ALUOpSRA) then
-                    vALUValues.srValue := vALUValues.aluData1(vALUValues.aluData1'high);
+                vALU.srValue   := '0';
+                if (vALU.op = ALUOpSRA) then
+                    vALU.srValue := vALU.aluData1(vALU.aluData1'high);
                 end if;
-                vALUValues.aluRawRes := std_ulogic_vector(
-                    shift_right(signed(vALUValues.srValue & vALUValues.aluData1), vALUValues.shiftAmount));
+                vALU.aluRawRes := std_ulogic_vector(
+                    shift_right(signed(vALU.srValue & vALU.aluData1), vALU.shiftAmount));
             when ALUOpNOP =>
-                vALUValues.aluRawRes := (others => '-');
+                vALU.aluRawRes := (others => '-');
         end case;
 
         -- Set Status Registers
-        vALUValues.zero     := nor_reduce(vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1 downto 0));
-        vALUValues.negative := vALUValues.aluRawRes(vALUValues.aluRawRes'high - 1);
-        vALUValues.carry    := vALUValues.aluRawRes(vALUValues.aluRawRes'high);
+        vALU.zero     := nor_reduce(vALU.aluRawRes(vALU.aluRawRes'high - 1 downto 0));
+        vALU.negative := vALU.aluRawRes(vALU.aluRawRes'high - 1);
+        vALU.carry    := vALU.aluRawRes(vALU.aluRawRes'high);
 
         -- Remove Carry Bit and Store New Value
-        if (vALUValues.aluCalc = '1') then
-            vALUValues.aluRes := vALUValues.aluRawRes(vALUValues.aluRes'range);
-            NxR.aluRes        <= vALUValues.aluRes;
+        if (vALU.aluCalc = '1') then
+            vALU.aluRes := vALU.aluRawRes(vALU.aluRes'range);
+            NxR.aluRes  <= vALU.aluRes;
         else
-            vALUValues.aluRes := R.aluRes;
+            vALU.aluRes := R.aluRes;
         end if;
 
         -------------------------------------------------------------------------------
@@ -446,11 +414,11 @@ begin
             -- check if condition is met
             case R.curInst(aFunct3Range) is
                 when cCondEq | cCondGe | cCondGeu =>
-                    if vALUValues.zero = '1' then
+                    if vALU.zero = '1' then
                         NxR.ctrlState <= PerformBranch;
                     end if;
                 when cCondNe | cCondLt | cCondLtu =>
-                    if vALUValues.zero = '0' then
+                    if vALU.zero = '0' then
                         NxR.ctrlState <= PerformBranch;
                     end if;
                 when others =>
@@ -461,11 +429,11 @@ begin
         -------------------------------------------------------------------------------
         -- Instruction Memory
         -------------------------------------------------------------------------------
-        avm_i_read <= vReadInstr;
+        avm_i_read <= std_logic(vInstrMem.read);
 
-        case vInstrAddrSrc is
+        case vInstrMem.src is
             when cInstrAddrPCSrc  => avm_i_address <= std_logic_vector(R.curPC);
-            when cInstrAddrALUSrc => avm_i_address <= std_logic_vector(vALUValues.aluRes);
+            when cInstrAddrALUSrc => avm_i_address <= std_logic_vector(vALU.aluRes);
             when others           => null;
         end case;
 
@@ -476,23 +444,30 @@ begin
         -------------------------------------------------------------------------------
         -- CSR Unit
         -------------------------------------------------------------------------------
-        vCsrAddrMapped := mapCsrAddr(R.curInst(31 downto 20));
+        -- Mux CsrWriteData
+        if R.curInst(14) = cCsrDataReg then
+            vCSR.writeData := vRegfile.readData1;
+        else
+            vCSR.writeData := std_ulogic_vector(resize(unsigned(R.curInst(19 downto 15)), cBitWidth));
+        end if;
 
-        if R.csrRead = '1' then
-            if mapCsrAddrValid(vCsrAddrMapped) then
-                vCsrReadData := R.csrReg(vCsrAddrMapped);
+        vCSR.addrMapped := mapCsrAddr(R.curInst(31 downto 20));
+
+        if vCSR.read = '1' then
+            if mapCsrAddrValid(vCSR.addrMapped) then
+                vCSR.readData := R.csrReg(vCSR.addrMapped);
             end if;
         end if;
 
-        if R.csrWriteMode /= cModeNoWrite then
-            if mapCsrAddrValid(vCsrAddrMapped) then
-                case R.csrWriteMode is
+        if vCSR.writeMode /= cModeNoWrite then
+            if mapCsrAddrValid(vCSR.addrMapped) then
+                case vCSR.writeMode is
                     when cModeWrite =>
-                        NxR.csrReg(vCsrAddrMapped) <= R.csrWriteData;
+                        NxR.csrReg(vCSR.addrMapped) <= vCSR.writeData;
                     when cModeSet =>
-                        NxR.csrReg(vCsrAddrMapped) <= R.csrWriteData or vCsrReadData;
+                        NxR.csrReg(vCSR.addrMapped) <= vCSR.writeData or vCSR.readData;
                     when cModeClear =>
-                        NxR.csrReg(vCsrAddrMapped) <= (not R.csrWriteData) and vCsrReadData;
+                        NxR.csrReg(vCSR.addrMapped) <= (not vCSR.writeData) and vCSR.readData;
                     when others =>
                         null;
                 end case;
@@ -504,78 +479,73 @@ begin
         -------------------------------------------------------------------------------
         case R.curInst(aFunct3Range) is
             when cMemByte =>
-                vDataMemReadData                                  := std_ulogic_vector(
+                vDataMem.readData                                  := std_ulogic_vector(
                     resize(signed(d_readdata_remapped(cByte - 1 downto 0)), cBitWidth));
-                vDataMemWriteData(4 * cByte - 1 downto 3 * cByte) := vRegReadData2(cByte - 1 downto 0);
-                vDataMemByteEnable                                := cEnableByte;
+                vDataMem.writeData(4 * cByte - 1 downto 3 * cByte) := vRegfile.readData2(cByte - 1 downto 0);
+                vDataMem.byteenable                                := cEnableByte;
 
             when cMemHalfWord =>
-                vDataMemReadData                                  := std_ulogic_vector(
+                vDataMem.readData                                  := std_ulogic_vector(
                     resize(signed(d_readdata_remapped(2 * cByte - 1 downto 0)), cBitWidth));
-                vDataMemWriteData(4 * cByte - 1 downto 2 * cByte) := vRegReadData2(2 * cByte - 1 downto 0);
-                vDataMemByteEnable                                := cEnableHalfWord;
+                vDataMem.writeData(4 * cByte - 1 downto 2 * cByte) := vRegfile.readData2(2 * cByte - 1 downto 0);
+                vDataMem.byteenable                                := cEnableHalfWord;
 
             when cMemWord =>
-                vDataMemReadData   := std_ulogic_vector(
+                vDataMem.readData   := std_ulogic_vector(
                     resize(signed(d_readdata_remapped(4 * cByte - 1 downto 0)), cBitWidth));
-                vDataMemWriteData  := vRegReadData2;
-                vDataMemByteEnable := cEnableWord;
+                vDataMem.writeData  := vRegfile.readData2;
+                vDataMem.byteenable := cEnableWord;
 
             when cMemUnsignedByte =>
-                vDataMemReadData                                  := std_ulogic_vector(resize(unsigned(
+                vDataMem.readData                                  := std_ulogic_vector(resize(unsigned(
                     d_readdata_remapped(cByte - 1 downto 0)), cBitWidth));
-                vDataMemWriteData(4 * cByte - 1 downto 3 * cByte) := vRegReadData2(cByte - 1 downto 0);
-                vDataMemByteEnable                                := cEnableByte;
+                vDataMem.writeData(4 * cByte - 1 downto 3 * cByte) := vRegfile.readData2(cByte - 1 downto 0);
+                vDataMem.byteenable                                := cEnableByte;
 
             when cMemUnsignedHalfWord =>
-                vDataMemReadData                                  := std_ulogic_vector(resize(unsigned(
+                vDataMem.readData                                  := std_ulogic_vector(resize(unsigned(
                     d_readdata_remapped(2 * cByte - 1 downto 0)), cBitWidth));
-                vDataMemWriteData(4 * cByte - 1 downto 2 * cByte) := vRegReadData2(2 * cByte - 1 downto 0);
-                vDataMemByteEnable                                := cEnableHalfWord;
+                vDataMem.writeData(4 * cByte - 1 downto 2 * cByte) := vRegfile.readData2(2 * cByte - 1 downto 0);
+                vDataMem.byteenable                                := cEnableHalfWord;
 
             when others =>
-                vDataMemReadData   := (others => '0');
-                vDataMemWriteData  := (others => '0');
-                vDataMemByteEnable := (others => '0');
+                vDataMem.readData   := (others => '0');
+                vDataMem.writeData  := (others => '0');
+                vDataMem.byteenable := (others => '0');
         end case;
 
-        avm_d_address        <= to_StdLogicVector(vALUValues.aluRes);
-        avm_d_byteenable     <= to_StdLogicVector(vDataMemByteEnable);
-        avm_d_write          <= std_logic(R.memWrite);
-        d_writedata_remapped <= (vDataMemWriteData);
-        avm_d_read           <= std_logic(R.memRead);
+        avm_d_address        <= to_StdLogicVector(vALU.aluRes);
+        avm_d_byteenable     <= to_StdLogicVector(vDataMem.byteenable);
+        avm_d_write          <= std_logic(vDataMem.write);
+        d_writedata_remapped <= vDataMem.writeData;
+        avm_d_read           <= std_logic(vDataMem.read);
 
         -------------------------------------------------------------------------------
         -- Register File - Write Stage
         -------------------------------------------------------------------------------
         -- MUX RegWriteData
-        case vRegWritedataSrc is
-            when cRegWritedataPCSrc    => vRegWriteData := R.curPC;
-            when cRegWritedataMemRdSrc => vRegWriteData := vDataMemReadData;
-            when cRegWritedataCSRSrc   => vRegWriteData := vCsrReadData;
-            when cRegWritedataALUSrc   => vRegWriteData := vALUValues.aluRes;
+        case vRegfile.writeDataSrc is
+            when cRegWritedataPCSrc    => vRegfile.writeData := R.curPC;
+            when cRegWritedataMemRdSrc => vRegfile.writeData := vDataMem.readData;
+            when cRegWritedataCSRSrc   => vRegfile.writeData := vCSR.readData;
+            when cRegWritedataALUSrc   => vRegfile.writeData := vALU.aluRes;
             when others                => null;
         end case;
 
-        if vRegFileWriteEN = '1' and R.curInst(aRdAddrRange) /= "00000" then
-            NxRegFile(to_integer(unsigned(R.curInst(aRdAddrRange)))) <= vRegWriteData;
+        if vRegfile.writeEnable = '1' and R.curInst(aRdAddrRange) /= "00000" then
+            NxRAMCtrl.regfileWrAddr <= to_integer(unsigned(R.curInst(aRdAddrRange)));
+            NxRAMCtrl.regfileWrData <= vRegfile.writeData;
+        else
+            NxRAMCtrl.regfileWrAddr <= RAMCtrl.regfileWrAddr;
+            NxRAMCtrl.regfileWrData <= RAMCtrl.regfileWrData;
         end if;
 
         -------------------------------------------------------------------------------
-        -- Multiplexer
+        -- PC
         -------------------------------------------------------------------------------   
-        -- Select next PC
-        if vRegWritedataSrc = cRegWritedataPCSrc or vPCInc = '1' then
-            NxR.curPC <= vALUValues.aluRes;
-        else
-            NxR.curPC <= R.curPC;
-        end if;
-
-        -- Mux CsrWriteData
-        if R.curInst(14) = cCsrDataReg then
-            NxR.csrWriteData <= vRegReadData1;
-        else
-            NxR.csrWriteData <= std_ulogic_vector(resize(unsigned(R.curInst(19 downto 15)), cBitWidth));
+        -- write next pc if enabled
+        if vPCEN = '1' then
+            NxR.curPC <= vALU.aluRes;
         end if;
 
     end process;

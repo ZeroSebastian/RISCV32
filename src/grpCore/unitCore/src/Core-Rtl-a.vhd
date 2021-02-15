@@ -4,7 +4,7 @@
 -------------------------------------------------------------------------------
 -- File       : Core-Rtl-a.vhd
 -- Author     : Binder Alexander
--- Date		  : 11.11.2019
+-- Date       : 11.11.2019
 -- Revisions  : V1, 11.11.2019 -ba
 -------------------------------------------------------------------------------
 -- Description:
@@ -15,9 +15,14 @@ architecture rtl of Core is
     -- common registers
     signal R, NxR : aRegSet;
 
-    -- Register File
-    signal RegFile, NxRegFile : aRegFile;
-    constant cInitValRegFile  : aRegFile := (others => (others => '0'));
+    -- RAM data
+    constant cInitRAM         : aRAM     := (others => (others => '0'));
+    signal RAM                : aRAM     := cInitRAM;
+    signal RAMCtrl, NxRAMCtrl : aRAMCtrl := cRAMCtrlDefault;
+    attribute ramstyle        : string;
+    attribute ramstyle of RAM : signal is "MLAB";
+
+    signal csr : aCsrSet := (others => (others => '0'));
 
     -- bussignals for remapping
     signal i_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
@@ -33,18 +38,37 @@ begin
     d_readdata_remapped <= swapEndianess(to_stdULogicVector(avm_d_readdata));
     avm_d_writedata     <= to_StdLogicVector(swapEndianess(d_writedata_remapped));
 
-    Registers : process(csi_clk, rsi_reset_n)
+    RAMData : process(csi_clk) is
     begin
-        if (rsi_reset_n = not ('1')) then
-            R       <= cInitValRegSet;
-            RegFile <= cInitValRegFile;
-        elsif (rising_edge(csi_clk)) then
-            R       <= NxR;
-            RegFile <= NxRegFile;
+        if (rising_edge(csi_clk)) then
+            -- write
+            RAM(NxRAMCtrl.regfileWrAddr) <= NxRAMCtrl.regfileWrData;
+            -- read
+            RAMCtrl.rs1Data              <= RAM(NxRAMCtrl.regfileRs1Addr);
+            RAMCtrl.rs2Data              <= RAM(NxRAMCtrl.regfileRs2Addr);
+
         end if;
     end process;
 
-    Comb : process(R, RegFile, i_readdata_remapped, d_readdata_remapped)
+    Registers : process(csi_clk, rsi_reset_n)
+    begin
+        if (rsi_reset_n = not ('1')) then
+            R   <= cInitValRegSet;
+            csr <= (others => (others => '0'));
+        elsif (rising_edge(csi_clk)) then
+            R <= NxR;
+
+            -- read csr
+            if mapCsrAddrValid(RAMCtrl.csrAddrRemapped) then
+                -- write csr
+                csr(NxRAMCtrl.csrAddrRemapped) <= NxRAMCtrl.csrWrData;
+                RAMCtrl.csrReadData            <= csr(NxRAMCtrl.csrAddrRemapped);
+            end if;
+
+        end if;
+    end process;
+
+    Comb : process(R, RAMCtrl, i_readdata_remapped, d_readdata_remapped)
         variable vRegfile  : aRegfileValues;
         variable vImm      : aImm;
         variable vALU      : aALUValues;
@@ -56,7 +80,7 @@ begin
     begin
         -- default signal values
         NxR       <= R;
-        NxRegFile <= RegFile;
+        NxRAMCtrl <= RAMCtrl;
 
         -- default variable values
         vRegfile  := cRegfileValuesDefault;
@@ -107,6 +131,7 @@ begin
                                 NxR.ctrlState <= Trap;
                             when others =>
                                 NxR.ctrlState <= CalculateSys;
+                                vCSR.read     := '1';
                         end case;
 
                     when others =>
@@ -241,22 +266,25 @@ begin
                 case R.curInst(aFunct3Range) is
                     when cSysRW | cSysRWI =>
                         if R.curInst(11 downto 7) /= "00000" then
-                            vCSR.read := '1';
+                            vCSR.read            := '1';
+                            vRegfile.writeEnable := '1';
                         end if;
+                        vCSR.writeMode := cModeWrite;
                     when cSysRS | cSysRSI =>
-                        vCSR.read := '1';
+                        vCSR.read            := '1';
+                        vRegfile.writeEnable := '1';
                         if R.curInst(19 downto 15) /= "00000" then
                             vCSR.writeMode := cModeSet;
                         end if;
                     when cSysRC | cSysRCI =>
-                        vCSR.read := '1';
+                        vCSR.read            := '1';
+                        vRegfile.writeEnable := '1';
                         if R.curInst(19 downto 15) /= "00000" then
                             vCSR.writeMode := cModeClear;
                         end if;
                     when others => null;
                 end case;
                 vRegfile.writeDataSrc := cRegWritedataCSRSrc;
-                vRegfile.writeEnable  := '1';
                 vInstrMem.read        := '1';
                 NxR.ctrlState         <= Fetch;
 
@@ -279,8 +307,16 @@ begin
         -- Register File - Read Stage
         -------------------------------------------------------------------------------
         -- read registers from regfile
-        vRegfile.readData1 := RegFile(to_integer(unsigned(R.curInst(aRs1AddrRange))));
-        vRegfile.readData2 := RegFile(to_integer(unsigned(R.curInst(aRs2AddrRange))));
+        --vRegfile.readData1 := RegFile(to_integer(unsigned(R.curInst(aRs1AddrRange))));
+        --vRegfile.readData2 := RegFile(to_integer(unsigned(R.curInst(aRs2AddrRange))));
+
+        if (R.ctrlState = ReadReg) then
+            NxRAMCtrl.regfileRs1Addr <= to_integer(unsigned(R.curInst(aRs1AddrRange)));
+            NxRAMCtrl.regfileRs2Addr <= to_integer(unsigned(R.curInst(aRs2AddrRange)));
+        end if;
+
+        vRegfile.readData1 := RAMCtrl.rs1Data;
+        vRegfile.readData2 := RAMCtrl.rs2Data;
 
         -------------------------------------------------------------------------------
         -- Immediate Extension
@@ -493,7 +529,7 @@ begin
         avm_d_address        <= to_StdLogicVector(vALU.aluRes);
         avm_d_byteenable     <= to_StdLogicVector(vDataMem.byteenable);
         avm_d_write          <= std_logic(vDataMem.write);
-        d_writedata_remapped <= (vDataMem.writeData);
+        d_writedata_remapped <= vDataMem.writeData;
         avm_d_read           <= std_logic(vDataMem.read);
 
         -------------------------------------------------------------------------------
@@ -509,7 +545,11 @@ begin
         end case;
 
         if vRegfile.writeEnable = '1' and R.curInst(aRdAddrRange) /= "00000" then
-            NxRegFile(to_integer(unsigned(R.curInst(aRdAddrRange)))) <= vRegfile.writeData;
+            NxRAMCtrl.regfileWrAddr <= to_integer(unsigned(R.curInst(aRdAddrRange)));
+            NxRAMCtrl.regfileWrData <= vRegfile.writeData;
+        else
+            NxRAMCtrl.regfileWrAddr <= RAMCtrl.regfileWrAddr;
+            NxRAMCtrl.regfileWrData <= RAMCtrl.regfileWrData;
         end if;
 
         -------------------------------------------------------------------------------

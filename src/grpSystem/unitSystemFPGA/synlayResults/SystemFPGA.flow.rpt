@@ -1,5 +1,5 @@
 Flow report for SystemFPGA
-Sat Feb 13 13:25:42 2021
+Mon Feb 15 17:21:00 2021
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,15 +40,15 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Sat Feb 13 13:25:42 2021       ;
+; Flow Status                     ; Successful - Mon Feb 15 17:21:00 2021       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; SystemFPGA                                  ;
 ; Top-level Entity Name           ; SystemFPGA                                  ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSEMA5F31C6                                ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 2,880 / 32,070 ( 9 % )                      ;
-; Total registers                 ; 2366                                        ;
+; Logic utilization (in ALMs)     ; 2,352 / 32,070 ( 7 % )                      ;
+; Total registers                 ; 1399                                        ;
 ; Total pins                      ; 22 / 457 ( 5 % )                            ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 262,144 / 4,065,280 ( 6 % )                 ;
@@ -67,7 +67,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 02/13/2021 13:21:33 ;
+; Start date & time ; 02/15/2021 17:17:13 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; SystemFPGA          ;
 +-------------------+---------------------+
@@ -80,7 +80,7 @@ refer to the applicable agreement for further details.
 +---------------------------------------+------------------------------------------------------------------------------------+---------------------+--------------+----------------+
 ; ALLOW_REGISTER_DUPLICATION            ; Off                                                                                ; On                  ; --           ; --             ;
 ; ALLOW_REGISTER_RETIMING               ; Off                                                                                ; On                  ; --           ; --             ;
-; COMPILER_SIGNATURE_ID                 ; 167929431472211.161321889213148                                                    ; --                  ; --           ; --             ;
+; COMPILER_SIGNATURE_ID                 ; 167929431472211.161340583301224                                                    ; --                  ; --           ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT                ; Vhdl                                                                               ; --                  ; --           ; eda_simulation ;
 ; EDA_SIMULATION_TOOL                   ; ModelSim (VHDL)                                                                    ; <None>              ; --           ; --             ;
 ; EDA_TIME_SCALE                        ; 1 ps                                                                               ; --                  ; --           ; eda_simulation ;
@@ -107,7 +107,7 @@ refer to the applicable agreement for further details.
 ; ROUTER_TIMING_OPTIMIZATION_LEVEL      ; MAXIMUM                                                                            ; Normal              ; --           ; --             ;
 ; SLD_FILE                              ; X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/riscv_system.regmap         ; --                  ; --           ; --             ;
 ; SLD_FILE                              ; X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/riscv_system.debuginfo      ; --                  ; --           ; --             ;
-; SLD_INFO                              ; QSYS_NAME riscv_system HAS_SOPCINFO 1 GENERATION_ID 1613218857                     ; --                  ; riscv_system ; --             ;
+; SLD_INFO                              ; QSYS_NAME riscv_system HAS_SOPCINFO 1 GENERATION_ID 1613405752                     ; --                  ; riscv_system ; --             ;
 ; SOPCINFO_FILE                         ; X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/../../riscv_system.sopcinfo ; --                  ; --           ; --             ;
 ; SYNTHESIS_ONLY_QIP                    ; On                                                                                 ; --                  ; --           ; --             ;
 ; USE_DLL_FREQUENCY_FOR_DQS_DELAY_CHAIN ; On                                                                                 ; Off                 ; --           ; --             ;
@@ -123,12 +123,12 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:25     ; 1.0                     ; 4958 MB             ; 00:00:36                           ;
-; Fitter               ; 00:03:14     ; 1.2                     ; 6835 MB             ; 00:14:19                           ;
-; Assembler            ; 00:00:10     ; 1.0                     ; 4897 MB             ; 00:00:10                           ;
-; Timing Analyzer      ; 00:00:11     ; 3.0                     ; 5283 MB             ; 00:00:29                           ;
-; EDA Netlist Writer   ; 00:00:03     ; 1.0                     ; 4826 MB             ; 00:00:03                           ;
-; Total                ; 00:04:03     ; --                      ; --                  ; 00:15:37                           ;
+; Analysis & Synthesis ; 00:00:20     ; 1.0                     ; 4956 MB             ; 00:00:30                           ;
+; Fitter               ; 00:02:59     ; 1.2                     ; 7250 MB             ; 00:11:39                           ;
+; Assembler            ; 00:00:09     ; 1.0                     ; 4885 MB             ; 00:00:09                           ;
+; Timing Analyzer      ; 00:00:11     ; 2.4                     ; 5483 MB             ; 00:00:22                           ;
+; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 4805 MB             ; 00:00:02                           ;
+; Total                ; 00:03:41     ; --                      ; --                  ; 00:12:42                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

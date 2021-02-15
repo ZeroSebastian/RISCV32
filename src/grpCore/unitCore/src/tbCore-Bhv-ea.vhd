@@ -94,7 +94,7 @@ ReadROM: process is
     type aTestMode is (SingleFile, FullISA);
     constant testMode : aTestMode := FullISA;
     
-    constant cNoTests : integer := 35;
+    constant cNoTests : integer := 36;
     
     variable vTestFiles : aTestFiles(0 to cNoTests - 1) := (
     new string'("rv32ui-p-add.bin"),
@@ -131,8 +131,8 @@ ReadROM: process is
     new string'("rv32ui-p-sub.bin"),
     new string'("rv32ui-p-sw.bin"),
     new string'("rv32ui-p-xor.bin"),
-    new string'("rv32ui-p-xori.bin")
-    --new string'("rv32ui-p-srl.bin")
+    new string'("rv32ui-p-xori.bin"),
+    new string'("rv32mi-p-csr.bin")
     );
     
     constant cPCValues : aPCValues (0 to cNoTests - 1) := (
@@ -170,7 +170,8 @@ ReadROM: process is
         x"000005D4",
         x"00000598",
         x"000005D4",
-        x"000002F8"
+        x"000002F8",
+        x"00000240"
     );
     
 begin
@@ -212,10 +213,6 @@ begin
                 severity failure;
             end if;
             
-            if Memory(to_integer(unsigned(instAddress)) + 4) /= x"00" then
-                report "Test produced an error: " & "knalle"
-                severity failure;
-            end if;
 
             test_finished_ack <= '1';
             wait until test_finished = '0';

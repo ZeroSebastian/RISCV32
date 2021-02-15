@@ -1,5 +1,5 @@
 Timing Analyzer report for SystemFPGA
-Sat Feb 13 13:25:38 2021
+Mon Feb 15 17:20:57 2021
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -102,16 +102,16 @@ refer to the applicable agreement for further details.
 ; Number detected on machine ; 12          ;
 ; Maximum allowed            ; 6           ;
 ;                            ;             ;
-; Average used               ; 3.01        ;
+; Average used               ; 2.36        ;
 ; Maximum used               ; 6           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  44.0%      ;
-;     Processor 3            ;  43.1%      ;
-;     Processor 4            ;  42.9%      ;
-;     Processor 5            ;  35.4%      ;
-;     Processor 6            ;  35.4%      ;
+;     Processor 2            ;  29.3%      ;
+;     Processor 3            ;  28.6%      ;
+;     Processor 4            ;  28.4%      ;
+;     Processor 5            ;  24.9%      ;
+;     Processor 6            ;  24.9%      ;
 +----------------------------+-------------+
 
 
@@ -120,8 +120,8 @@ refer to the applicable agreement for further details.
 +------------------------------------------------------------------+--------+--------------------------+
 ; SDC File Path                                                    ; Status ; Read at                  ;
 +------------------------------------------------------------------+--------+--------------------------+
-; ../riscv_system/synthesis/submodules/altera_reset_controller.sdc ; OK     ; Sat Feb 13 13:25:30 2021 ;
-; ../../../fhlow/synlayQuartus/TimingConstraints.tcl               ; OK     ; Sat Feb 13 13:25:30 2021 ;
+; ../riscv_system/synthesis/submodules/altera_reset_controller.sdc ; OK     ; Mon Feb 15 17:20:48 2021 ;
+; ../../../fhlow/synlayQuartus/TimingConstraints.tcl               ; OK     ; Mon Feb 15 17:20:48 2021 ;
 +------------------------------------------------------------------+--------+--------------------------+
 
 
@@ -139,7 +139,7 @@ refer to the applicable agreement for further details.
 +-----------+-----------------+------------+------+
 ; Fmax      ; Restricted Fmax ; Clock Name ; Note ;
 +-----------+-----------------+------------+------+
-; 79.52 MHz ; 79.52 MHz       ; CLOCK_50   ;      ;
+; 85.46 MHz ; 85.46 MHz       ; CLOCK_50   ;      ;
 +-----------+-----------------+------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
@@ -155,7 +155,7 @@ HTML report is unavailable in plain text report export.
 +----------+-------+------------------+
 ; Clock    ; Slack ; End Point TNS    ;
 +----------+-------+------------------+
-; CLOCK_50 ; 7.424 ; 0.000            ;
+; CLOCK_50 ; 8.299 ; 0.000            ;
 +----------+-------+------------------+
 
 
@@ -164,7 +164,7 @@ HTML report is unavailable in plain text report export.
 +----------+-------+-----------------+
 ; Clock    ; Slack ; End Point TNS   ;
 +----------+-------+-----------------+
-; CLOCK_50 ; 0.374 ; 0.000           ;
+; CLOCK_50 ; 0.371 ; 0.000           ;
 +----------+-------+-----------------+
 
 
@@ -173,7 +173,7 @@ HTML report is unavailable in plain text report export.
 +----------+--------+--------------------+
 ; Clock    ; Slack  ; End Point TNS      ;
 +----------+--------+--------------------+
-; CLOCK_50 ; 15.523 ; 0.000              ;
+; CLOCK_50 ; 15.583 ; 0.000              ;
 +----------+--------+--------------------+
 
 
@@ -182,7 +182,7 @@ HTML report is unavailable in plain text report export.
 +----------+-------+--------------------+
 ; Clock    ; Slack ; End Point TNS      ;
 +----------+-------+--------------------+
-; CLOCK_50 ; 1.117 ; 0.000              ;
+; CLOCK_50 ; 0.977 ; 0.000              ;
 +----------+-------+--------------------+
 
 
@@ -191,7 +191,7 @@ HTML report is unavailable in plain text report export.
 +----------+-------+--------------------------------+
 ; Clock    ; Slack ; End Point TNS                  ;
 +----------+-------+--------------------------------+
-; CLOCK_50 ; 8.873 ; 0.000                          ;
+; CLOCK_50 ; 8.875 ; 0.000                          ;
 +----------+-------+--------------------------------+
 
 
@@ -202,18 +202,18 @@ The design MTBF is not calculated because there are no specified synchronizers i
 Number of Synchronizer Chains Found: 9
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-Worst Case Available Settling Time: 31.198 ns
+Worst Case Available Settling Time: 33.606 ns
 
 
 
 
-+------------------------------------------------+
-; Slow 1100mV 0C Model Fmax Summary              ;
-+----------+-----------------+------------+------+
-; Fmax     ; Restricted Fmax ; Clock Name ; Note ;
-+----------+-----------------+------------+------+
-; 83.6 MHz ; 83.6 MHz        ; CLOCK_50   ;      ;
-+----------+-----------------+------------+------+
++-------------------------------------------------+
+; Slow 1100mV 0C Model Fmax Summary               ;
++-----------+-----------------+------------+------+
+; Fmax      ; Restricted Fmax ; Clock Name ; Note ;
++-----------+-----------------+------------+------+
+; 87.89 MHz ; 87.89 MHz       ; CLOCK_50   ;      ;
++-----------+-----------------+------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
 
@@ -222,7 +222,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------+-------+-----------------+
 ; Clock    ; Slack ; End Point TNS   ;
 +----------+-------+-----------------+
-; CLOCK_50 ; 8.038 ; 0.000           ;
+; CLOCK_50 ; 8.622 ; 0.000           ;
 +----------+-------+-----------------+
 
 
@@ -231,7 +231,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------+-------+----------------+
 ; Clock    ; Slack ; End Point TNS  ;
 +----------+-------+----------------+
-; CLOCK_50 ; 0.388 ; 0.000          ;
+; CLOCK_50 ; 0.367 ; 0.000          ;
 +----------+-------+----------------+
 
 
@@ -240,7 +240,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------+--------+-------------------+
 ; Clock    ; Slack  ; End Point TNS     ;
 +----------+--------+-------------------+
-; CLOCK_50 ; 15.663 ; 0.000             ;
+; CLOCK_50 ; 15.724 ; 0.000             ;
 +----------+--------+-------------------+
 
 
@@ -249,7 +249,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------+-------+-------------------+
 ; Clock    ; Slack ; End Point TNS     ;
 +----------+-------+-------------------+
-; CLOCK_50 ; 1.037 ; 0.000             ;
+; CLOCK_50 ; 0.904 ; 0.000             ;
 +----------+-------+-------------------+
 
 
@@ -258,7 +258,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------+-------+-------------------------------+
 ; Clock    ; Slack ; End Point TNS                 ;
 +----------+-------+-------------------------------+
-; CLOCK_50 ; 8.915 ; 0.000                         ;
+; CLOCK_50 ; 8.910 ; 0.000                         ;
 +----------+-------+-------------------------------+
 
 
@@ -269,7 +269,7 @@ The design MTBF is not calculated because there are no specified synchronizers i
 Number of Synchronizer Chains Found: 9
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-Worst Case Available Settling Time: 31.391 ns
+Worst Case Available Settling Time: 33.665 ns
 
 
 
@@ -279,7 +279,7 @@ Worst Case Available Settling Time: 31.391 ns
 +----------+--------+-----------------+
 ; Clock    ; Slack  ; End Point TNS   ;
 +----------+--------+-----------------+
-; CLOCK_50 ; 11.774 ; 0.000           ;
+; CLOCK_50 ; 12.920 ; 0.000           ;
 +----------+--------+-----------------+
 
 
@@ -297,7 +297,7 @@ Worst Case Available Settling Time: 31.391 ns
 +----------+--------+--------------------+
 ; Clock    ; Slack  ; End Point TNS      ;
 +----------+--------+--------------------+
-; CLOCK_50 ; 16.995 ; 0.000              ;
+; CLOCK_50 ; 16.953 ; 0.000              ;
 +----------+--------+--------------------+
 
 
@@ -306,7 +306,7 @@ Worst Case Available Settling Time: 31.391 ns
 +----------+-------+--------------------+
 ; Clock    ; Slack ; End Point TNS      ;
 +----------+-------+--------------------+
-; CLOCK_50 ; 0.629 ; 0.000              ;
+; CLOCK_50 ; 0.581 ; 0.000              ;
 +----------+-------+--------------------+
 
 
@@ -315,7 +315,7 @@ Worst Case Available Settling Time: 31.391 ns
 +----------+-------+--------------------------------+
 ; Clock    ; Slack ; End Point TNS                  ;
 +----------+-------+--------------------------------+
-; CLOCK_50 ; 8.478 ; 0.000                          ;
+; CLOCK_50 ; 8.479 ; 0.000                          ;
 +----------+-------+--------------------------------+
 
 
@@ -326,7 +326,7 @@ The design MTBF is not calculated because there are no specified synchronizers i
 Number of Synchronizer Chains Found: 9
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-Worst Case Available Settling Time: 34.313 ns
+Worst Case Available Settling Time: 36.114 ns
 
 
 
@@ -336,7 +336,7 @@ Worst Case Available Settling Time: 34.313 ns
 +----------+--------+----------------+
 ; Clock    ; Slack  ; End Point TNS  ;
 +----------+--------+----------------+
-; CLOCK_50 ; 12.740 ; 0.000          ;
+; CLOCK_50 ; 13.647 ; 0.000          ;
 +----------+--------+----------------+
 
 
@@ -354,7 +354,7 @@ Worst Case Available Settling Time: 34.313 ns
 +----------+--------+-------------------+
 ; Clock    ; Slack  ; End Point TNS     ;
 +----------+--------+-------------------+
-; CLOCK_50 ; 17.332 ; 0.000             ;
+; CLOCK_50 ; 17.306 ; 0.000             ;
 +----------+--------+-------------------+
 
 
@@ -363,7 +363,7 @@ Worst Case Available Settling Time: 34.313 ns
 +----------+-------+-------------------+
 ; Clock    ; Slack ; End Point TNS     ;
 +----------+-------+-------------------+
-; CLOCK_50 ; 0.566 ; 0.000             ;
+; CLOCK_50 ; 0.503 ; 0.000             ;
 +----------+-------+-------------------+
 
 
@@ -372,7 +372,7 @@ Worst Case Available Settling Time: 34.313 ns
 +----------+-------+-------------------------------+
 ; Clock    ; Slack ; End Point TNS                 ;
 +----------+-------+-------------------------------+
-; CLOCK_50 ; 8.432 ; 0.000                         ;
+; CLOCK_50 ; 8.434 ; 0.000                         ;
 +----------+-------+-------------------------------+
 
 
@@ -383,7 +383,7 @@ The design MTBF is not calculated because there are no specified synchronizers i
 Number of Synchronizer Chains Found: 9
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-Worst Case Available Settling Time: 34.875 ns
+Worst Case Available Settling Time: 36.415 ns
 
 
 
@@ -393,8 +393,8 @@ Worst Case Available Settling Time: 34.875 ns
 +------------------+-------+-------+----------+---------+---------------------+
 ; Clock            ; Setup ; Hold  ; Recovery ; Removal ; Minimum Pulse Width ;
 +------------------+-------+-------+----------+---------+---------------------+
-; Worst-case Slack ; 7.424 ; 0.171 ; 15.523   ; 0.566   ; 8.432               ;
-;  CLOCK_50        ; 7.424 ; 0.171 ; 15.523   ; 0.566   ; 8.432               ;
+; Worst-case Slack ; 8.299 ; 0.171 ; 15.583   ; 0.503   ; 8.434               ;
+;  CLOCK_50        ; 8.299 ; 0.171 ; 15.583   ; 0.503   ; 8.434               ;
 ; Design-wide TNS  ; 0.0   ; 0.0   ; 0.0      ; 0.0     ; 0.0                 ;
 ;  CLOCK_50        ; 0.000 ; 0.000 ; 0.000    ; 0.000   ; 0.000               ;
 +------------------+-------+-------+----------+---------+---------------------+
@@ -515,7 +515,7 @@ Worst Case Available Settling Time: 34.875 ns
 +------------+----------+----------+----------+----------+----------+
 ; From Clock ; To Clock ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +------------+----------+----------+----------+----------+----------+
-; CLOCK_50   ; CLOCK_50 ; 35423307 ; 0        ; 0        ; 0        ;
+; CLOCK_50   ; CLOCK_50 ; 17764394 ; 0        ; 0        ; 0        ;
 +------------+----------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -525,7 +525,7 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +------------+----------+----------+----------+----------+----------+
 ; From Clock ; To Clock ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +------------+----------+----------+----------+----------+----------+
-; CLOCK_50   ; CLOCK_50 ; 35423307 ; 0        ; 0        ; 0        ;
+; CLOCK_50   ; CLOCK_50 ; 17764394 ; 0        ; 0        ; 0        ;
 +------------+----------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -535,7 +535,7 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +------------+----------+----------+----------+----------+----------+
 ; From Clock ; To Clock ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +------------+----------+----------+----------+----------+----------+
-; CLOCK_50   ; CLOCK_50 ; 2342     ; 0        ; 0        ; 0        ;
+; CLOCK_50   ; CLOCK_50 ; 1311     ; 0        ; 0        ; 0        ;
 +------------+----------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -545,7 +545,7 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +------------+----------+----------+----------+----------+----------+
 ; From Clock ; To Clock ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +------------+----------+----------+----------+----------+----------+
-; CLOCK_50   ; CLOCK_50 ; 2342     ; 0        ; 0        ; 0        ;
+; CLOCK_50   ; CLOCK_50 ; 1311     ; 0        ; 0        ; 0        ;
 +------------+----------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -655,7 +655,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime Timing Analyzer
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Sat Feb 13 13:25:27 2021
+    Info: Processing started: Mon Feb 15 17:20:46 2021
 Info: Command: quartus_sta SystemFPGA -c SystemFPGA
 Info: qsta_default_script.tcl version: #1
 Info (20030): Parallel compilation is enabled and will use 6 of the 6 processors detected
@@ -664,133 +664,393 @@ Info (21077): High junction temperature is 85 degrees C
 Info (332104): Reading SDC File: '../riscv_system/synthesis/submodules/altera_reset_controller.sdc'
 Info (332104): Reading SDC File: '../../../fhlow/synlayQuartus/TimingConstraints.tcl'
 Info (332151): Clock uncertainty is not calculated until you update the timing netlist.
+Info (332097): The following timing edges are non-unate.  The Timing Analyzer will assume pos-unate behavior for these edges in the clock network.
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama0~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama0~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama10~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama10~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama11~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama11~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama12~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama12~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama13~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama13~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama14~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama14~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama15~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama15~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama16~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama16~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama17~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama17~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama18~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama18~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama19~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama19~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama1~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama1~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama20~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama20~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama21~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama21~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama22~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama22~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama23~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama23~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama24~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama24~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama25~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama25~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama26~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama26~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama27~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama27~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama28~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama28~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama29~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama29~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama2~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama2~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama30~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama30~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama31~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama31~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama3~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama3~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama4~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama4~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama5~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama5~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama6~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama6~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama7~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama7~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama8~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama8~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama9~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama9~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama0~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama0~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama10~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama10~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama11~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama11~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama12~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama12~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama13~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama13~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama14~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama14~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama15~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama15~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama16~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama16~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama17~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama17~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama18~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama18~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama19~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama19~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama1~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama1~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama20~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama20~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama21~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama21~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama22~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama22~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama23~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama23~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama24~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama24~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama25~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama25~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama26~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama26~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama27~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama27~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama28~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama28~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama29~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama29~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama2~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama2~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama30~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama30~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama31~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama31~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama3~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama3~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama4~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama4~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama5~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama5~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama6~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama6~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama7~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama7~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama8~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama8~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama9~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama9~MEMORYREGOUT
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Info: Found TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
 Info: Analyzing Slow 1100mV 85C Model
-Info (332146): Worst-case setup slack is 7.424
+Info (332146): Worst-case setup slack is 8.299
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     7.424               0.000 CLOCK_50 
-Info (332146): Worst-case hold slack is 0.374
+    Info (332119):     8.299               0.000 CLOCK_50 
+Info (332146): Worst-case hold slack is 0.371
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.374               0.000 CLOCK_50 
-Info (332146): Worst-case recovery slack is 15.523
+    Info (332119):     0.371               0.000 CLOCK_50 
+Info (332146): Worst-case recovery slack is 15.583
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    15.523               0.000 CLOCK_50 
-Info (332146): Worst-case removal slack is 1.117
+    Info (332119):    15.583               0.000 CLOCK_50 
+Info (332146): Worst-case removal slack is 0.977
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     1.117               0.000 CLOCK_50 
-Info (332146): Worst-case minimum pulse width slack is 8.873
+    Info (332119):     0.977               0.000 CLOCK_50 
+Info (332146): Worst-case minimum pulse width slack is 8.875
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     8.873               0.000 CLOCK_50 
+    Info (332119):     8.875               0.000 CLOCK_50 
 Info (332114): Report Metastability: Found 9 synchronizer chains.
     Info (332114): The design MTBF is not calculated because there are no specified synchronizers in the design.
     Info (332114): Number of Synchronizer Chains Found: 9
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-    Info (332114): Worst Case Available Settling Time: 31.198 ns
+    Info (332114): Worst Case Available Settling Time: 33.606 ns
     Info (332114): 
 Info: Analyzing Slow 1100mV 0C Model
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
+Info (332097): The following timing edges are non-unate.  The Timing Analyzer will assume pos-unate behavior for these edges in the clock network.
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama0~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama0~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama10~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama10~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama11~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama11~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama12~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama12~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama13~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama13~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama14~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama14~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama15~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama15~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama16~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama16~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama17~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama17~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama18~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama18~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama19~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama19~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama1~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama1~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama20~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama20~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama21~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama21~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama22~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama22~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama23~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama23~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama24~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama24~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama25~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama25~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama26~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama26~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama27~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama27~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama28~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama28~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama29~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama29~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama2~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama2~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama30~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama30~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama31~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama31~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama3~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama3~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama4~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama4~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama5~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama5~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama6~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama6~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama7~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama7~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama8~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama8~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama9~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama9~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama0~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama0~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama10~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama10~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama11~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama11~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama12~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama12~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama13~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama13~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama14~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama14~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama15~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama15~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama16~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama16~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama17~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama17~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama18~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama18~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama19~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama19~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama1~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama1~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama20~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama20~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama21~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama21~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama22~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama22~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama23~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama23~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama24~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama24~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama25~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama25~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama26~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama26~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama27~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama27~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama28~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama28~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama29~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama29~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama2~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama2~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama30~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama30~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama31~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama31~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama3~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama3~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama4~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama4~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama5~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama5~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama6~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama6~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama7~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama7~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama8~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama8~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama9~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama9~MEMORYREGOUT
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
-Info (332146): Worst-case setup slack is 8.038
+Info (332146): Worst-case setup slack is 8.622
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     8.038               0.000 CLOCK_50 
-Info (332146): Worst-case hold slack is 0.388
+    Info (332119):     8.622               0.000 CLOCK_50 
+Info (332146): Worst-case hold slack is 0.367
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.388               0.000 CLOCK_50 
-Info (332146): Worst-case recovery slack is 15.663
+    Info (332119):     0.367               0.000 CLOCK_50 
+Info (332146): Worst-case recovery slack is 15.724
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    15.663               0.000 CLOCK_50 
-Info (332146): Worst-case removal slack is 1.037
+    Info (332119):    15.724               0.000 CLOCK_50 
+Info (332146): Worst-case removal slack is 0.904
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     1.037               0.000 CLOCK_50 
-Info (332146): Worst-case minimum pulse width slack is 8.915
+    Info (332119):     0.904               0.000 CLOCK_50 
+Info (332146): Worst-case minimum pulse width slack is 8.910
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     8.915               0.000 CLOCK_50 
+    Info (332119):     8.910               0.000 CLOCK_50 
 Info (332114): Report Metastability: Found 9 synchronizer chains.
     Info (332114): The design MTBF is not calculated because there are no specified synchronizers in the design.
     Info (332114): Number of Synchronizer Chains Found: 9
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-    Info (332114): Worst Case Available Settling Time: 31.391 ns
+    Info (332114): Worst Case Available Settling Time: 33.665 ns
     Info (332114): 
 Info: Analyzing Fast 1100mV 85C Model
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
+Info (332097): The following timing edges are non-unate.  The Timing Analyzer will assume pos-unate behavior for these edges in the clock network.
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama0~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama0~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama10~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama10~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama11~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama11~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama12~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama12~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama13~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama13~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama14~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama14~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama15~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama15~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama16~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama16~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama17~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama17~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama18~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama18~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama19~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama19~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama1~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama1~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama20~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama20~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama21~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama21~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama22~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama22~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama23~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama23~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama24~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama24~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama25~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama25~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama26~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama26~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama27~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama27~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama28~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama28~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama29~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama29~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama2~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama2~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama30~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama30~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama31~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama31~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama3~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama3~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama4~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama4~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama5~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama5~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama6~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama6~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama7~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama7~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama8~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama8~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama9~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama9~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama0~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama0~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama10~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama10~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama11~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama11~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama12~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama12~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama13~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama13~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama14~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama14~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama15~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama15~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama16~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama16~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama17~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama17~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama18~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama18~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama19~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama19~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama1~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama1~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama20~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama20~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama21~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama21~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama22~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama22~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama23~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama23~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama24~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama24~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama25~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama25~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama26~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama26~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama27~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama27~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama28~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama28~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama29~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama29~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama2~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama2~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama30~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama30~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama31~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama31~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama3~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama3~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama4~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama4~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama5~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama5~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama6~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama6~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama7~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama7~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama8~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama8~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama9~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama9~MEMORYREGOUT
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
-Info (332146): Worst-case setup slack is 11.774
+Info (332146): Worst-case setup slack is 12.920
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    11.774               0.000 CLOCK_50 
+    Info (332119):    12.920               0.000 CLOCK_50 
 Info (332146): Worst-case hold slack is 0.181
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
     Info (332119):     0.181               0.000 CLOCK_50 
-Info (332146): Worst-case recovery slack is 16.995
+Info (332146): Worst-case recovery slack is 16.953
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    16.995               0.000 CLOCK_50 
-Info (332146): Worst-case removal slack is 0.629
+    Info (332119):    16.953               0.000 CLOCK_50 
+Info (332146): Worst-case removal slack is 0.581
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.629               0.000 CLOCK_50 
-Info (332146): Worst-case minimum pulse width slack is 8.478
+    Info (332119):     0.581               0.000 CLOCK_50 
+Info (332146): Worst-case minimum pulse width slack is 8.479
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     8.478               0.000 CLOCK_50 
+    Info (332119):     8.479               0.000 CLOCK_50 
 Info (332114): Report Metastability: Found 9 synchronizer chains.
     Info (332114): The design MTBF is not calculated because there are no specified synchronizers in the design.
     Info (332114): Number of Synchronizer Chains Found: 9
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-    Info (332114): Worst Case Available Settling Time: 34.313 ns
+    Info (332114): Worst Case Available Settling Time: 36.114 ns
     Info (332114): 
 Info: Analyzing Fast 1100mV 0C Model
+Info (332097): The following timing edges are non-unate.  The Timing Analyzer will assume pos-unate behavior for these edges in the clock network.
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama0~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama0~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama10~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama10~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama11~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama11~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama12~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama12~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama13~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama13~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama14~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama14~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama15~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama15~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama16~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama16~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama17~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama17~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama18~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama18~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama19~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama19~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama1~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama1~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama20~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama20~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama21~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama21~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama22~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama22~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama23~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama23~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama24~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama24~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama25~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama25~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama26~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama26~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama27~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama27~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama28~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama28~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama29~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama29~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama2~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama2~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama30~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama30~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama31~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama31~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama3~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama3~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama4~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama4~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama5~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama5~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama6~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama6~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama7~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama7~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama8~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama8~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama9~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_0|dpram_f0t1:auto_generated|lutrama9~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama0~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama0~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama10~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama10~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama11~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama11~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama12~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama12~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama13~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama13~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama14~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama14~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama15~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama15~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama16~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama16~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama17~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama17~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama18~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama18~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama19~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama19~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama1~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama1~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama20~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama20~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama21~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama21~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama22~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama22~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama23~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama23~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama24~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama24~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama25~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama25~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama26~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama26~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama27~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama27~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama28~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama28~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama29~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama29~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama2~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama2~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama30~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama30~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama31~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama31~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama3~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama3~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama4~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama4~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama5~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama5~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama6~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama6~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama7~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama7~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama8~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama8~MEMORYREGOUT
+    Info (332098): From: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama9~CLKMUX_0  to: riscv_system:u0|Core:rv32ui_fsmd_0|altdpram:RegFile_rtl_1|dpram_f0t1:auto_generated|lutrama9~MEMORYREGOUT
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
-Info (332146): Worst-case setup slack is 12.740
+Info (332146): Worst-case setup slack is 13.647
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    12.740               0.000 CLOCK_50 
+    Info (332119):    13.647               0.000 CLOCK_50 
 Info (332146): Worst-case hold slack is 0.171
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
     Info (332119):     0.171               0.000 CLOCK_50 
-Info (332146): Worst-case recovery slack is 17.332
+Info (332146): Worst-case recovery slack is 17.306
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    17.332               0.000 CLOCK_50 
-Info (332146): Worst-case removal slack is 0.566
+    Info (332119):    17.306               0.000 CLOCK_50 
+Info (332146): Worst-case removal slack is 0.503
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.566               0.000 CLOCK_50 
-Info (332146): Worst-case minimum pulse width slack is 8.432
+    Info (332119):     0.503               0.000 CLOCK_50 
+Info (332146): Worst-case minimum pulse width slack is 8.434
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     8.432               0.000 CLOCK_50 
+    Info (332119):     8.434               0.000 CLOCK_50 
 Info (332114): Report Metastability: Found 9 synchronizer chains.
     Info (332114): The design MTBF is not calculated because there are no specified synchronizers in the design.
     Info (332114): Number of Synchronizer Chains Found: 9
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-    Info (332114): Worst Case Available Settling Time: 34.875 ns
+    Info (332114): Worst Case Available Settling Time: 36.415 ns
     Info (332114): 
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 5283 megabytes
-    Info: Processing ended: Sat Feb 13 13:25:38 2021
+    Info: Peak virtual memory: 5483 megabytes
+    Info: Processing ended: Mon Feb 15 17:20:57 2021
     Info: Elapsed time: 00:00:11
-    Info: Total CPU time (on all processors): 00:00:29
+    Info: Total CPU time (on all processors): 00:00:22
 
 

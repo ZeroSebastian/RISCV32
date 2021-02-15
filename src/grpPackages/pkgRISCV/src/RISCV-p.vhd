@@ -385,16 +385,12 @@ package RISCV is
     type aRegSet is record
         -- common signals
         curInst   : aInst;
-
         -- control signals
         ctrlState : aControlUnitState;
-
         -- signals for program counter
         curPC     : aPCValue;
-
         -- signals for ALU
         aluRes    : aALUValue;
-
         -- signals for CSR
         csrReg    : aCsrSet;
     end record aRegSet;
@@ -406,7 +402,41 @@ package RISCV is
         aluRes    => (others => '0'),
         csrReg    => (others => (others => '0'))
     );
-
+    
+    -------------------------------------------------------------------------------
+    -- RAM definition
+    -------------------------------------------------------------------------------
+    -- store working registers and csr regs, workaround needed for block ram generation
+    type aRAM is array (0 to cRegCount + cCsrAddrCnt - 1) of aRegValue;
+    
+    type aRAMCtrl is record
+        -- interfacing regfile
+        regfileRs1Addr : integer;
+        regfileRs2Addr : integer;
+        rs1Data : aRegValue;
+        rs2Data : aRegValue;
+        regfileWrAddr : integer;
+        regfileWrData : aRegValue;
+        -- interfacing csr
+        csrAddrRemapped : integer;
+        csrReadData : aRegValue;
+        csrWrData : aRegValue;
+        
+    end record;
+    
+    constant cRAMCtrlDefault : aRAMCtrl := (
+        regfileRs1Addr => 0,
+        regfileRs2Addr => 0,
+        rs1Data => (others => '0'),
+        rs2Data => (others => '0'),
+        -- init ram causes all zeros in r0
+        regfileWrAddr => 0,
+        regfileWrData => (others => '0'),
+        csrAddrRemapped => 255,
+        csrReadData => (others => '0'),
+        csrWrData => (others => '0')
+    );
+    
     ------------------------------------------------------------------------------
     -- Function Definitions
     ------------------------------------------------------------------------------

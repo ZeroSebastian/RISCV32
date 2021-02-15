@@ -37,3 +37,4 @@ rv32ui-p-sub.bin
 rv32ui-p-sw.bin
 rv32ui-p-xor.bin
 rv32ui-p-xori.bin
+rv32mi-p-csr.bin
