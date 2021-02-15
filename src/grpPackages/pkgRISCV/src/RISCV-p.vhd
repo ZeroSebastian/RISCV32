@@ -172,6 +172,22 @@ package RISCV is
     subtype aRegAdr is std_ulogic_vector(cRegAdrWidth - 1 downto 0);
     type aRegFile is array (0 to cRegCount - 1) of aRegValue;
 
+    type aRegfileValues is record
+        readData1    : aRegValue;
+        readData2    : aRegValue;
+        writeData    : aRegValue;
+        writeEnable  : std_ulogic;
+        writeDataSrc : aCtrl2Signal;
+    end record;
+
+    constant cRegfileValuesDefault : aRegfileValues := (
+        readData1    => (others => '0'),
+        readData2    => (others => '0'),
+        writeData    => (others => '0'),
+        writeEnable  => '0',
+        writeDataSrc => cRegWritedataALUSrc
+    );
+
     -------------------------------------------------------------------------------
     -- Immediate Extension
     -------------------------------------------------------------------------------
@@ -195,6 +211,9 @@ package RISCV is
     subtype aALUValue is std_ulogic_vector(cALUWidth - 1 downto 0);
 
     type aALUValues is record
+        src1        : aCtrl2Signal;
+        src2        : aCtrl2Signal;
+        op          : aALUOp;
         aluCalc     : std_ulogic;
         aluData1    : aALUValue;
         aluData2    : aALUValue;
@@ -216,6 +235,9 @@ package RISCV is
     end record;
 
     constant cALUValuesDefault : aALUValues := (
+        src1        => cALUSrc1RegFile,
+        src2        => cALUSrc2RegFile,
+        op          => ALUOpAdd,
         aluCalc     => '0',
         aluData1    => (others => '0'),
         aluData2    => (others => '0'),
@@ -247,7 +269,7 @@ package RISCV is
 
     -------------------------------------------------------------------------------
     -- Memory
-    -------------------------------------------------------------------------------
+    -------------------------------------------------------------------------------    
     subtype aMemByteselect is std_ulogic_vector(3 downto 0);
     -- Memory Funct3
     constant cMemByte             : aFunct3 := "000";
@@ -260,17 +282,58 @@ package RISCV is
     constant cEnableHalfWord : aMemByteselect := "0011";
     constant cEnableWord     : aMemByteselect := "1111";
 
-    constant cInstrAddrPCSrc  : aCtrlSignal  := '0';
-    constant cInstrAddrALUSrc : aCtrlSignal  := '1';
+    type aDataMemValues is record
+        readData   : aRegValue;
+        writeData  : aRegValue;
+        byteenable : aMemByteselect;
+        read       : std_ulogic;
+        write      : std_ulogic;
+    end record;
+
+    constant cDataMemDefault : aDataMemValues := (
+        readData   => (others => '0'),
+        writeData  => (others => '0'),
+        byteenable => cEnableWord,
+        read       => '0',
+        write      => '0'
+    );
+
+    constant cInstrAddrPCSrc  : aCtrlSignal := '0';
+    constant cInstrAddrALUSrc : aCtrlSignal := '1';
     
+    type aInstrMemValues is record
+        read : std_ulogic;
+        src : aCtrlSignal;
+    end record;
     
+    constant cInstrMemDefault : aInstrMemValues := (
+        read => '0',
+        src => cInstrAddrPCSrc
+    );
+
     -------------------------------------------------------------------------------
     -- CSR
     -------------------------------------------------------------------------------
-    constant cModeNoWrite     : aCtrl2Signal := "00";
-    constant cModeClear       : aCtrl2Signal := "01";
-    constant cModeSet         : aCtrl2Signal := "10";
-    constant cModeWrite       : aCtrl2Signal := "11";
+    constant cModeNoWrite : aCtrl2Signal := "00";
+    constant cModeClear   : aCtrl2Signal := "01";
+    constant cModeSet     : aCtrl2Signal := "10";
+    constant cModeWrite   : aCtrl2Signal := "11";
+
+    type aCSRValues is record
+        addrMapped : integer;
+        readData   : aRegValue;
+        writeData  : aRegValue;
+        read       : std_ulogic;
+        writeMode  : aCtrl2Signal;
+    end record;
+
+    constant cCSRValuesDefault : aCSRValues := (
+        addrMapped => 255,
+        readData   => (others => '0'),
+        writeData  => (others => '0'),
+        read       => '0',
+        writeMode  => cModeNoWrite
+    );
 
     -- machine information registers
     constant cCsrMVendorId  : aCsrAddr := x"F11";
@@ -321,27 +384,27 @@ package RISCV is
 
     type aRegSet is record
         -- common signals
-        curInst      : aInst;
+        curInst   : aInst;
 
         -- control signals
-        ctrlState    : aControlUnitState;
+        ctrlState : aControlUnitState;
 
         -- signals for program counter
-        curPC        : aPCValue;
+        curPC     : aPCValue;
 
         -- signals for ALU
-        aluRes       : aALUValue;
+        aluRes    : aALUValue;
 
         -- signals for CSR
-        csrReg       : aCsrSet;
+        csrReg    : aCsrSet;
     end record aRegSet;
 
     constant cInitValRegSet : aRegSet := (
-        curInst      => (others => '0'),
-        ctrlState    => InitState,
-        curPC        => (others => '0'),
-        aluRes       => (others => '0'),
-        csrReg       => (others => (others => '0'))
+        curInst   => (others => '0'),
+        ctrlState => InitState,
+        curPC     => (others => '0'),
+        aluRes    => (others => '0'),
+        csrReg    => (others => (others => '0'))
     );
 
     ------------------------------------------------------------------------------
@@ -395,22 +458,22 @@ package body RISCV is
             when cCsrPmpcfg1    => return 17;
             when cCsrPmpcfg2    => return 18;
             when cCsrPmpcfg3    => return 19;
-            when cCsrPmpAddr0   => return 20;
-            when cCsrPmpAddr1   => return 21;
-            when cCsrPmpAddr2   => return 22;
-            when cCsrPmpAddr3   => return 23;
-            when cCsrPmpAddr4   => return 24;
-            when cCsrPmpAddr5   => return 25;
-            when cCsrPmpAddr6   => return 26;
-            when cCsrPmpAddr7   => return 27;
-            when cCsrPmpAddr8   => return 28;
-            when cCsrPmpAddr9   => return 29;
-            when cCsrPmpAddr10  => return 30;
-            when cCsrPmpAddr11  => return 31;
-            when cCsrPmpAddr12  => return 32;
-            when cCsrPmpAddr13  => return 33;
-            when cCsrPmpAddr14  => return 34;
-            when cCsrPmpAddr15  => return 35;
+            when cCsrPmpaddr0   => return 20;
+            when cCsrPmpaddr1   => return 21;
+            when cCsrPmpaddr2   => return 22;
+            when cCsrPmpaddr3   => return 23;
+            when cCsrPmpaddr4   => return 24;
+            when cCsrPmpaddr5   => return 25;
+            when cCsrPmpaddr6   => return 26;
+            when cCsrPmpaddr7   => return 27;
+            when cCsrPmpaddr8   => return 28;
+            when cCsrPmpaddr9   => return 29;
+            when cCsrPmpaddr10  => return 30;
+            when cCsrPmpaddr11  => return 31;
+            when cCsrPmpaddr12  => return 32;
+            when cCsrPmpaddr13  => return 33;
+            when cCsrPmpaddr14  => return 34;
+            when cCsrPmpaddr15  => return 35;
 
             when others => return 255;  --invalid address
         end case;
