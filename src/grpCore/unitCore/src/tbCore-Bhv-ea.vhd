@@ -46,6 +46,12 @@ architecture bhv of tbCore is
     -- variables for automatic tests
     signal test_finished    : bit := '0';
     signal test_finished_ack: bit := '0';
+    
+    -- filenames
+    type aTestFiles is array (natural range <>) of line;
+    -- pc values
+    type aPCValues is array (natural range <>) of aRegValue;
+    
 
 begin
 
@@ -87,7 +93,86 @@ ReadROM: process is
     -- FullISA runs the riscv isa tests
     type aTestMode is (SingleFile, FullISA);
     constant testMode : aTestMode := FullISA;
-
+    
+    constant cNoTests : integer := 35;
+    
+    variable vTestFiles : aTestFiles(0 to cNoTests - 1) := (
+    new string'("rv32ui-p-add.bin"),
+    new string'("rv32ui-p-addi.bin"),
+    new string'("rv32ui-p-and.bin"),
+    new string'("rv32ui-p-andi.bin"),
+    new string'("rv32ui-p-auipc.bin"),
+    new string'("rv32ui-p-beq.bin"),
+    new string'("rv32ui-p-bgeu.bin"),
+    new string'("rv32ui-p-blt.bin"),
+    new string'("rv32ui-p-bltu.bin"),
+    new string'("rv32ui-p-fence_i.bin"),
+    new string'("rv32ui-p-jal.bin"),
+    new string'("rv32ui-p-jalr.bin"),
+    new string'("rv32ui-p-lb.bin"),
+    new string'("rv32ui-p-lbu.bin"),
+    new string'("rv32ui-p-lh.bin"),
+    new string'("rv32ui-p-lhu.bin"),
+    new string'("rv32ui-p-lui.bin"),
+    new string'("rv32ui-p-lw.bin"),
+    new string'("rv32ui-p-or.bin"),
+    new string'("rv32ui-p-ori.bin"),    
+    new string'("rv32ui-p-sb.bin"),
+    new string'("rv32ui-p-sh.bin"),
+    new string'("rv32ui-p-simple.bin"),
+    new string'("rv32ui-p-sll.bin"),
+    new string'("rv32ui-p-slti.bin"),
+    new string'("rv32ui-p-sltiu.bin"),
+    new string'("rv32ui-p-sltu.bin"),
+    new string'("rv32ui-p-sra.bin"),
+    new string'("rv32ui-p-srai.bin"),
+    new string'("rv32ui-p-srl.bin"),    
+    new string'("rv32ui-p-srli.bin"),
+    new string'("rv32ui-p-sub.bin"),
+    new string'("rv32ui-p-sw.bin"),
+    new string'("rv32ui-p-xor.bin"),
+    new string'("rv32ui-p-xori.bin")
+    --new string'("rv32ui-p-srl.bin")
+    );
+    
+    constant cPCValues : aPCValues (0 to cNoTests - 1) := (
+        x"000005F4",
+        x"0000039C",
+        x"000005CC",
+        x"000002D4",
+        x"0000015C",
+        x"000003D4",
+        x"00000468",
+        x"000003D4",
+        x"00000408",
+        x"000001F8",
+        x"00000168",
+        x"000001E8",
+        x"00000360",
+        x"00000360",
+        x"00000380",
+        x"00000394",
+        x"00000174",
+        x"000003A0",
+        x"000005D8",
+        x"000002F0",
+        x"00000508",
+        x"0000058C",
+        x"00000100",
+        x"00000664",
+        x"00000388",
+        x"00000388",
+        x"000005Dc",
+        x"000006b0",
+        x"000003CC",
+        x"00000698",
+        x"000003B4",
+        x"000005D4",
+        x"00000598",
+        x"000005D4",
+        x"000002F8"
+    );
+    
 begin
 
     if testMode = SingleFile then
@@ -102,19 +187,10 @@ begin
         file_close(char_file);
 
     elsif testMode = FullISA then
-        file_open(test_file, "../../../../../test/rv32tests.txt");
-        while not endfile (test_file) loop
-
-            -- read next testfile
-            readline(test_file, line_num);
-            line_content := (others=>nul);
-            for j in line_num'range loop
-                read(line_num, line_content(j));
-            end loop;
-
+        for j in 0 to vTestFiles'length - 1 loop
             -- open next testfile
-            file_open(char_file, "../../../../../test/" & line_content);
-
+            file_open(char_file, "../../../../../test/" & vTestFiles(j).all);
+            
             -- reset memory
             Memory := (others=>(others=>'0'));
 
@@ -131,16 +207,23 @@ begin
             -- check for finished test
             wait until test_finished = '1';
 
+            if(instAddress /= to_stdlogicVector(cPCValues(j))) then 
+                report "Test produced an error: " & vTestFiles(j).all
+                severity failure;
+            end if;
+            
             if Memory(to_integer(unsigned(instAddress)) + 4) /= x"00" then
-                report "Test produced an error: " & line_content
+                report "Test produced an error: " & "knalle"
                 severity failure;
             end if;
 
             test_finished_ack <= '1';
             wait until test_finished = '0';
             test_finished_ack <= '0';
-
         end loop;
+        
+        
+        
 
         file_close(test_file);
         report "All Tests finished without errors!";
