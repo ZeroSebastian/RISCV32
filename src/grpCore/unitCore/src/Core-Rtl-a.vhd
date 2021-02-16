@@ -131,7 +131,6 @@ begin
                                 NxR.ctrlState <= Trap;
                             when others =>
                                 NxR.ctrlState <= CalculateSys;
-                                vCSR.read     := '1';
                         end case;
 
                     when others =>
@@ -266,18 +265,15 @@ begin
                 case R.curInst(aFunct3Range) is
                     when cSysRW | cSysRWI =>
                         if R.curInst(11 downto 7) /= "00000" then
-                            vCSR.read            := '1';
                             vRegfile.writeEnable := '1';
                         end if;
                         vCSR.writeMode := cModeWrite;
                     when cSysRS | cSysRSI =>
-                        vCSR.read            := '1';
                         vRegfile.writeEnable := '1';
                         if R.curInst(19 downto 15) /= "00000" then
                             vCSR.writeMode := cModeSet;
                         end if;
                     when cSysRC | cSysRCI =>
-                        vCSR.read            := '1';
                         vRegfile.writeEnable := '1';
                         if R.curInst(19 downto 15) /= "00000" then
                             vCSR.writeMode := cModeClear;
@@ -306,10 +302,6 @@ begin
         -------------------------------------------------------------------------------
         -- Register File - Read Stage
         -------------------------------------------------------------------------------
-        -- read registers from regfile
-        --vRegfile.readData1 := RegFile(to_integer(unsigned(R.curInst(aRs1AddrRange))));
-        --vRegfile.readData2 := RegFile(to_integer(unsigned(R.curInst(aRs2AddrRange))));
-
         if (R.ctrlState = ReadReg) then
             NxRAMCtrl.regfileRs1Addr <= to_integer(unsigned(R.curInst(aRs1AddrRange)));
             NxRAMCtrl.regfileRs2Addr <= to_integer(unsigned(R.curInst(aRs2AddrRange)));
@@ -465,10 +457,8 @@ begin
 
         vCSR.addrMapped := mapCsrAddr(R.curInst(31 downto 20));
 
-        if vCSR.read = '1' then
-            if mapCsrAddrValid(vCSR.addrMapped) then
-                vCSR.readData := R.csrReg(vCSR.addrMapped);
-            end if;
+        if mapCsrAddrValid(vCSR.addrMapped) then
+            vCSR.readData := R.csrReg(vCSR.addrMapped);
         end if;
 
         if vCSR.writeMode /= cModeNoWrite then

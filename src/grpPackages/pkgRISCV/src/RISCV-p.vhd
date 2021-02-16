@@ -323,7 +323,6 @@ package RISCV is
         addrMapped : integer;
         readData   : aRegValue;
         writeData  : aRegValue;
-        read       : std_ulogic;
         writeMode  : aCtrl2Signal;
     end record;
 
@@ -331,7 +330,6 @@ package RISCV is
         addrMapped => 255,
         readData   => (others => '0'),
         writeData  => (others => '0'),
-        read       => '0',
         writeMode  => cModeNoWrite
     );
 
