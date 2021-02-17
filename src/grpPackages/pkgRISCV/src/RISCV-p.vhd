@@ -78,6 +78,7 @@ package RISCV is
     -------------------------------------------------------------------------------
     subtype aOpCode is std_ulogic_vector(aOPCodeRange);
     subtype aFunct3 is std_ulogic_vector(aFunct3Range);
+    subtype aFunct7 is std_ulogic_vector(aFunct7Range);
     subtype aFunct12 is std_ulogic_vector(11 downto 0);
 
     constant cOpRType    : aOpCode := "0110011";
@@ -108,6 +109,17 @@ package RISCV is
     constant cSysRWI : aFunct3 := "101";
     constant cSysRSI : aFunct3 := "110";
     constant cSysRCI : aFunct3 := "111";
+
+    -- Mul/Div Funct3
+    constant cMulDivOp : aFunct7 := "0000001";
+    constant cMul      : aFunct3 := "000";
+    constant cMulh     : aFunct3 := "001";
+    constant cMulhsu   : aFunct3 := "010";
+    constant cMulhu    : aFunct3 := "011";
+    constant cDiv      : aFunct3 := "100";
+    constant cDivu     : aFunct3 := "101";
+    constant cRem      : aFunct3 := "110";
+    constant cRemu     : aFunct3 := "111";
 
     -- Trap Return Funct12
     constant cMTrapRet : aFunct12 := "001100000010";
@@ -205,24 +217,31 @@ package RISCV is
         ALUOpSLT, ALUOpSLTU,            -- less than (unsigned)
         ALUOpAnd, ALUOpOr, ALUOpXor,
         ALUOpSLL, ALUOpSRL, ALUOpSRA,   -- shift left/right logical/arithmetic
+        ALUOpMul, ALUOpMulh, ALUOpMulhu, ALUOpMulhsu, -- multiplication
+        ALUOpDiv, ALUOpDivu, ALUOpRem, ALUOpRemu, -- division / remain
         ALUOpNOP
     );
     subtype aRawALUValue is std_ulogic_vector(cALUWidth downto 0); -- incl. overflow bit
     subtype aALUValue is std_ulogic_vector(cALUWidth - 1 downto 0);
+    subtype aALUMuLValue is std_ulogic_vector((cALUWidth * 2 + 2) - 1 downto 0);
+    subtype aALUMultiplicandValue is std_ulogic_vector(cALUWidth downto 0);
 
     type aALUValues is record
         src1        : aCtrl2Signal;
         src2        : aCtrl2Signal;
         op          : aALUOp;
-        aluCalc     : std_ulogic;
-        aluData1    : aALUValue;
-        aluData2    : aALUValue;
+        calc        : std_ulogic;
+        data1       : aALUValue;
+        data2       : aALUValue;
         addsubRes   : aRawALUValue;
         addsubCarry : std_ulogic;
+        mul1        : aALUMultiplicandValue;
+        mul2        : aALUMultiplicandValue;
+        mulRes      : aALUMuLValue;
         srValue     : std_ulogic;
         shiftAmount : natural;
-        aluRawRes   : aRawALUValue;
-        aluRes      : aALUValue;
+        rawRes      : aRawALUValue;
+        res         : aALUValue;
         zero        : std_ulogic;
         negative    : std_ulogic;
         carry       : std_ulogic;
@@ -238,15 +257,18 @@ package RISCV is
         src1        => cALUSrc1RegFile,
         src2        => cALUSrc2RegFile,
         op          => ALUOpAdd,
-        aluCalc     => '0',
-        aluData1    => (others => '0'),
-        aluData2    => (others => '0'),
+        calc        => '0',
+        data1       => (others => '0'),
+        data2       => (others => '0'),
         addsubRes   => (others => '0'),
         addsubCarry => '0',
+        mul1        => (others => '0'),
+        mul2        => (others => '0'),
+        mulRes      => (others => '0'),
         srValue     => '0',
         shiftAmount => 0,
-        aluRawRes   => (others => '0'),
-        aluRes      => (others => '0'),
+        rawRes      => (others => '0'),
+        res         => (others => '0'),
         zero        => '0',
         negative    => '0',
         carry       => '0');
@@ -300,15 +322,15 @@ package RISCV is
 
     constant cInstrAddrPCSrc  : aCtrlSignal := '0';
     constant cInstrAddrALUSrc : aCtrlSignal := '1';
-    
+
     type aInstrMemValues is record
         read : std_ulogic;
-        src : aCtrlSignal;
+        src  : aCtrlSignal;
     end record;
-    
+
     constant cInstrMemDefault : aInstrMemValues := (
         read => '0',
-        src => cInstrAddrPCSrc
+        src  => cInstrAddrPCSrc
     );
 
     -------------------------------------------------------------------------------
@@ -400,41 +422,41 @@ package RISCV is
         aluRes    => (others => '0'),
         csrReg    => (others => (others => '0'))
     );
-    
+
     -------------------------------------------------------------------------------
     -- RAM definition
     -------------------------------------------------------------------------------
     -- store working registers and csr regs, workaround needed for block ram generation
     type aRAM is array (0 to cRegCount + cCsrAddrCnt - 1) of aRegValue;
-    
+
     type aRAMCtrl is record
         -- interfacing regfile
-        regfileRs1Addr : integer;
-        regfileRs2Addr : integer;
-        rs1Data : aRegValue;
-        rs2Data : aRegValue;
-        regfileWrAddr : integer;
-        regfileWrData : aRegValue;
+        regfileRs1Addr  : integer;
+        regfileRs2Addr  : integer;
+        rs1Data         : aRegValue;
+        rs2Data         : aRegValue;
+        regfileWrAddr   : integer;
+        regfileWrData   : aRegValue;
         -- interfacing csr
         csrAddrRemapped : integer;
-        csrReadData : aRegValue;
-        csrWrData : aRegValue;
-        
+        csrReadData     : aRegValue;
+        csrWrData       : aRegValue;
+
     end record;
-    
+
     constant cRAMCtrlDefault : aRAMCtrl := (
-        regfileRs1Addr => 0,
-        regfileRs2Addr => 0,
-        rs1Data => (others => '0'),
-        rs2Data => (others => '0'),
+        regfileRs1Addr  => 0,
+        regfileRs2Addr  => 0,
+        rs1Data         => (others => '0'),
+        rs2Data         => (others => '0'),
         -- init ram causes all zeros in r0
-        regfileWrAddr => 0,
-        regfileWrData => (others => '0'),
+        regfileWrAddr   => 0,
+        regfileWrData   => (others => '0'),
         csrAddrRemapped => 255,
-        csrReadData => (others => '0'),
-        csrWrData => (others => '0')
+        csrReadData     => (others => '0'),
+        csrWrData       => (others => '0')
     );
-    
+
     ------------------------------------------------------------------------------
     -- Function Definitions
     ------------------------------------------------------------------------------

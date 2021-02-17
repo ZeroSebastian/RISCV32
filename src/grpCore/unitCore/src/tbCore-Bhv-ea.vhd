@@ -93,9 +93,11 @@ begin
         type aTestMode is (SingleFile, FullISA);
         constant testMode : aTestMode := FullISA;
 
-        constant cNoTests : integer := 40;
+        constant cNoTests : integer := 44;
 
         variable vTestSuite : aTestSuite(0 to cNoTests - 1) := (
+            (new string'("rv32um-p-mulhsu.bin"), x"0000066C"),
+            (new string'("rv32um-p-mulh.bin"), x"0000066C"),
             (new string'("rv32ui-p-add.bin"), x"00000684"),
             (new string'("rv32ui-p-addi.bin"), x"0000042C"),
             (new string'("rv32ui-p-and.bin"), x"0000065C"),
@@ -135,7 +137,9 @@ begin
             (new string'("rv32ui-p-sw.bin"), x"00000628"),
             (new string'("rv32ui-p-xor.bin"), x"00000664"),
             (new string'("rv32ui-p-xori.bin"), x"00000388"),
-            (new string'("rv32mi-p-csr.bin"), x"00000354")
+            (new string'("rv32mi-p-csr.bin"), x"00000354"),
+            (new string'("rv32um-p-mul.bin"), x"0000066C"),
+            (new string'("rv32um-p-mulhu.bin"), x"0000066C")
         );
 
     begin
@@ -174,6 +178,9 @@ begin
                 if (instAddress /= to_stdlogicVector(vTestSuite(j).pcSuccessval)) then
                     report "Test produced an error: " & vTestSuite(j).filename.all
                     severity failure;
+                else
+                    report vTestSuite(j).filename.all & " executed successfully!"
+                    severity note;
                 end if;
 
                 test_finished_ack <= '1';
