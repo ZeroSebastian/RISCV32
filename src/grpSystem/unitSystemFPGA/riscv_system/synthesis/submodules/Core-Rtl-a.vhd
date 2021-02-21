@@ -3,7 +3,7 @@
 -- Project    : RISC-V 32-Bit Core
 -------------------------------------------------------------------------------
 -- File       : Core-Rtl-a.vhd
--- Author     : Binder Alexander
+-- Author     : Binder Alexander, Jahn Sebastian
 -- Date       : 11.11.2019
 -- Revisions  : V1, 11.11.2019 -ba
 -------------------------------------------------------------------------------
@@ -76,6 +76,9 @@ begin
         variable vDataMem  : aDataMemValues;
         variable vPCEN     : std_ulogic;
         variable vInstrMem : aInstrMemValues;
+
+        variable vS : signed(cBitWidth * 2 downto 0);
+        variable vQ : signed(cBitWidth - 1 downto 0);
 
     begin
         -- default signal values
@@ -243,8 +246,27 @@ begin
                         when cMulhu  => vALU.op := ALUOpMulhu;
                         when cMulh   => vALU.op := ALUOpMulh;
                         when cMulhsu => vALU.op := ALUOpMulhsu;
-                        when others =>
-                            report "Not implemented" severity note;
+                        when cDivu | cDiv | cRem | cRemu => -- prepare division
+                            if (R.curInst(aFunct3Range) = cDiv or R.curInst(aFunct3Range) = cRem) then
+                                NxR.calcSigned <= '1';
+                                NxR.divisor    <= signed(RAMCtrl.rs2Data(RAMCtrl.rs2Data'high) & RAMCtrl.rs2Data);
+                                NxR.dividend   <= signed(RAMCtrl.rs1Data(RAMCtrl.rs1Data'high) & RAMCtrl.rs1Data);
+
+                            elsif (R.curInst(aFunct3Range) = cDivu or R.curInst(aFunct3Range) = cRemu) then
+                                NxR.calcSigned <= '0';
+                                NxR.divisor    <= signed('0' & RAMCtrl.rs2Data);
+                                NxR.dividend   <= signed('0' & RAMCtrl.rs1Data);
+                            end if;
+
+                            NxR.divStart  <= '1';
+                            NxR.ctrlState <= WaitDivide;
+
+                            -- abort loading and writing
+                            vRegfile.writeEnable := '0';
+                            vALU.calc            := '0';
+                            vInstrMem.read       := '0';
+
+                        when others => null;
                     end case;
                 -- normal alu operation
                 else
@@ -272,6 +294,22 @@ begin
                     end case;
                 end if;
 
+            when WaitDivide =>
+                -- wait for busy flag to be cleared
+                if (R.done = '1') then
+                    NxR.divStart         <= '0';
+                    NxR.ctrlState        <= Fetch;
+                    vRegfile.writeEnable := '1';
+                    vALU.calc            := '1';
+                    vInstrMem.read       := '1';
+
+                    if (R.curInst(aFunct3Range) = cDiv or R.curInst(aFunct3Range) = cDivu) then
+                        vALU.op := ALUOpDiv;
+                    else
+                        vALU.op := ALUOpRem;
+                    end if;
+
+                end if;
             -- CSR Instruction
             when CalculateSys =>
                 case R.curInst(aFunct3Range) is
@@ -427,6 +465,10 @@ begin
                 vALU.rawRes := vALU.mulRes(vALU.rawRes'range);
             when ALUOpMulhu | ALUOpMulhsu | ALUOpMulh =>
                 vALU.rawRes := '0' & vALU.mulRes(vALU.mulRes'high - 2 downto vALU.mulRes'high - 2 - (vALU.res'length - 1));
+            when ALUOpDiv | ALUOpDivu =>
+                vALU.rawRes := std_ulogic_vector(R.Q(R.Q'high) & R.Q);
+            when ALUOpRem | ALUOpRemu =>
+                vALU.rawRes := std_ulogic_vector(R.s(R.s'high downto R.s'high - cBitWidth));
             when ALUOpNOP =>
                 vALU.rawRes := (others => '-');
             when others => null;
@@ -584,6 +626,78 @@ begin
             NxR.curPC <= vALU.res;
         end if;
 
+        -------------------------------------------------------------------------------
+        -- Divider
+        -------------------------------------------------------------------------------         
+        case R.state is
+            when prepare =>
+                if (R.divStart = '1') then
+                    NxR.Q <= (others => '0');
+                    if (R.calcSigned = '1') then
+                        NxR.signDividend <= R.dividend(R.dividend'high);
+                        NxR.s            <= (others => R.dividend(R.dividend'high));
+                    else
+                        NxR.s            <= (others => '0');
+                        NxR.signDividend <= '0';
+                    end if;
+                    NxR.s(R.dividend'range) <= signed(R.dividend);
+                    NxR.count           <= cBitWidth;
+                    NxR.zeroRemDetected <= '0';
+                    NxR.state <= calc;
+                    -- check if divisor is 0 -> set fields
+                    if (R.divisor = 0) then
+                        NxR.state                                           <= finish;
+                        NxR.Q                                               <= (others => '1');
+                        NxR.s                                               <= (others => '0');
+                        NxR.s(NxR.s'high - 1 downto NxR.s'high - cBitWidth) <= R.dividend(R.dividend'high - 1 downto 0);
+                    end if;
+                end if;
+
+            when calc =>
+                vQ := R.Q;
+
+                if (R.s(R.s'high) /= R.divisor(R.divisor'high)) then
+                    vS                                     := shift_left(R.s, 1);
+                    vS(vS'high downto vS'high - cBitWidth) := vS(vS'high downto vS'high - cBitWidth) + R.divisor;
+                    vQ(R.count - 1)                        := '0';
+                else
+                    vS                                     := shift_left(R.s, 1);
+                    vS(vS'high downto vS'high - cBitWidth) := vS(vS'high downto vS'high - cBitWidth) - R.divisor;
+                    vQ(R.count - 1)                        := '1';
+                end if;
+
+                if vS(vS'high downto vS'high - cBitWidth) = 0 then
+                    NxR.zeroRemDetected <= '1';
+                end if;
+
+                NxR.count <= R.count - 1;
+
+                if (R.count = 1) then
+                    NxR.state <= finish;
+                    -- convert from 1s complement to 2s complement
+                    vQ        := shift_left(vQ, 1) + 1;
+                    -- correct result if signs do not match
+                    if vS(vS'high) /= R.signDividend or R.zeroRemDetected = '1' then
+                        if (R.divisor(R.divisor'high) = vS(vS'high)) then
+                            vQ                                     := vQ + 1;
+                            vS(vS'high downto vS'high - cBitWidth) := vS(vS'high downto vS'high - cBitWidth) - R.divisor;
+                        else
+                            vQ                                     := vQ - 1;
+                            vS(vS'high downto vS'high - cBitWidth) := vS(vS'high downto vS'high - cBitWidth) + R.divisor;
+                        end if;
+                    end if;
+                end if;
+                NxR.Q <= vQ;
+                NxR.s <= vS;
+
+            when finish =>
+                NxR.done <= '1';
+                if (R.divStart = '0') then
+                    NxR.done  <= '0';
+                    NxR.state <= prepare;
+                end if;
+            when others => null;
+        end case;
     end process;
 
 end architecture rtl;

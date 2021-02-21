@@ -103,6 +103,8 @@ set_global_assignment -name SMART_RECOMPILE OFF
 set_global_assignment -name ENABLE_SIGNALTAP OFF
 set_global_assignment -name USE_SIGNALTAP_FILE debug_signal_analyer.stp
 set_global_assignment -name ALLOW_REGISTER_DUPLICATION OFF
+set_global_assignment -name VHDL_FILE "../../../grpCore/unitRadix2Divider/src/Radix2Divider-Rtl-a.vhd"
+set_global_assignment -name VHDL_FILE "../../../grpCore/unitRadix2Divider/src/Radix2Divider-e.vhd"
 set_global_assignment -name VHDL_FILE "X:/src/grpPackages/pkgGlobal/src/Global-p.vhd" -library work
 set_global_assignment -name VHDL_FILE "X:/src/grpPackages/pkgRISCV/src/RISCV-p.vhd" -library work
 set_global_assignment -name QIP_FILE "X:/src/grpSystem/unitSystemFPGA/riscv_system/synthesis/riscv_system.qip"

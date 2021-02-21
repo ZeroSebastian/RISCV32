@@ -12,6 +12,7 @@
 
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 library work;
 use work.Global.all;
@@ -141,6 +142,7 @@ package RISCV is
         PerformBranch,
         CalculateALUOp,
         CalculateSys,
+        WaitDivide,
         Trap);
 
     constant cMemToRegALU : aCtrlSignal := '0';
@@ -221,6 +223,9 @@ package RISCV is
         ALUOpDiv, ALUOpDivu, ALUOpRem, ALUOpRemu, -- division / remain
         ALUOpNOP
     );
+    
+    type aDivState is (prepare, calc, finish);
+    
     subtype aRawALUValue is std_ulogic_vector(cALUWidth downto 0); -- incl. overflow bit
     subtype aALUValue is std_ulogic_vector(cALUWidth - 1 downto 0);
     subtype aALUMuLValue is std_ulogic_vector((cALUWidth * 2 + 2) - 1 downto 0);
@@ -400,8 +405,7 @@ package RISCV is
 
     -------------------------------------------------------------------------------
     -- RegSet
-    -------------------------------------------------------------------------------
-
+    -------------------------------------------------------------------------------    
     type aRegSet is record
         -- common signals
         curInst   : aInst;
@@ -411,6 +415,19 @@ package RISCV is
         curPC     : aPCValue;
         -- signals for ALU
         aluRes    : aALUValue;
+        -- signals for divider
+        divStart : std_ulogic;
+        divisor : signed(cALUWidth downto 0);
+        dividend : signed(cALUWidth downto 0);
+        Q               : signed(cALUWidth - 1 downto 0);
+        signDividend : std_ulogic;
+        s               : signed(cALUWidth * 2 downto 0);
+        zeroRemDetected : std_ulogic;
+        count           : natural;
+        done : std_ulogic;
+        state           : aDivState;        
+        calcSigned : std_ulogic;
+        
         -- signals for CSR
         csrReg    : aCsrSet;
     end record aRegSet;
@@ -420,6 +437,17 @@ package RISCV is
         ctrlState => InitState,
         curPC     => (others => '0'),
         aluRes    => (others => '0'),
+        divStart => '0',
+        divisor => (others => '0'),
+        dividend => (others => '0'),
+        Q => (others => '0'),
+        signDividend => '0',
+        s => (others => '0'),
+        zeroRemDetected => '0',
+        count => 0,
+        done => '0',
+        state => prepare,        
+        calcSigned => '0',
         csrReg    => (others => (others => '0'))
     );
 

@@ -93,9 +93,13 @@ begin
         type aTestMode is (SingleFile, FullISA);
         constant testMode : aTestMode := FullISA;
 
-        constant cNoTests : integer := 44;
+        constant cNoTests : integer := 48;
 
         variable vTestSuite : aTestSuite(0 to cNoTests - 1) := (
+            (new string'("rv32um-p-remu.bin"), x"00000280"),
+            (new string'("rv32um-p-rem.bin"), x"00000280"),
+            (new string'("rv32um-p-div.bin"), x"00000280"),
+            (new string'("rv32um-p-divu.bin"), x"00000284"),
             (new string'("rv32um-p-mulhsu.bin"), x"0000066C"),
             (new string'("rv32um-p-mulh.bin"), x"0000066C"),
             (new string'("rv32ui-p-add.bin"), x"00000684"),
@@ -210,7 +214,7 @@ begin
             end if;
 
             -- when address hasn't changed in 32 cycles assume program finished
-            if address_cycle_count = 32 then
+            if address_cycle_count = 45 then
                 test_finished <= '1';
             end if;
 
