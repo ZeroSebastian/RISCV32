@@ -6,13 +6,13 @@ preplace inst riscv_system.rv32ui_fsmd_0 -pg 1 -lvl 2 -y 70
 preplace inst riscv_system.clk_0 -pg 1 -lvl 1 -y 30
 preplace inst riscv_system.onchip_memory2_0 -pg 1 -lvl 3 -y 50
 preplace inst riscv_system.leds -pg 1 -lvl 3 -y 250
-preplace netloc EXPORT<net_container>riscv_system</net_container>(SLAVE)switches.external_connection,(SLAVE)riscv_system.switches) 1 0 3 NJ 180 NJ 180 NJ
-preplace netloc FAN_OUT<net_container>riscv_system</net_container>(SLAVE)switches.clk,(SLAVE)rv32ui_fsmd_0.clock,(SLAVE)leds.clk,(SLAVE)onchip_memory2_0.clk1,(MASTER)clk_0.clk) 1 1 2 290 40 520
+preplace netloc FAN_OUT<net_container>riscv_system</net_container>(SLAVE)switches.clk,(SLAVE)rv32ui_fsmd_0.clock,(MASTER)clk_0.clk,(SLAVE)onchip_memory2_0.clk1,(SLAVE)leds.clk) 1 1 2 290 40 520
 preplace netloc EXPORT<net_container>riscv_system</net_container>(SLAVE)riscv_system.clk,(SLAVE)clk_0.clk_in) 1 0 1 NJ
-preplace netloc FAN_OUT<net_container>riscv_system</net_container>(SLAVE)leds.s1,(SLAVE)switches.s1,(MASTER)rv32ui_fsmd_0.data,(SLAVE)onchip_memory2_0.s2) 1 2 1 480
 preplace netloc POINT_TO_POINT<net_container>riscv_system</net_container>(MASTER)rv32ui_fsmd_0.instruction,(SLAVE)onchip_memory2_0.s1) 1 2 1 N
+preplace netloc EXPORT<net_container>riscv_system</net_container>(SLAVE)riscv_system.reset,(SLAVE)clk_0.clk_in_reset) 1 0 1 NJ
 preplace netloc EXPORT<net_container>riscv_system</net_container>(SLAVE)riscv_system.leds,(SLAVE)leds.external_connection) 1 0 3 NJ 280 NJ 280 NJ
-preplace netloc FAN_OUT<net_container>riscv_system</net_container>(SLAVE)leds.reset,(MASTER)clk_0.clk_reset,(SLAVE)rv32ui_fsmd_0.reset_n,(SLAVE)onchip_memory2_0.reset1,(SLAVE)switches.reset) 1 1 2 270 60 500
-preplace netloc EXPORT<net_container>riscv_system</net_container>(SLAVE)clk_0.clk_in_reset,(SLAVE)riscv_system.reset) 1 0 1 NJ
+preplace netloc FAN_OUT<net_container>riscv_system</net_container>(SLAVE)switches.reset,(SLAVE)rv32ui_fsmd_0.reset_n,(SLAVE)leds.reset,(MASTER)clk_0.clk_reset,(SLAVE)onchip_memory2_0.reset1) 1 1 2 270 60 500
+preplace netloc EXPORT<net_container>riscv_system</net_container>(SLAVE)riscv_system.switches,(SLAVE)switches.external_connection) 1 0 3 NJ 180 NJ 180 NJ
+preplace netloc FAN_OUT<net_container>riscv_system</net_container>(SLAVE)leds.s1,(SLAVE)onchip_memory2_0.s2,(SLAVE)switches.s1,(MASTER)rv32ui_fsmd_0.data) 1 2 1 480
 levelinfo -pg 1 0 60 730
 levelinfo -hier riscv_system 70 100 320 570 720

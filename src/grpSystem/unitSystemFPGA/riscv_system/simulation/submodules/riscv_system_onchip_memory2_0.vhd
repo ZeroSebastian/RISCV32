@@ -28,7 +28,7 @@ use ieee.std_logic_unsigned.all;
 
 entity riscv_system_onchip_memory2_0 is 
         generic (
-                 INIT_FILE : STRING := "X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex"
+                 INIT_FILE : STRING := "X:/test/c/checkSystem2.hex"
                  );
         port (
               -- inputs:

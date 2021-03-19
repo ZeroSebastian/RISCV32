@@ -43,7 +43,7 @@ module riscv_system_onchip_memory2_0 (
                                      )
 ;
 
-  parameter INIT_FILE = "X:/src/grpSystem/unitSystemFPGA/checkMinimalSystemFull.hex";
+  parameter INIT_FILE = "X:/test/c/checkSystem2.hex";
 
 
   output  [ 31: 0] readdata;

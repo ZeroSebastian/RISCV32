@@ -334,6 +334,7 @@ package RISCV is
     type aDataMemValues is record
         readData   : aRegValue;
         writeData  : aRegValue;
+        address    : aRegValue;
         byteenable : aMemByteselect;
         read       : std_ulogic;
         write      : std_ulogic;
@@ -342,6 +343,7 @@ package RISCV is
     constant cDataMemDefault : aDataMemValues := (
         readData   => (others => '0'),
         writeData  => (others => '0'),
+        address    => (others => '0'),
         byteenable => cEnableWord,
         read       => '0',
         write      => '0'

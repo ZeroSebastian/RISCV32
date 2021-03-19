@@ -656,12 +656,47 @@ begin
         -------------------------------------------------------------------------------
         -- Data Memory
         -------------------------------------------------------------------------------
+        vDataMem.address := vALU.res;
         case R.curInst(aFunct3Range) is
-            when cMemByte =>
-                vDataMem.readData                                  := std_ulogic_vector(
-                    resize(signed(d_readdata_remapped(cByte - 1 downto 0)), cBitWidth));
-                vDataMem.writeData(4 * cByte - 1 downto 3 * cByte) := vRegfile.readData2(cByte - 1 downto 0);
-                vDataMem.byteenable                                := cEnableByte;
+            when cMemByte | cMemUnsignedByte =>
+                if (R.curInst(aOPCodeRange) = cOpILoad) then
+                    -- check if address is byte aligned
+                    case vDataMem.address(1 downto 0) is
+                        when "00" =>
+                            vDataMem.readData(7 downto 0) := d_readdata_remapped(7 downto 0);
+                        when "01" =>
+                            vDataMem.readData(7 downto 0) := d_readdata_remapped(15 downto 8);
+                        when "10" =>
+                            vDataMem.readData(7 downto 0) := d_readdata_remapped(23 downto 16);
+                        when "11" =>
+                            vDataMem.readData(7 downto 0) := d_readdata_remapped(31 downto 24);
+                        when others => null;
+                    end case;
+                    if (R.curInst(aFunct3Range) = cMemByte) then
+                        vDataMem.readData(31 downto 8) := (others => vDataMem.readData(7));
+                    else
+                        vDataMem.readData(31 downto 8) := (others => '0');
+                    end if;
+                    vDataMem.address(1 downto 0) := "00";
+                    vDataMem.byteenable          := "1111";
+                else
+                    case vDataMem.address(1 downto 0) is
+                        when "00" =>
+                            vDataMem.byteenable              := "1000";
+                            vDataMem.writeData(7 downto 0) := vRegfile.readData2(7 downto 0);
+                        when "01" =>
+                            vDataMem.byteenable              := "0100";
+                            vDataMem.writeData(15 downto 8) := vRegfile.readData2(7 downto 0);
+                        when "10" =>
+                            vDataMem.byteenable             := "0010";
+                            vDataMem.writeData(23 downto 16) := vRegfile.readData2(7 downto 0);
+                        when "11" =>
+                            vDataMem.byteenable            := "0001";
+                            vDataMem.writeData(31 downto 24) := vRegfile.readData2(7 downto 0);
+                        when others => null;
+                    end case;
+                    vDataMem.address(1 downto 0) := "00";
+                end if;
 
             when cMemHalfWord =>
                 vDataMem.readData                                  := std_ulogic_vector(
@@ -675,12 +710,6 @@ begin
                 vDataMem.writeData  := vRegfile.readData2;
                 vDataMem.byteenable := cEnableWord;
 
-            when cMemUnsignedByte =>
-                vDataMem.readData                                  := std_ulogic_vector(resize(unsigned(
-                    d_readdata_remapped(cByte - 1 downto 0)), cBitWidth));
-                vDataMem.writeData(4 * cByte - 1 downto 3 * cByte) := vRegfile.readData2(cByte - 1 downto 0);
-                vDataMem.byteenable                                := cEnableByte;
-
             when cMemUnsignedHalfWord =>
                 vDataMem.readData                                  := std_ulogic_vector(resize(unsigned(
                     d_readdata_remapped(2 * cByte - 1 downto 0)), cBitWidth));
@@ -693,7 +722,7 @@ begin
                 vDataMem.byteenable := (others => '0');
         end case;
 
-        avm_d_address        <= to_StdLogicVector(vALU.res);
+        avm_d_address        <= to_StdLogicVector(vDataMem.address);
         avm_d_byteenable     <= to_StdLogicVector(vDataMem.byteenable);
         avm_d_write          <= std_logic(vDataMem.write);
         d_writedata_remapped <= vDataMem.writeData;

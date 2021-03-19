@@ -151,14 +151,16 @@ package RISCV is
     constant cNoJump : aCtrlSignal := '0';
     constant cJump   : aCtrlSignal := '1';
 
-    constant cALUSrc1RegFile : aCtrl2Signal := "00";
-    constant cALUSrc1Zero    : aCtrl2Signal := "01";
-    constant cALUSrc1PrevPC  : aCtrl2Signal := "10";
-    constant cALUSrc1PC      : aCtrl2Signal := "11";
+    constant cALUSrc1RegFile : aCtrl3Signal := "000";
+    constant cALUSrc1Zero    : aCtrl3Signal := "001";
+    constant cALUSrc1PrevPC  : aCtrl3Signal := "010";
+    constant cALUSrc1PC      : aCtrl3Signal := "011";
+    constant cALUSrc1DivS    : aCtrl3Signal := "100";
 
-    constant cALUSrc2RegFile : aCtrl2Signal := "00";
-    constant cALUSrc2ImmGen  : aCtrl2Signal := "01";
-    constant cALUSrc2Const4  : aCtrl2Signal := "10";
+    constant cALUSrc2RegFile    : aCtrl2Signal := "00";
+    constant cALUSrc2ImmGen     : aCtrl2Signal := "01";
+    constant cALUSrc2Const4     : aCtrl2Signal := "10";
+    constant cALUSrc2DivDivisor : aCtrl2Signal := "11";
 
     constant cRegWritedataALUSrc   : aCtrl2Signal := "00";
     constant cRegWritedataMemRdSrc : aCtrl2Signal := "01";
@@ -223,21 +225,22 @@ package RISCV is
         ALUOpDiv, ALUOpDivu, ALUOpRem, ALUOpRemu, -- division / remain
         ALUOpNOP
     );
-    
-    type aDivState is (prepare, calc, finish);
-    
+
+    type aDivState is (prepare, calc, correctRes);
+
     subtype aRawALUValue is std_ulogic_vector(cALUWidth downto 0); -- incl. overflow bit
     subtype aALUValue is std_ulogic_vector(cALUWidth - 1 downto 0);
     subtype aALUMuLValue is std_ulogic_vector((cALUWidth * 2 + 2) - 1 downto 0);
     subtype aALUMultiplicandValue is std_ulogic_vector(cALUWidth downto 0);
 
     type aALUValues is record
-        src1        : aCtrl2Signal;
+        src1        : aCtrl3Signal;
         src2        : aCtrl2Signal;
         op          : aALUOp;
         calc        : std_ulogic;
-        data1       : aALUValue;
-        data2       : aALUValue;
+        stepDiv     : std_ulogic;
+        data1       : aRawALUValue;
+        data2       : aRawALUValue;
         addsubRes   : aRawALUValue;
         addsubCarry : std_ulogic;
         mul1        : aALUMultiplicandValue;
@@ -263,6 +266,7 @@ package RISCV is
         src2        => cALUSrc2RegFile,
         op          => ALUOpAdd,
         calc        => '0',
+        stepDiv     => '0',
         data1       => (others => '0'),
         data2       => (others => '0'),
         addsubRes   => (others => '0'),
@@ -294,6 +298,24 @@ package RISCV is
 
     constant cFunct7OtherInstrPos : natural := 30;
 
+    type aDividerValues is record
+        dividend   : signed(cBitWidth downto 0);
+        divisor    : signed(cBitWidth downto 0);
+        s          : signed(cBitWidth * 2 downto 0);
+        Q          : signed(cBitWidth - 1 downto 0);
+        start      : std_ulogic;
+        calcSigned : std_ulogic;
+    end record;
+
+    constant cDividerDefault : aDividerValues := (
+        dividend   => (others => '0'),
+        divisor    => (others => '0'),
+        s          => (others => '0'),
+        Q          => (others => '0'),
+        start      => '0',
+        calcSigned => '0'
+    );
+
     -------------------------------------------------------------------------------
     -- Memory
     -------------------------------------------------------------------------------    
@@ -312,6 +334,7 @@ package RISCV is
     type aDataMemValues is record
         readData   : aRegValue;
         writeData  : aRegValue;
+        address    : aRegValue;
         byteenable : aMemByteselect;
         read       : std_ulogic;
         write      : std_ulogic;
@@ -320,6 +343,7 @@ package RISCV is
     constant cDataMemDefault : aDataMemValues := (
         readData   => (others => '0'),
         writeData  => (others => '0'),
+        address    => (others => '0'),
         byteenable => cEnableWord,
         read       => '0',
         write      => '0'
@@ -408,47 +432,45 @@ package RISCV is
     -------------------------------------------------------------------------------    
     type aRegSet is record
         -- common signals
-        curInst   : aInst;
+        curInst               : aInst;
         -- control signals
-        ctrlState : aControlUnitState;
+        ctrlState             : aControlUnitState;
         -- signals for program counter
-        curPC     : aPCValue;
+        curPC                 : aPCValue;
         -- signals for ALU
-        aluRes    : aALUValue;
+        aluRes                : aALUValue;
+        aluZero               : std_ulogic;
         -- signals for divider
-        divStart : std_ulogic;
-        divisor : signed(cALUWidth downto 0);
-        dividend : signed(cALUWidth downto 0);
-        Q               : signed(cALUWidth - 1 downto 0);
-        signDividend : std_ulogic;
-        s               : signed(cALUWidth * 2 downto 0);
-        zeroRemDetected : std_ulogic;
-        count           : natural;
-        done : std_ulogic;
-        state           : aDivState;        
-        calcSigned : std_ulogic;
-        
+        divisor               : signed(cALUWidth downto 0);
+        dividend              : signed(cALUWidth downto 0);
+        divisionQ             : signed(cALUWidth - 1 downto 0);
+        signDividend          : std_ulogic;
+        divisionS             : signed(cALUWidth * 2 downto 0);
+        divisionIntermZeroRem : std_ulogic;
+        divisionCount         : natural;
+        divisionDone          : std_ulogic;
+        divisionState         : aDivState;
+
         -- signals for CSR
-        csrReg    : aCsrSet;
+        csrReg                : aCsrSet;
     end record aRegSet;
 
     constant cInitValRegSet : aRegSet := (
-        curInst   => (others => '0'),
-        ctrlState => InitState,
-        curPC     => (others => '0'),
-        aluRes    => (others => '0'),
-        divStart => '0',
-        divisor => (others => '0'),
-        dividend => (others => '0'),
-        Q => (others => '0'),
-        signDividend => '0',
-        s => (others => '0'),
-        zeroRemDetected => '0',
-        count => 0,
-        done => '0',
-        state => prepare,        
-        calcSigned => '0',
-        csrReg    => (others => (others => '0'))
+        curInst               => (others => '0'),
+        ctrlState             => InitState,
+        curPC                 => (others => '0'),
+        aluRes                => (others => '0'),
+        aluZero               => '0',
+        divisor               => (others => '0'),
+        dividend              => (others => '0'),
+        divisionQ             => (others => '0'),
+        signDividend          => '0',
+        divisionS             => (others => '0'),
+        divisionIntermZeroRem => '0',
+        divisionCount         => 0,
+        divisionDone          => '0',
+        divisionState         => prepare,
+        csrReg                => (others => (others => '0'))
     );
 
     -------------------------------------------------------------------------------
@@ -459,30 +481,23 @@ package RISCV is
 
     type aRAMCtrl is record
         -- interfacing regfile
-        regfileRs1Addr  : integer;
-        regfileRs2Addr  : integer;
-        rs1Data         : aRegValue;
-        rs2Data         : aRegValue;
-        regfileWrAddr   : integer;
-        regfileWrData   : aRegValue;
-        -- interfacing csr
-        csrAddrRemapped : integer;
-        csrReadData     : aRegValue;
-        csrWrData       : aRegValue;
+        regfileRs1Addr : integer;
+        regfileRs2Addr : integer;
+        rs1Data        : aRegValue;
+        rs2Data        : aRegValue;
+        regfileWrAddr  : integer;
+        regfileWrData  : aRegValue;
 
     end record;
 
     constant cRAMCtrlDefault : aRAMCtrl := (
-        regfileRs1Addr  => 0,
-        regfileRs2Addr  => 0,
-        rs1Data         => (others => '0'),
-        rs2Data         => (others => '0'),
+        regfileRs1Addr => 0,
+        regfileRs2Addr => 0,
+        rs1Data        => (others => '0'),
+        rs2Data        => (others => '0'),
         -- init ram causes all zeros in r0
-        regfileWrAddr   => 0,
-        regfileWrData   => (others => '0'),
-        csrAddrRemapped => 255,
-        csrReadData     => (others => '0'),
-        csrWrData       => (others => '0')
+        regfileWrAddr  => 0,
+        regfileWrData  => (others => '0')
     );
 
     ------------------------------------------------------------------------------
