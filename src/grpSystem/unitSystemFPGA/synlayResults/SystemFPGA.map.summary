@@ -1,10 +1,10 @@
-Analysis & Synthesis Status : Successful - Tue Mar 16 20:29:18 2021
+Analysis & Synthesis Status : Successful - Fri Mar 19 16:01:25 2021
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : SystemFPGA
 Top-level Entity Name : SystemFPGA
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 1566
+Total registers : 1565
 Total pins : 22
 Total virtual pins : 0
 Total block memory bits : 262,144

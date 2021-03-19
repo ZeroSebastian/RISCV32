@@ -8,10 +8,11 @@ use IEEE.numeric_std.all;
 
 entity riscv_system is
 	port (
-		clk_clk         : in  std_logic                    := '0';             --      clk.clk
-		leds_export     : out std_logic_vector(7 downto 0);                    --     leds.export
-		reset_reset_n   : in  std_logic                    := '0';             --    reset.reset_n
-		switches_export : in  std_logic_vector(7 downto 0) := (others => '0')  -- switches.export
+		clk_clk           : in  std_logic                     := '0';             --        clk.clk
+		const_high_export : in  std_logic_vector(31 downto 0) := (others => '0'); -- const_high.export
+		leds_export       : out std_logic_vector(7 downto 0);                     --       leds.export
+		reset_reset_n     : in  std_logic                     := '0';             --      reset.reset_n
+		switches_export   : in  std_logic_vector(7 downto 0)  := (others => '0')  --   switches.export
 	);
 end entity riscv_system;
 
@@ -51,6 +52,16 @@ architecture rtl of riscv_system is
 			freeze      : in  std_logic                     := 'X'              -- freeze
 		);
 	end component riscv_system_onchip_memory2_0;
+
+	component riscv_system_pio_0 is
+		port (
+			clk      : in  std_logic                     := 'X';             -- clk
+			reset_n  : in  std_logic                     := 'X';             -- reset_n
+			address  : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			readdata : out std_logic_vector(31 downto 0);                    -- readdata
+			in_port  : in  std_logic_vector(31 downto 0) := (others => 'X')  -- export
+		);
+	end component riscv_system_pio_0;
 
 	component Core is
 		port (
@@ -103,6 +114,8 @@ architecture rtl of riscv_system is
 			onchip_memory2_0_s2_byteenable                    : out std_logic_vector(3 downto 0);                     -- byteenable
 			onchip_memory2_0_s2_chipselect                    : out std_logic;                                        -- chipselect
 			onchip_memory2_0_s2_clken                         : out std_logic;                                        -- clken
+			pio_0_s1_address                                  : out std_logic_vector(1 downto 0);                     -- address
+			pio_0_s1_readdata                                 : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			switches_s1_address                               : out std_logic_vector(1 downto 0);                     -- address
 			switches_s1_readdata                              : in  std_logic_vector(31 downto 0) := (others => 'X')  -- readdata
 		);
@@ -206,6 +219,8 @@ architecture rtl of riscv_system is
 	signal mm_interconnect_0_leds_s1_writedata              : std_logic_vector(31 downto 0); -- mm_interconnect_0:leds_s1_writedata -> leds:writedata
 	signal mm_interconnect_0_switches_s1_readdata           : std_logic_vector(31 downto 0); -- switches:readdata -> mm_interconnect_0:switches_s1_readdata
 	signal mm_interconnect_0_switches_s1_address            : std_logic_vector(1 downto 0);  -- mm_interconnect_0:switches_s1_address -> switches:address
+	signal mm_interconnect_0_pio_0_s1_readdata              : std_logic_vector(31 downto 0); -- pio_0:readdata -> mm_interconnect_0:pio_0_s1_readdata
+	signal mm_interconnect_0_pio_0_s1_address               : std_logic_vector(1 downto 0);  -- mm_interconnect_0:pio_0_s1_address -> pio_0:address
 	signal mm_interconnect_0_onchip_memory2_0_s2_chipselect : std_logic;                     -- mm_interconnect_0:onchip_memory2_0_s2_chipselect -> onchip_memory2_0:chipselect2
 	signal mm_interconnect_0_onchip_memory2_0_s2_readdata   : std_logic_vector(31 downto 0); -- onchip_memory2_0:readdata2 -> mm_interconnect_0:onchip_memory2_0_s2_readdata
 	signal mm_interconnect_0_onchip_memory2_0_s2_address    : std_logic_vector(12 downto 0); -- mm_interconnect_0:onchip_memory2_0_s2_address -> onchip_memory2_0:address2
@@ -228,7 +243,7 @@ architecture rtl of riscv_system is
 	signal rst_controller_reset_out_reset_req               : std_logic;                     -- rst_controller:reset_req -> [onchip_memory2_0:reset_req, rst_translator:reset_req_in]
 	signal reset_reset_n_ports_inv                          : std_logic;                     -- reset_reset_n:inv -> rst_controller:reset_in0
 	signal mm_interconnect_0_leds_s1_write_ports_inv        : std_logic;                     -- mm_interconnect_0_leds_s1_write:inv -> leds:write_n
-	signal rst_controller_reset_out_reset_ports_inv         : std_logic;                     -- rst_controller_reset_out_reset:inv -> [leds:reset_n, rv32ui_fsmd_0:rsi_reset_n, switches:reset_n]
+	signal rst_controller_reset_out_reset_ports_inv         : std_logic;                     -- rst_controller_reset_out_reset:inv -> [leds:reset_n, pio_0:reset_n, rv32ui_fsmd_0:rsi_reset_n, switches:reset_n]
 
 begin
 
@@ -264,6 +279,15 @@ begin
 			reset       => rst_controller_reset_out_reset,                   -- reset1.reset
 			reset_req   => rst_controller_reset_out_reset_req,               --       .reset_req
 			freeze      => '0'                                               -- (terminated)
+		);
+
+	pio_0 : component riscv_system_pio_0
+		port map (
+			clk      => clk_clk,                                  --                 clk.clk
+			reset_n  => rst_controller_reset_out_reset_ports_inv, --               reset.reset_n
+			address  => mm_interconnect_0_pio_0_s1_address,       --                  s1.address
+			readdata => mm_interconnect_0_pio_0_s1_readdata,      --                    .readdata
+			in_port  => const_high_export                         -- external_connection.export
 		);
 
 	rv32ui_fsmd_0 : component Core
@@ -315,6 +339,8 @@ begin
 			onchip_memory2_0_s2_byteenable                    => mm_interconnect_0_onchip_memory2_0_s2_byteenable, --                                            .byteenable
 			onchip_memory2_0_s2_chipselect                    => mm_interconnect_0_onchip_memory2_0_s2_chipselect, --                                            .chipselect
 			onchip_memory2_0_s2_clken                         => mm_interconnect_0_onchip_memory2_0_s2_clken,      --                                            .clken
+			pio_0_s1_address                                  => mm_interconnect_0_pio_0_s1_address,               --                                    pio_0_s1.address
+			pio_0_s1_readdata                                 => mm_interconnect_0_pio_0_s1_readdata,              --                                            .readdata
 			switches_s1_address                               => mm_interconnect_0_switches_s1_address,            --                                 switches_s1.address
 			switches_s1_readdata                              => mm_interconnect_0_switches_s1_readdata            --                                            .readdata
 		);

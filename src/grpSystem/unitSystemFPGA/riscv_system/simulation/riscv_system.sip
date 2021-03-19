@@ -35,5 +35,6 @@ set_global_assignment -library "lib_riscv_system" -name MISC_FILE [file join $::
 set_global_assignment -library "lib_riscv_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/RISCV-p.vhd"]
 set_global_assignment -library "lib_riscv_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/Core-e.vhd"]
 set_global_assignment -library "lib_riscv_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/Core-Rtl-a.vhd"]
+set_global_assignment -library "lib_riscv_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/riscv_system_pio_0.vhd"]
 set_global_assignment -library "lib_riscv_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/riscv_system_onchip_memory2_0.vhd"]
 set_global_assignment -library "lib_riscv_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/riscv_system_leds.vhd"]

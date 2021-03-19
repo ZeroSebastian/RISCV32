@@ -33,10 +33,10 @@ begin
 
     -- remap bus signals to internal representation (memory is little endian, cpu uses big endian)
     -- instrucion bus
-    i_readdata_remapped <= swapEndianess(to_stdULogicVector(avm_i_readdata));
+    i_readdata_remapped <= to_stdULogicVector(avm_i_readdata); --swapEndianess(to_stdULogicVector(avm_i_readdata));
     -- data bus
-    d_readdata_remapped <= swapEndianess(to_stdULogicVector(avm_d_readdata));
-    avm_d_writedata     <= to_StdLogicVector(swapEndianess(d_writedata_remapped));
+    d_readdata_remapped <= to_stdULogicVector(avm_d_readdata); -- swapEndianess(to_stdULogicVector(avm_d_readdata));
+    avm_d_writedata     <= to_StdLogicVector(d_writedata_remapped); -- to_StdLogicVector(swapEndianess(d_writedata_remapped));
 
     RAMData : process(csi_clk) is
     begin
@@ -59,7 +59,7 @@ begin
         end if;
     end process;
 
-    Comb : process(R, RAMCtrl, i_readdata_remapped, d_readdata_remapped)
+    Comb : process(R, RAMCtrl, i_readdata_remapped, d_readdata_remapped, avm_d_waitrequest)
         variable vRegfile  : aRegfileValues;
         variable vImm      : aImm;
         variable vALU      : aALUValues;
@@ -200,10 +200,14 @@ begin
 
             -- Read data from data mem
             when WaitLoad =>
-                NxR.ctrlState         <= Fetch;
-                vInstrMem.read        := '1';
-                vRegfile.writeEnable  := '1';
-                vRegfile.writeDataSrc := cRegWritedataMemRdSrc;
+                vDataMem.read := '1';
+                -- only transit when slave is ready
+                if (avm_d_waitrequest = '0') then
+                    NxR.ctrlState         <= Fetch;
+                    vInstrMem.read        := '1';
+                    vRegfile.writeEnable  := '1';
+                    vRegfile.writeDataSrc := cRegWritedataMemRdSrc;
+                end if;
 
             -- S-Type Store Instruction
             when CalculateStore =>
@@ -325,6 +329,7 @@ begin
                 NxR.ctrlState         <= Fetch;
 
             when Wait0 =>
+                -- only transit when slave is ready
                 NxR.ctrlState  <= Fetch;
                 vInstrMem.read := '1';
 
@@ -659,63 +664,61 @@ begin
         vDataMem.address := vALU.res;
         case R.curInst(aFunct3Range) is
             when cMemByte | cMemUnsignedByte =>
-                if (R.curInst(aOPCodeRange) = cOpILoad) then
-                    -- check if address is byte aligned
-                    case vDataMem.address(1 downto 0) is
-                        when "00" =>
-                            vDataMem.readData(7 downto 0) := d_readdata_remapped(7 downto 0);
-                        when "01" =>
-                            vDataMem.readData(7 downto 0) := d_readdata_remapped(15 downto 8);
-                        when "10" =>
-                            vDataMem.readData(7 downto 0) := d_readdata_remapped(23 downto 16);
-                        when "11" =>
-                            vDataMem.readData(7 downto 0) := d_readdata_remapped(31 downto 24);
-                        when others => null;
-                    end case;
-                    if (R.curInst(aFunct3Range) = cMemByte) then
-                        vDataMem.readData(31 downto 8) := (others => vDataMem.readData(7));
-                    else
-                        vDataMem.readData(31 downto 8) := (others => '0');
-                    end if;
-                    vDataMem.address(1 downto 0) := "00";
-                    vDataMem.byteenable          := "1111";
+                -- check if address is byte aligned
+                case vDataMem.address(1 downto 0) is
+                    when "00" =>
+                        vDataMem.readData(7 downto 0)  := d_readdata_remapped(7 downto 0);
+                        vDataMem.byteenable            := "0001";
+                        vDataMem.writeData(7 downto 0) := vRegfile.readData2(7 downto 0);
+                    when "01" =>
+                        vDataMem.readData(7 downto 0)   := d_readdata_remapped(15 downto 8);
+                        vDataMem.byteenable             := "0010";
+                        vDataMem.writeData(15 downto 8) := vRegfile.readData2(7 downto 0);
+                    when "10" =>
+                        vDataMem.readData(7 downto 0)    := d_readdata_remapped(23 downto 16);
+                        vDataMem.byteenable              := "0100";
+                        vDataMem.writeData(23 downto 16) := vRegfile.readData2(7 downto 0);
+                    when "11" =>
+                        vDataMem.readData(7 downto 0)    := d_readdata_remapped(31 downto 24);
+                        vDataMem.byteenable              := "1000";
+                        vDataMem.writeData(31 downto 24) := vRegfile.readData2(7 downto 0);
+                    when others => null;
+                end case;
+                vDataMem.address(1 downto 0) := "00";
+                -- signed or unsigned read?
+                if (R.curInst(aFunct3Range) = cMemByte) then
+                    vDataMem.readData(31 downto 8) := (others => vDataMem.readData(7));
                 else
-                    case vDataMem.address(1 downto 0) is
-                        when "00" =>
-                            vDataMem.byteenable              := "1000";
-                            vDataMem.writeData(7 downto 0) := vRegfile.readData2(7 downto 0);
-                        when "01" =>
-                            vDataMem.byteenable              := "0100";
-                            vDataMem.writeData(15 downto 8) := vRegfile.readData2(7 downto 0);
-                        when "10" =>
-                            vDataMem.byteenable             := "0010";
-                            vDataMem.writeData(23 downto 16) := vRegfile.readData2(7 downto 0);
-                        when "11" =>
-                            vDataMem.byteenable            := "0001";
-                            vDataMem.writeData(31 downto 24) := vRegfile.readData2(7 downto 0);
-                        when others => null;
-                    end case;
-                    vDataMem.address(1 downto 0) := "00";
+                    vDataMem.readData(31 downto 8) := (others => '0');
                 end if;
 
-            when cMemHalfWord =>
-                vDataMem.readData                                  := std_ulogic_vector(
-                    resize(signed(d_readdata_remapped(2 * cByte - 1 downto 0)), cBitWidth));
-                vDataMem.writeData(4 * cByte - 1 downto 2 * cByte) := vRegfile.readData2(2 * cByte - 1 downto 0);
-                vDataMem.byteenable                                := cEnableHalfWord;
+            when cMemHalfWord | cMemUnsignedHalfWord =>
+                -- check how the halfword is aligned
+                case vDataMem.address(1) is
+                    when '0' =>
+                        vDataMem.readData(15 downto 0)  := d_readdata_remapped(15 downto 0);
+                        vDataMem.writeData(15 downto 0) := vRegfile.readData2(15 downto 0);
+                        vDataMem.byteenable             := "0011";
+                    when '1' =>
+                        vDataMem.readData(15 downto 0)   := d_readdata_remapped(31 downto 16);
+                        vDataMem.writeData(31 downto 16) := vRegfile.readData2(15 downto 0);
+                        vDataMem.byteenable              := "1100";
+
+                    when others => null;
+                end case;
+                vDataMem.address(1) := '0';
+
+                -- signed or unsigned read?
+                if (R.curInst(aFunct3Range) = cMemHalfWord) then
+                    vDataMem.readData(31 downto 16) := (others => vDataMem.readData(15));
+                else
+                    vDataMem.readData(31 downto 16) := (others => '0');
+                end if;
 
             when cMemWord =>
-                vDataMem.readData   := std_ulogic_vector(
-                    resize(signed(d_readdata_remapped(4 * cByte - 1 downto 0)), cBitWidth));
+                vDataMem.readData   := std_ulogic_vector(d_readdata_remapped);
                 vDataMem.writeData  := vRegfile.readData2;
                 vDataMem.byteenable := cEnableWord;
-
-            when cMemUnsignedHalfWord =>
-                vDataMem.readData                                  := std_ulogic_vector(resize(unsigned(
-                    d_readdata_remapped(2 * cByte - 1 downto 0)), cBitWidth));
-                vDataMem.writeData(4 * cByte - 1 downto 2 * cByte) := vRegfile.readData2(2 * cByte - 1 downto 0);
-                vDataMem.byteenable                                := cEnableHalfWord;
-
             when others =>
                 vDataMem.readData   := (others => '0');
                 vDataMem.writeData  := (others => '0');

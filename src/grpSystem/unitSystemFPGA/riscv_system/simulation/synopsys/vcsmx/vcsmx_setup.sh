@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 18.1 625 win32 2021.03.16.20:15:42
+# ACDS 18.1 625 win32 2021.03.19.15:39:43
 
 # ----------------------------------------
 # vcsmx - auto-generated simulation script
@@ -107,7 +107,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 18.1 625 win32 2021.03.16.20:15:42
+# ACDS 18.1 625 win32 2021.03.19.15:39:43
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="riscv_system"
@@ -165,6 +165,7 @@ mkdir -p ./libraries/mm_interconnect_1/
 mkdir -p ./libraries/mm_interconnect_0/
 mkdir -p ./libraries/switches/
 mkdir -p ./libraries/rv32ui_fsmd_0/
+mkdir -p ./libraries/pio_0/
 mkdir -p ./libraries/onchip_memory2_0/
 mkdir -p ./libraries/leds/
 mkdir -p ./libraries/altera_ver/
@@ -254,6 +255,7 @@ if [ $SKIP_COM -eq 0 ]; then
   vhdlan -xlrm $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS             "$QSYS_SIMDIR/submodules/RISCV-p.vhd"                                                         -work rv32ui_fsmd_0                
   vhdlan -xlrm $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS             "$QSYS_SIMDIR/submodules/Core-e.vhd"                                                          -work rv32ui_fsmd_0                
   vhdlan -xlrm $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS             "$QSYS_SIMDIR/submodules/Core-Rtl-a.vhd"                                                      -work rv32ui_fsmd_0                
+  vhdlan -xlrm $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS             "$QSYS_SIMDIR/submodules/riscv_system_pio_0.vhd"                                              -work pio_0                        
   vhdlan -xlrm $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS             "$QSYS_SIMDIR/submodules/riscv_system_onchip_memory2_0.vhd"                                   -work onchip_memory2_0             
   vhdlan -xlrm $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS             "$QSYS_SIMDIR/submodules/riscv_system_leds.vhd"                                               -work leds                         
   vhdlan -xlrm $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS             "$QSYS_SIMDIR/riscv_system.vhd"                                                                                                  
