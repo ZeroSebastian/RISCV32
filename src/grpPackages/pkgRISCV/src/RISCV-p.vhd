@@ -145,7 +145,7 @@ package RISCV is
         WaitLoad,
         CalculateStore,
         StoreIdleState,
-        WaitState,
+        WaitStore,
         CalculateBranch,
         PerformBranch,
         CalculateALUOp,

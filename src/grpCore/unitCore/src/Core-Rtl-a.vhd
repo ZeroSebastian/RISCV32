@@ -114,7 +114,8 @@ begin
                     when cOpRType | cOpIArith =>
                         NxR.ctrlState <= CalculateALUOp;
                     when cOpFence =>    -- implemented as NOP
-                        NxR.ctrlState <= WaitState;
+                        NxR.ctrlState    <= Fetch;
+                        vInstrMem.read   := '1';
                     when cOpSys =>
                         case R.curInst(aFunct3Range) is
                             when cSysEnv =>
@@ -160,9 +161,7 @@ begin
                 vRegfile.writeDataSrc := cRegWritedataPCSrc;
 
             -- B-Type Conditional Branch
-            when CalculateBranch =>
-                NxR.ctrlState <= WaitState;
-
+            when CalculateBranch =>              
                 -- configure ALU
                 case R.curInst(aFunct3Range) is
                     when cCondEq | cCondNe   => vALU.op := ALUOpSub;
@@ -220,7 +219,7 @@ begin
                 vALU.calc        := '1';
 
             when StoreIdleState =>
-                NxR.ctrlState <= WaitState;
+                NxR.ctrlState <= WaitStore;
 
             -- R-Type or I-Type Register Instruction
             when CalculateALUOp =>
@@ -332,7 +331,7 @@ begin
                 vInstrMem.read        := '1';
                 NxR.ctrlState         <= Fetch;
 
-            when WaitState =>
+            when WaitStore =>
                 -- only transit when slave is ready
                 if (avm_d_waitrequest = '0') then
                     -- only transit when slave is ready
@@ -605,15 +604,21 @@ begin
         -- BranchCheck Unit
         -------------------------------------------------------------------------------
         if (R.ctrlState = CalculateBranch) then
-            -- check if condition is met
+            -- check if condition is met           
             case R.curInst(aFunct3Range) is
                 when cCondEq | cCondGe | cCondGeu =>
                     if vALU.zero = '1' then
                         NxR.ctrlState <= PerformBranch;
+                    else                  
+                        NxR.ctrlState    <= Fetch;
+                        vInstrMem.read   := '1';
                     end if;
                 when cCondNe | cCondLt | cCondLtu =>
                     if vALU.zero = '0' then
                         NxR.ctrlState <= PerformBranch;
+                    else                  
+                        NxR.ctrlState    <= Fetch;
+                        vInstrMem.read   := '1';
                     end if;
                 when others =>
                     null;
