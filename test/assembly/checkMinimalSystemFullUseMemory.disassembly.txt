@@ -1,0 +1,33 @@
+
+checkMinimalSystemFullUseMemory:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <main>:
+   0:	00000113          	li	sp,0
+   4:	00002537          	lui	a0,0x2
+   8:	00a10133          	add	sp,sp,a0
+   c:	00000513          	li	a0,0
+  10:	00008637          	lui	a2,0x8
+  14:	001005b7          	lui	a1,0x100
+  18:	00000297          	auipc	t0,0x0
+  1c:	03028293          	addi	t0,t0,48 # 48 <KAUNTER>
+
+00000020 <loop>:
+  20:	00150513          	addi	a0,a0,1 # 2001 <KAUNTER+0x1fb9>
+  24:	00b55463          	bge	a0,a1,2c <blink>
+  28:	ff9ff06f          	j	20 <loop>
+
+0000002c <blink>:
+  2c:	00000513          	li	a0,0
+  30:	00000797          	auipc	a5,0x0
+  34:	0187a783          	lw	a5,24(a5) # 48 <KAUNTER>
+  38:	00178793          	addi	a5,a5,1
+  3c:	00f2a023          	sw	a5,0(t0)
+  40:	00f60023          	sb	a5,0(a2) # 8000 <PERIPH_OUT>
+  44:	fddff06f          	j	20 <loop>
+
+00000048 <KAUNTER>:
+  48:	0000                	unimp
+	...

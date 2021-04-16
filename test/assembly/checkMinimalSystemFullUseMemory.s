@@ -1,10 +1,10 @@
-.section .text
-.global _start
+.global main
+main:
 
 .equ CONSTANT, 		0x100000
 .equ PERIPH_OUT,   	0x00008000
 
-_start:
+main:
 
 	# reserve space for data
 	li sp, 0
@@ -19,6 +19,10 @@ _start:
 
 	# load compare value
 	li a1, CONSTANT
+	
+	# load address of counter
+	la t0, KAUNTER
+	
 loop:
 	# increment
 	addi a0, a0, 1
@@ -31,13 +35,16 @@ loop:
 blink:
 	# reset loop counter
 	li a0, 0
-
-	# increment peripheral value
-	addi a3, a3, 1
-
+	
+	# load a3
+	lw a5, KAUNTER
+	addi a5, a5, 1
+	# store
+	sw a5, 0(t0)
+	
 	# write to peripheral
-	sb a3, 0(a2)
+	sb a5, 0(a2)
 
 	j loop
 
-
+KAUNTER: .int 0x00000000
