@@ -74,6 +74,12 @@ package RISCV is
     subtype aALUShiftRange is natural range 5 downto 0; -- alu shift range
     subtype aFunct7OtherInstructionRange is natural range 30 downto 30; -- bit that is set when the other instruction should be executed
 
+    subtype aCSRRWCheckRange is natural range 11 downto 7; -- range to check when csr rw instruction is executed
+    subtype aCSRRSRCCheckRange is natural range 19 downto 15; -- range to check when csr rs / rc instruction is executed
+    subtype aCSRRegAddrRange is natural range 31 downto 20; -- range where address of csr register is defined
+
+    subtype aTrapMetCheckRange is natural range 31 downto 20; -- range where to check if a trap condition is met
+
     -------------------------------------------------------------------------------
     -- OpCodes
     -------------------------------------------------------------------------------
@@ -135,9 +141,11 @@ package RISCV is
         CalculateUpperimmediate,
         CalculateJump,
         CalculateLoad,
+        LoadIdleState,
         WaitLoad,
         CalculateStore,
-        Wait0,
+        StoreIdleState,
+        WaitState,
         CalculateBranch,
         PerformBranch,
         CalculateALUOp,
@@ -218,9 +226,9 @@ package RISCV is
 
     type aALUOp is (
         ALUOpAdd, ALUOpSub,
-        ALUOpSLT, ALUOpSLTU,            -- less than (unsigned)
+        ALUOpSlt, ALUOpSltu,            -- less than (unsigned)
         ALUOpAnd, ALUOpOr, ALUOpXor,
-        ALUOpSLL, ALUOpSRL, ALUOpSRA,   -- shift left/right logical/arithmetic
+        ALUOpSll, ALUOpSrl, ALUOpSra,   -- shift left/right logical/arithmetic
         ALUOpMul, ALUOpMulh, ALUOpMulhu, ALUOpMulhsu, -- multiplication
         ALUOpDiv, ALUOpDivu, ALUOpRem, ALUOpRemu, -- division / remain
         ALUOpNOP
@@ -320,6 +328,7 @@ package RISCV is
     -- Memory
     -------------------------------------------------------------------------------    
     subtype aMemByteselect is std_ulogic_vector(3 downto 0);
+    subtype aMemLowerBytes is std_ulogic_vector(1 downto 0);
     -- Memory Funct3
     constant cMemByte             : aFunct3 := "000";
     constant cMemHalfWord         : aFunct3 := "001";
@@ -327,26 +336,38 @@ package RISCV is
     constant cMemUnsignedByte     : aFunct3 := "100";
     constant cMemUnsignedHalfWord : aFunct3 := "101";
 
-    constant cEnableByte     : aMemByteselect := "0001";
-    constant cEnableHalfWord : aMemByteselect := "0011";
-    constant cEnableWord     : aMemByteselect := "1111";
+    constant cEnableByte0     : aMemByteselect := "0001";
+    constant cEnableByte1     : aMemByteselect := "0010";
+    constant cEnableByte2     : aMemByteselect := "0100";
+    constant cEnableByte3     : aMemByteselect := "1000";
+    constant cEnableHalfWord0 : aMemByteselect := "0011";
+    constant cEnableHalfWord1 : aMemByteselect := "1100";
+    constant cEnableWord      : aMemByteselect := "1111";
+
+    constant cAddressByte0 : aMemLowerBytes := "00";
+    constant cAddressByte1 : aMemLowerBytes := "01";
+    constant cAddressByte2 : aMemLowerBytes := "10";
+    constant cAddressByte3 : aMemLowerBytes := "11";
+
+    subtype aByte0AcceseRange is natural range 7 downto 0;
+    subtype aByte1AcceseRange is natural range 15 downto 8;
+    subtype aByte2AcceseRange is natural range 23 downto 16;
+    subtype aByte3AcceseRange is natural range 31 downto 24;
+    subtype aHalfword0AcceseRange is natural range 15 downto 0;
+    subtype aHalfword1AcceseRange is natural range 31 downto 16;
 
     type aDataMemValues is record
         readData   : aRegValue;
         writeData  : aRegValue;
         address    : aRegValue;
         byteenable : aMemByteselect;
-        read       : std_ulogic;
-        write      : std_ulogic;
     end record;
 
     constant cDataMemDefault : aDataMemValues := (
         readData   => (others => '0'),
         writeData  => (others => '0'),
         address    => (others => '0'),
-        byteenable => cEnableWord,
-        read       => '0',
-        write      => '0'
+        byteenable => cEnableWord
     );
 
     constant cInstrAddrPCSrc  : aCtrlSignal := '0';
@@ -368,7 +389,9 @@ package RISCV is
     constant cModeNoWrite : aCtrl2Signal := "00";
     constant cModeClear   : aCtrl2Signal := "01";
     constant cModeSet     : aCtrl2Signal := "10";
-    constant cModeWrite   : aCtrl2Signal := "11";
+    constant cModeWrite   : aCtrl2Signal := "11";    
+    
+    constant  cCSRDataSrcPos : natural := 14; -- position in instr that indicates the source for csr
 
     type aCSRValues is record
         addrMapped : integer;
@@ -450,7 +473,13 @@ package RISCV is
         divisionCount         : natural;
         divisionDone          : std_ulogic;
         divisionState         : aDivState;
-
+        -- signals for data bus
+        dataBusAddress : aRegValue;
+        dataBusReadData : aRegValue;
+        dataBusWriteData : aRegValue;
+        dataBusRead : std_ulogic;
+        dataBusWrite : std_ulogic;
+        dataBusByteenable : aMemByteselect;
         -- signals for CSR
         csrReg                : aCsrSet;
     end record aRegSet;
@@ -470,6 +499,12 @@ package RISCV is
         divisionCount         => 0,
         divisionDone          => '0',
         divisionState         => prepare,
+        dataBusAddress => (others => '0'),
+        dataBusReadData => (others => '0'),
+        dataBusWriteData => (others => '0'),
+        dataBusRead => '0',
+        dataBusWrite => '0',
+        dataBusByteenable => (others => '0'),
         csrReg                => (others => (others => '0'))
     );
 

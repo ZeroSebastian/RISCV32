@@ -22,8 +22,6 @@ architecture rtl of Core is
     attribute ramstyle        : string;
     attribute ramstyle of RAM : signal is "MLAB";
 
-    signal csr : aCsrSet := (others => (others => '0'));
-
     -- bussignals for remapping
     signal i_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
     signal d_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
@@ -53,7 +51,6 @@ begin
     begin
         if (rsi_reset_n = not ('1')) then
             R   <= cInitValRegSet;
-            csr <= (others => (others => '0'));
         elsif (rising_edge(csi_clk)) then
             R <= NxR;
         end if;
@@ -117,7 +114,7 @@ begin
                     when cOpRType | cOpIArith =>
                         NxR.ctrlState <= CalculateALUOp;
                     when cOpFence =>    -- implemented as NOP
-                        NxR.ctrlState <= Wait0;
+                        NxR.ctrlState <= WaitState;
                     when cOpSys =>
                         case R.curInst(aFunct3Range) is
                             when cSysEnv =>
@@ -164,13 +161,13 @@ begin
 
             -- B-Type Conditional Branch
             when CalculateBranch =>
-                NxR.ctrlState <= Wait0;
+                NxR.ctrlState <= WaitState;
 
                 -- configure ALU
                 case R.curInst(aFunct3Range) is
                     when cCondEq | cCondNe   => vALU.op := ALUOpSub;
-                    when cCondLt | cCondGe   => vALU.op := ALUOpSLT;
-                    when cCondLtu | cCondGeu => vALU.op := ALUOpSLTU;
+                    when cCondLt | cCondGe   => vALU.op := ALUOpSlt;
+                    when cCondLtu | cCondGeu => vALU.op := ALUOpSltu;
                     when others              => null;
                 end case;
                 vALU.src1 := cALUSrc1RegFile;
@@ -191,19 +188,23 @@ begin
 
             -- I-Type Load Instruction
             when CalculateLoad =>
+                NxR.dataBusRead <= '1';
+                NxR.ctrlState   <= LoadIdleState;
+                vALU.op         := ALUOpAdd;
+                vALU.src1       := cALUSrc1RegFile;
+                vALU.src2       := cALUSrc2ImmGen;
+                vALU.calc       := '1';
+
+            -- idle state -> registered address and read must at least be two cycles on bus
+            when LoadIdleState =>
                 NxR.ctrlState <= WaitLoad;
-                vALU.op       := ALUOpAdd;
-                vALU.src1     := cALUSrc1RegFile;
-                vALU.src2     := cALUSrc2ImmGen;
-                vALU.calc     := '1';
-                vDataMem.read := '1';
 
             -- Read data from data mem
             when WaitLoad =>
-                vDataMem.read := '1';
                 -- only transit when slave is ready
                 if (avm_d_waitrequest = '0') then
                     NxR.ctrlState         <= Fetch;
+                    NxR.dataBusRead       <= '0';
                     vInstrMem.read        := '1';
                     vRegfile.writeEnable  := '1';
                     vRegfile.writeDataSrc := cRegWritedataMemRdSrc;
@@ -211,12 +212,15 @@ begin
 
             -- S-Type Store Instruction
             when CalculateStore =>
-                NxR.ctrlState  <= Wait0;
-                vDataMem.write := '1';
-                vALU.op        := ALUOpAdd;
-                vALU.src1      := cALUSrc1RegFile;
-                vALU.src2      := cALUSrc2ImmGen;
-                vALU.calc      := '1';
+                NxR.ctrlState    <= StoreIdleState;
+                NxR.dataBusWrite <= '1';
+                vALU.op          := ALUOpAdd;
+                vALU.src1        := cALUSrc1RegFile;
+                vALU.src2        := cALUSrc2ImmGen;
+                vALU.calc        := '1';
+
+            when StoreIdleState =>
+                NxR.ctrlState <= WaitState;
 
             -- R-Type or I-Type Register Instruction
             when CalculateALUOp =>
@@ -272,15 +276,15 @@ begin
                             else
                                 vALU.op := ALUOpAdd;
                             end if;
-                        when cFunct3sll  => vALU.op := ALUOpSLL; -- shift left logical
-                        when cFunct3slt  => vALU.op := ALUOpSLT; -- signed less than
-                        when cFunct3sltu => vALU.op := ALUOpSLTU; -- unsigned less than
+                        when cFunct3sll  => vALU.op := ALUOpSll; -- shift left logical
+                        when cFunct3slt  => vALU.op := ALUOpSlt; -- signed less than
+                        when cFunct3sltu => vALU.op := ALUOpSltu; -- unsigned less than
                         when cFunct3xor  => vALU.op := ALUOpXor; -- xor
                         when cFunct3sr => -- shift rigth logical/arithmetical                            
                             if R.curInst(cFunct7OtherInstrPos) = '0' then
-                                vALU.op := ALUOpSRL;
+                                vALU.op := ALUOpSrl;
                             else
-                                vALU.op := ALUOpSRA;
+                                vALU.op := ALUOpSra;
                             end if;
                         when cFunct3or   => vALU.op := ALUOpOr; -- or
                         when cFunct3and  => vALU.op := ALUOpAnd; -- and
@@ -308,18 +312,18 @@ begin
             when CalculateSys =>
                 case R.curInst(aFunct3Range) is
                     when cSysRW | cSysRWI =>
-                        if R.curInst(11 downto 7) /= "00000" then
+                        if R.curInst(aCSRRWCheckRange) /= "00000" then
                             vRegfile.writeEnable := '1';
                         end if;
                         vCSR.writeMode := cModeWrite;
                     when cSysRS | cSysRSI =>
                         vRegfile.writeEnable := '1';
-                        if R.curInst(19 downto 15) /= "00000" then
+                        if R.curInst(aCSRRSRCCheckRange) /= "00000" then
                             vCSR.writeMode := cModeSet;
                         end if;
                     when cSysRC | cSysRCI =>
                         vRegfile.writeEnable := '1';
-                        if R.curInst(19 downto 15) /= "00000" then
+                        if R.curInst(aCSRRSRCCheckRange) /= "00000" then
                             vCSR.writeMode := cModeClear;
                         end if;
                     when others => null;
@@ -328,13 +332,17 @@ begin
                 vInstrMem.read        := '1';
                 NxR.ctrlState         <= Fetch;
 
-            when Wait0 =>
+            when WaitState =>
                 -- only transit when slave is ready
-                NxR.ctrlState  <= Fetch;
-                vInstrMem.read := '1';
+                if (avm_d_waitrequest = '0') then
+                    -- only transit when slave is ready
+                    NxR.ctrlState    <= Fetch;
+                    NxR.dataBusWrite <= '0';
+                    vInstrMem.read   := '1';
+                end if;
 
             when Trap =>
-                if R.curInst(31 downto 20) = cMTrapRet then
+                if R.curInst(aTrapMetCheckRange) = cMTrapRet then
                     NxR.ctrlState  <= Fetch;
                     vInstrMem.read := '1';
                 else
@@ -540,10 +548,10 @@ begin
         case vALU.op is
             when ALUOpAdd | ALUOpSub =>
                 vALU.rawRes := vALU.addsubRes;
-            when ALUOpSLT =>
+            when ALUOpSlt =>
                 vALU.rawRes    := (others => '0');
                 vALU.rawRes(0) := (vALU.addsubRes(vALU.addsubRes'high - 1) or vALU.addsubCarry) and not (not vALU.data1(vALU.data1'high - 1) and vALU.data2(vALU.data2'high - 1));
-            when ALUOpSLTU =>
+            when ALUOpSltu =>
                 vALU.rawRes := (0 => vALU.addsubRes(vALU.addsubRes'high), others => '0');
             when ALUOpAnd =>
                 vALU.rawRes := (vALU.data1 AND vALU.data2);
@@ -551,12 +559,12 @@ begin
                 vALU.rawRes := (vALU.data1 OR vALU.data2);
             when ALUOpXor =>
                 vALU.rawRes := (vALU.data1 XOR vALU.data2);
-            when ALUOpSLL =>
+            when ALUOpSll =>
                 vALU.rawRes := std_ulogic_vector(
                     shift_left(unsigned(vALU.data1), vALU.shiftAmount));
-            when ALUOpSRL | ALUOpSRA =>
+            when ALUOpSrl | ALUOpSra =>
                 vALU.srValue := '0';
-                if (vALU.op = ALUOpSRA) then
+                if (vALU.op = ALUOpSra) then
                     vALU.srValue := vALU.data1(vALU.data1'high - 1);
                 end if;
                 vALU.rawRes  := std_ulogic_vector(
@@ -631,13 +639,13 @@ begin
         -- CSR Unit
         -------------------------------------------------------------------------------
         -- Mux CsrWriteData
-        if R.curInst(14) = cCsrDataReg then
+        if R.curInst(cCSRDataSrcPos) = cCsrDataReg then
             vCSR.writeData := vRegfile.readData1;
         else
-            vCSR.writeData := std_ulogic_vector(resize(unsigned(R.curInst(19 downto 15)), cBitWidth));
+            vCSR.writeData := std_ulogic_vector(resize(unsigned(R.curInst(aCSRRSRCCheckRange)), cBitWidth));
         end if;
 
-        vCSR.addrMapped := mapCsrAddr(R.curInst(31 downto 20));
+        vCSR.addrMapped := mapCsrAddr(R.curInst(aCSRRegAddrRange));
 
         if mapCsrAddrValid(vCSR.addrMapped) then
             vCSR.readData := R.csrReg(vCSR.addrMapped);
@@ -665,54 +673,54 @@ begin
         case R.curInst(aFunct3Range) is
             when cMemByte | cMemUnsignedByte =>
                 -- check if address is byte aligned
-                case vDataMem.address(1 downto 0) is
-                    when "00" =>
-                        vDataMem.readData(7 downto 0)  := d_readdata_remapped(7 downto 0);
-                        vDataMem.byteenable            := "0001";
-                        vDataMem.writeData(7 downto 0) := vRegfile.readData2(7 downto 0);
-                    when "01" =>
-                        vDataMem.readData(7 downto 0)   := d_readdata_remapped(15 downto 8);
-                        vDataMem.byteenable             := "0010";
-                        vDataMem.writeData(15 downto 8) := vRegfile.readData2(7 downto 0);
-                    when "10" =>
-                        vDataMem.readData(7 downto 0)    := d_readdata_remapped(23 downto 16);
-                        vDataMem.byteenable              := "0100";
-                        vDataMem.writeData(23 downto 16) := vRegfile.readData2(7 downto 0);
-                    when "11" =>
-                        vDataMem.readData(7 downto 0)    := d_readdata_remapped(31 downto 24);
-                        vDataMem.byteenable              := "1000";
-                        vDataMem.writeData(31 downto 24) := vRegfile.readData2(7 downto 0);
+                case vDataMem.address(aMemLowerBytes'range) is
+                    when cAddressByte0 =>
+                        vDataMem.readData(aByte0AcceseRange)  := d_readdata_remapped(aByte0AcceseRange);
+                        vDataMem.byteenable                   := cEnableByte0;
+                        vDataMem.writeData(aByte0AcceseRange) := vRegfile.readData2(aByte0AcceseRange);
+                    when cAddressByte1 =>
+                        vDataMem.readData(aByte0AcceseRange)  := d_readdata_remapped(aByte1AcceseRange);
+                        vDataMem.byteenable                   := cEnableByte1;
+                        vDataMem.writeData(aByte1AcceseRange) := vRegfile.readData2(aByte0AcceseRange);
+                    when cAddressByte2 =>
+                        vDataMem.readData(aByte0AcceseRange)  := d_readdata_remapped(aByte2AcceseRange);
+                        vDataMem.byteenable                   := cEnableByte2;
+                        vDataMem.writeData(aByte2AcceseRange) := vRegfile.readData2(aByte0AcceseRange);
+                    when cAddressByte3 =>
+                        vDataMem.readData(aByte0AcceseRange)  := d_readdata_remapped(aByte3AcceseRange);
+                        vDataMem.byteenable                   := cEnableByte3;
+                        vDataMem.writeData(aByte3AcceseRange) := vRegfile.readData2(aByte0AcceseRange);
                     when others => null;
                 end case;
-                vDataMem.address(1 downto 0) := "00";
+                vDataMem.address(aMemLowerBytes'range) := "00";
                 -- signed or unsigned read?
                 if (R.curInst(aFunct3Range) = cMemByte) then
-                    vDataMem.readData(31 downto 8) := (others => vDataMem.readData(7));
+                    vDataMem.readData(vDataMem.readData'high downto aByte0AcceseRange'high + 1) := (others => vDataMem.readData(aByte0AcceseRange'high));
                 else
-                    vDataMem.readData(31 downto 8) := (others => '0');
+                    vDataMem.readData(vDataMem.readData'high downto aByte0AcceseRange'high + 1) := (others => '0');
                 end if;
 
             when cMemHalfWord | cMemUnsignedHalfWord =>
                 -- check how the halfword is aligned
-                case vDataMem.address(1) is
-                    when '0' =>
-                        vDataMem.readData(15 downto 0)  := d_readdata_remapped(15 downto 0);
-                        vDataMem.writeData(15 downto 0) := vRegfile.readData2(15 downto 0);
-                        vDataMem.byteenable             := "0011";
-                    when '1' =>
-                        vDataMem.readData(15 downto 0)   := d_readdata_remapped(31 downto 16);
-                        vDataMem.writeData(31 downto 16) := vRegfile.readData2(15 downto 0);
-                        vDataMem.byteenable              := "1100";
+                case vDataMem.address(aMemLowerBytes'range) is
+                    when cAddressByte0 =>
+                        vDataMem.readData(aHalfword0AcceseRange)  := d_readdata_remapped(aHalfword0AcceseRange);
+                        vDataMem.writeData(aHalfword0AcceseRange) := vRegfile.readData2(aHalfword0AcceseRange);
+                        vDataMem.byteenable                       := cEnableHalfWord0;
+                    when cAddressByte2 =>
+                        vDataMem.readData(aHalfword0AcceseRange)  := d_readdata_remapped(aHalfword1AcceseRange);
+                        vDataMem.writeData(aHalfword1AcceseRange) := vRegfile.readData2(aHalfword0AcceseRange);
+                        vDataMem.byteenable                       := cEnableHalfWord1;
 
                     when others => null;
                 end case;
-                vDataMem.address(1) := '0';
+                vDataMem.address(aMemLowerBytes'range) := "00";
 
                 -- signed or unsigned read?
                 if (R.curInst(aFunct3Range) = cMemHalfWord) then
-                    vDataMem.readData(31 downto 16) := (others => vDataMem.readData(15));
+                    vDataMem.readData(vDataMem.readData'high downto aHalfword0AcceseRange'high + 1) := (others => vDataMem.readData(aHalfword0AcceseRange'high));
                 else
-                    vDataMem.readData(31 downto 16) := (others => '0');
+                    vDataMem.readData(vDataMem.readData'high downto aHalfword0AcceseRange'high + 1) := (others => '0');
                 end if;
 
             when cMemWord =>
@@ -725,11 +733,19 @@ begin
                 vDataMem.byteenable := (others => '0');
         end case;
 
-        avm_d_address        <= to_StdLogicVector(vDataMem.address);
-        avm_d_byteenable     <= to_StdLogicVector(vDataMem.byteenable);
-        avm_d_write          <= std_logic(vDataMem.write);
-        d_writedata_remapped <= vDataMem.writeData;
-        avm_d_read           <= std_logic(vDataMem.read);
+        -- new reg value when waitrequest is not '1'
+        -- otherwise the values must remain constant
+        if (R.ctrlState = CalculateStore or R.ctrlState = CalculateLoad) then
+            NxR.dataBusWriteData  <= vDataMem.writeData;
+            NxR.dataBusByteenable <= vDataMem.byteenable;
+            NxR.dataBusAddress    <= vDataMem.address;
+        end if;
+
+        avm_d_address        <= std_logic_vector(R.dataBusAddress);
+        avm_d_byteenable     <= std_logic_vector(R.dataBusByteenable);
+        avm_d_write          <= std_logic(R.dataBusWrite);
+        d_writedata_remapped <= R.dataBusWriteData;
+        avm_d_read           <= std_logic(R.dataBusRead);
 
         -------------------------------------------------------------------------------
         -- Register File - Write Stage
@@ -743,7 +759,8 @@ begin
             when others                => null;
         end case;
 
-        if vRegfile.writeEnable = '1' and R.curInst(aRdAddrRange) /= "00000" then
+        -- only configure to write when reg address is not 0
+        if vRegfile.writeEnable = '1' and R.curInst(aRdAddrRange) /= (aRdAddrRange => '0') then
             NxRAMCtrl.regfileWrAddr <= to_integer(unsigned(R.curInst(aRdAddrRange)));
             NxRAMCtrl.regfileWrData <= vRegfile.writeData;
         else
