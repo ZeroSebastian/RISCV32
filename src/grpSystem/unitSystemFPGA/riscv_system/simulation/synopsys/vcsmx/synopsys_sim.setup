@@ -20,7 +20,6 @@ mm_interconnect_1:             ./libraries/mm_interconnect_1/
 mm_interconnect_0:             ./libraries/mm_interconnect_0/            
 switches:                      ./libraries/switches/                     
 rv32ui_fsmd_0:                 ./libraries/rv32ui_fsmd_0/                
-pio_0:                         ./libraries/pio_0/                        
 onchip_memory2_0:              ./libraries/onchip_memory2_0/             
 leds:                          ./libraries/leds/                         
 altera_ver:                    ./libraries/altera_ver/                   

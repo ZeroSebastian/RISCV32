@@ -133,10 +133,6 @@
    type="VHDL"
    library="rv32ui_fsmd_0" />
  <file
-   path="simulation/submodules/riscv_system_pio_0.vhd"
-   type="VHDL"
-   library="pio_0" />
- <file
    path="simulation/submodules/riscv_system_onchip_memory2_0.vhd"
    type="VHDL"
    library="onchip_memory2_0" />

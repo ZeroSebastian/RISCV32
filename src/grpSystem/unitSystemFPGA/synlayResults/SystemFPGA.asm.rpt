@@ -1,5 +1,5 @@
 Assembler report for SystemFPGA
-Fri Apr 16 16:29:13 2021
+Tue Apr 20 19:47:13 2021
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -38,7 +38,7 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Fri Apr 16 16:29:13 2021 ;
+; Assembler Status      ; Successful - Tue Apr 20 19:47:13 2021 ;
 ; Revision Name         ; SystemFPGA                            ;
 ; Top-level Entity Name ; SystemFPGA                            ;
 ; Family                ; Cyclone V                             ;
@@ -68,8 +68,8 @@ refer to the applicable agreement for further details.
 +----------------+-----------------------------------------------------------------------+
 ; Option         ; Setting                                                               ;
 +----------------+-----------------------------------------------------------------------+
-; JTAG usercode  ; 0x01B252EA                                                            ;
-; Checksum       ; 0x01B252EA                                                            ;
+; JTAG usercode  ; 0x01B063D1                                                            ;
+; Checksum       ; 0x01B063D1                                                            ;
 +----------------+-----------------------------------------------------------------------+
 
 
@@ -89,13 +89,13 @@ refer to the applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Fri Apr 16 16:29:02 2021
+    Info: Processing started: Tue Apr 20 19:47:03 2021
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off SystemFPGA -c SystemFPGA
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 4885 megabytes
-    Info: Processing ended: Fri Apr 16 16:29:13 2021
-    Info: Elapsed time: 00:00:11
-    Info: Total CPU time (on all processors): 00:00:11
+    Info: Peak virtual memory: 4884 megabytes
+    Info: Processing ended: Tue Apr 20 19:47:13 2021
+    Info: Elapsed time: 00:00:10
+    Info: Total CPU time (on all processors): 00:00:10
 
 

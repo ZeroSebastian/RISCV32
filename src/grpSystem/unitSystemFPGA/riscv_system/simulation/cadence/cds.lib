@@ -27,7 +27,6 @@ DEFINE mm_interconnect_1             ./libraries/mm_interconnect_1/
 DEFINE mm_interconnect_0             ./libraries/mm_interconnect_0/            
 DEFINE switches                      ./libraries/switches/                     
 DEFINE rv32ui_fsmd_0                 ./libraries/rv32ui_fsmd_0/                
-DEFINE pio_0                         ./libraries/pio_0/                        
 DEFINE onchip_memory2_0              ./libraries/onchip_memory2_0/             
 DEFINE leds                          ./libraries/leds/                         
 DEFINE altera_ver                    ./libraries/altera_ver/                   

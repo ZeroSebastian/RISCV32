@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 18.1 625 win32 2021.04.16.16:43:54
+# ACDS 18.1 625 win32 2021.04.20.19:42:11
 
 # ----------------------------------------
 # ncsim - auto-generated simulation script
@@ -106,7 +106,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 18.1 625 win32 2021.04.16.16:43:54
+# ACDS 18.1 625 win32 2021.04.20.19:42:11
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="riscv_system"
@@ -164,7 +164,6 @@ mkdir -p ./libraries/mm_interconnect_1/
 mkdir -p ./libraries/mm_interconnect_0/
 mkdir -p ./libraries/switches/
 mkdir -p ./libraries/rv32ui_fsmd_0/
-mkdir -p ./libraries/pio_0/
 mkdir -p ./libraries/onchip_memory2_0/
 mkdir -p ./libraries/leds/
 mkdir -p ./libraries/altera_ver/
@@ -251,7 +250,6 @@ if [ $SKIP_COM -eq 0 ]; then
   ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QSYS_SIMDIR/submodules/RISCV-p.vhd"                                                         -work rv32ui_fsmd_0                 -cdslib ./cds_libs/rv32ui_fsmd_0.cds.lib                
   ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QSYS_SIMDIR/submodules/Core-e.vhd"                                                          -work rv32ui_fsmd_0                 -cdslib ./cds_libs/rv32ui_fsmd_0.cds.lib                
   ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QSYS_SIMDIR/submodules/Core-Rtl-a.vhd"                                                      -work rv32ui_fsmd_0                 -cdslib ./cds_libs/rv32ui_fsmd_0.cds.lib                
-  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QSYS_SIMDIR/submodules/riscv_system_pio_0.vhd"                                              -work pio_0                         -cdslib ./cds_libs/pio_0.cds.lib                        
   ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QSYS_SIMDIR/submodules/riscv_system_onchip_memory2_0.vhd"                                   -work onchip_memory2_0              -cdslib ./cds_libs/onchip_memory2_0.cds.lib             
   ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QSYS_SIMDIR/submodules/riscv_system_leds.vhd"                                               -work leds                          -cdslib ./cds_libs/leds.cds.lib                         
   ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QSYS_SIMDIR/riscv_system.vhd"                                                                                                                                                           

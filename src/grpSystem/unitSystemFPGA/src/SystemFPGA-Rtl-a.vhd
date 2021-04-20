@@ -11,17 +11,13 @@
 -------------------------------------------------------------------------------
 
 architecture rtl of SystemFPGA is
-    
-    constant cAllHigh : std_ulogic_vector(31 downto 0) := (others => '0');
-    signal allHigh : std_ulogic_vector(31 downto 0) := (others => '0');
-    
+        
 	component riscv_system is
 		port (
 			clk_clk         : in  std_logic;
 			reset_reset_n   : in  std_logic;
 			switches_export : in  std_logic_vector(7 downto 0);
-			leds_export     : out std_logic_vector(7 downto 0);
-			const_high_export : in std_ulogic_vector(31 downto 0)
+			leds_export     : out std_logic_vector(7 downto 0)
 		);
 	end component riscv_system;
 
@@ -40,8 +36,7 @@ begin
 			clk_clk         => CLOCK_50, --slow_clk,
 			reset_reset_n   => SW(9),
 			switches_export => SW(7 downto 0),
-			leds_export     => LEDR(7 downto 0),
-			const_high_export => allHigh
+			leds_export     => LEDR(7 downto 0)
 		);
 
 	

@@ -94,7 +94,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 18.1 625 win32 2021.04.16.16:43:54
+# ACDS 18.1 625 win32 2021.04.20.19:42:11
 
 # ----------------------------------------
 # Initialize variables
@@ -216,8 +216,6 @@ ensure_lib                               ./libraries/switches/
 vmap       switches                      ./libraries/switches/                     
 ensure_lib                               ./libraries/rv32ui_fsmd_0/                
 vmap       rv32ui_fsmd_0                 ./libraries/rv32ui_fsmd_0/                
-ensure_lib                               ./libraries/pio_0/                        
-vmap       pio_0                         ./libraries/pio_0/                        
 ensure_lib                               ./libraries/onchip_memory2_0/             
 vmap       onchip_memory2_0              ./libraries/onchip_memory2_0/             
 ensure_lib                               ./libraries/leds/                         
@@ -296,7 +294,6 @@ alias com {
   eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QSYS_SIMDIR/submodules/RISCV-p.vhd"                                                         -work rv32ui_fsmd_0                
   eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QSYS_SIMDIR/submodules/Core-e.vhd"                                                          -work rv32ui_fsmd_0                
   eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QSYS_SIMDIR/submodules/Core-Rtl-a.vhd"                                                      -work rv32ui_fsmd_0                
-  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QSYS_SIMDIR/submodules/riscv_system_pio_0.vhd"                                              -work pio_0                        
   eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QSYS_SIMDIR/submodules/riscv_system_onchip_memory2_0.vhd"                                   -work onchip_memory2_0             
   eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QSYS_SIMDIR/submodules/riscv_system_leds.vhd"                                               -work leds                         
   eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QSYS_SIMDIR/riscv_system.vhd"                                                                                                  
@@ -306,14 +303,14 @@ alias com {
 # Elaborate top level design
 alias elab {
   echo "\[exec\] elab"
-  eval vsim -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L rsp_mux -L cmd_mux -L cmd_demux -L router_001 -L router -L avalon_st_adapter -L rsp_demux -L leds_s1_agent_rsp_fifo -L leds_s1_agent -L rv32ui_fsmd_0_data_agent -L leds_s1_translator -L rv32ui_fsmd_0_data_translator -L rst_controller -L mm_interconnect_1 -L mm_interconnect_0 -L switches -L rv32ui_fsmd_0 -L pio_0 -L onchip_memory2_0 -L leds -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev $TOP_LEVEL_NAME
+  eval vsim -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L rsp_mux -L cmd_mux -L cmd_demux -L router_001 -L router -L avalon_st_adapter -L rsp_demux -L leds_s1_agent_rsp_fifo -L leds_s1_agent -L rv32ui_fsmd_0_data_agent -L leds_s1_translator -L rv32ui_fsmd_0_data_translator -L rst_controller -L mm_interconnect_1 -L mm_interconnect_0 -L switches -L rv32ui_fsmd_0 -L onchip_memory2_0 -L leds -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev $TOP_LEVEL_NAME
 }
 
 # ----------------------------------------
 # Elaborate the top level design with novopt option
 alias elab_debug {
   echo "\[exec\] elab_debug"
-  eval vsim -novopt -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L rsp_mux -L cmd_mux -L cmd_demux -L router_001 -L router -L avalon_st_adapter -L rsp_demux -L leds_s1_agent_rsp_fifo -L leds_s1_agent -L rv32ui_fsmd_0_data_agent -L leds_s1_translator -L rv32ui_fsmd_0_data_translator -L rst_controller -L mm_interconnect_1 -L mm_interconnect_0 -L switches -L rv32ui_fsmd_0 -L pio_0 -L onchip_memory2_0 -L leds -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev $TOP_LEVEL_NAME
+  eval vsim -novopt -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L rsp_mux -L cmd_mux -L cmd_demux -L router_001 -L router -L avalon_st_adapter -L rsp_demux -L leds_s1_agent_rsp_fifo -L leds_s1_agent -L rv32ui_fsmd_0_data_agent -L leds_s1_translator -L rv32ui_fsmd_0_data_translator -L rst_controller -L mm_interconnect_1 -L mm_interconnect_0 -L switches -L rv32ui_fsmd_0 -L onchip_memory2_0 -L leds -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev $TOP_LEVEL_NAME
 }
 
 # ----------------------------------------

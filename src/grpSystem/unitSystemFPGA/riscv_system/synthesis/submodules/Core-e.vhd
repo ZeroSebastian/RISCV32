@@ -3,7 +3,7 @@
 -- Project    : RISC-V 32-Bit Core
 -------------------------------------------------------------------------------
 -- File       : Core-e.vhd
--- Author	  : Binder Alexander
+-- Author	  : Binder Alexander, Jahn Sebastian
 -- Date		  : 11.11.2019
 -- Revisions  : V1, 11.11.2019 -ba
 -------------------------------------------------------------------------------
@@ -20,6 +20,12 @@ use work.RISCV.all;
 use work.Global.all;
 
 entity Core is
+    
+    generic (
+        -- defines if the M extension is being generated
+        gImplementMExtension : natural := 1
+    );
+    
     port (
         csi_clk             : in  std_logic;
         rsi_reset_n         : in  std_logic;

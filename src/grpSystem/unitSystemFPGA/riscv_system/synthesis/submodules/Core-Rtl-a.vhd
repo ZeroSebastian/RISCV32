@@ -23,18 +23,18 @@ architecture rtl of Core is
     attribute ramstyle of RAM : signal is "MLAB";
 
     -- bussignals for remapping
-    signal i_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
-    signal d_readdata_remapped  : std_ulogic_vector(cBitWidth - 1 downto 0);
-    signal d_writedata_remapped : std_ulogic_vector(cBitWidth - 1 downto 0);
+    signal i_readdata  : std_ulogic_vector(cBitWidth - 1 downto 0);
+    signal d_readdata  : std_ulogic_vector(cBitWidth - 1 downto 0);
+    signal d_writedata : std_ulogic_vector(cBitWidth - 1 downto 0);
 
 begin
 
     -- remap bus signals to internal representation (memory is little endian, cpu uses big endian)
     -- instrucion bus
-    i_readdata_remapped <= to_stdULogicVector(avm_i_readdata); --swapEndianess(to_stdULogicVector(avm_i_readdata));
+    i_readdata      <= std_ulogic_vector(avm_i_readdata);
     -- data bus
-    d_readdata_remapped <= to_stdULogicVector(avm_d_readdata); -- swapEndianess(to_stdULogicVector(avm_d_readdata));
-    avm_d_writedata     <= to_StdLogicVector(d_writedata_remapped); -- to_StdLogicVector(swapEndianess(d_writedata_remapped));
+    d_readdata      <= std_ulogic_vector(avm_d_readdata);
+    avm_d_writedata <= std_logic_vector(d_writedata);
 
     RAMData : process(csi_clk) is
     begin
@@ -50,13 +50,13 @@ begin
     Registers : process(csi_clk, rsi_reset_n)
     begin
         if (rsi_reset_n = not ('1')) then
-            R   <= cInitValRegSet;
+            R <= cInitValRegSet;
         elsif (rising_edge(csi_clk)) then
             R <= NxR;
         end if;
     end process;
 
-    Comb : process(R, RAMCtrl, i_readdata_remapped, d_readdata_remapped, avm_d_waitrequest)
+    Comb : process(R, RAMCtrl, i_readdata, d_readdata, avm_d_waitrequest)
         variable vRegfile  : aRegfileValues;
         variable vImm      : aImm;
         variable vALU      : aALUValues;
@@ -114,7 +114,8 @@ begin
                     when cOpRType | cOpIArith =>
                         NxR.ctrlState <= CalculateALUOp;
                     when cOpFence =>    -- implemented as NOP
-                        NxR.ctrlState <= WaitState;
+                        NxR.ctrlState  <= Fetch;
+                        vInstrMem.read := '1';
                     when cOpSys =>
                         case R.curInst(aFunct3Range) is
                             when cSysEnv =>
@@ -161,8 +162,6 @@ begin
 
             -- B-Type Conditional Branch
             when CalculateBranch =>
-                NxR.ctrlState <= WaitState;
-
                 -- configure ALU
                 case R.curInst(aFunct3Range) is
                     when cCondEq | cCondNe   => vALU.op := ALUOpSub;
@@ -220,7 +219,7 @@ begin
                 vALU.calc        := '1';
 
             when StoreIdleState =>
-                NxR.ctrlState <= WaitState;
+                NxR.ctrlState <= WaitStore;
 
             -- R-Type or I-Type Register Instruction
             when CalculateALUOp =>
@@ -238,7 +237,7 @@ begin
                 end if;
 
                 -- mul div operation
-                if R.curInst(aOPCodeRange) = cOpRType and R.curInst(aFunct7Range) = cMulDivOp then
+                if gImplementMExtension = 1 and R.curInst(aOPCodeRange) = cOpRType and R.curInst(aFunct7Range) = cMulDivOp then
                     case R.curInst(aFunct3Range) is
                         when cMul    => vALU.op := ALUOpMul;
                         when cMulhu  => vALU.op := ALUOpMulhu;
@@ -295,7 +294,7 @@ begin
             when WaitDivide =>
                 -- wait for busy flag to be cleared
                 vDivider.start := '0';
-                if (R.divisionDone = '1') then
+                if (gImplementMExtension = 1 and R.divisionDone = '1') then
                     NxR.ctrlState        <= Fetch;
                     vRegfile.writeEnable := '1';
                     vALU.calc            := '1';
@@ -332,7 +331,7 @@ begin
                 vInstrMem.read        := '1';
                 NxR.ctrlState         <= Fetch;
 
-            when WaitState =>
+            when WaitStore =>
                 -- only transit when slave is ready
                 if (avm_d_waitrequest = '0') then
                     -- only transit when slave is ready
@@ -390,105 +389,108 @@ begin
         -------------------------------------------------------------------------------
         -- Divider
         -------------------------------------------------------------------------------  
-        vDivider.Q       := R.divisionQ;
-        vDivider.s       := R.divisionS;
-        NxR.divisionDone <= '0';
-        case R.divisionState is
-            when prepare =>
-                if (vDivider.start = '1') then
-                    NxR.divisionQ                <= (others => '0');
-                    vDivider.Q                   := (others => '0');
-                    if (vDivider.calcSigned = '1') then
-                        NxR.signDividend <= vDivider.dividend(vDivider.dividend'high);
-                        vDivider.s       := (others => vDivider.dividend(vDivider.dividend'high));
-                    else
-                        vDivider.s       := (others => '0');
-                        NxR.signDividend <= '0';
+
+        if (gImplementMExtension = 1) then
+            vDivider.Q       := R.divisionQ;
+            vDivider.s       := R.divisionS;
+            NxR.divisionDone <= '0';
+            case R.divisionState is
+                when prepare =>
+                    if (vDivider.start = '1') then
+                        NxR.divisionQ                <= (others => '0');
+                        vDivider.Q                   := (others => '0');
+                        if (vDivider.calcSigned = '1') then
+                            NxR.signDividend <= vDivider.dividend(vDivider.dividend'high);
+                            vDivider.s       := (others => vDivider.dividend(vDivider.dividend'high));
+                        else
+                            vDivider.s       := (others => '0');
+                            NxR.signDividend <= '0';
+                        end if;
+                        vDivider.s(vDivider.dividend'range) := signed(vDivider.dividend);
+                        NxR.divisionS                <= vDivider.s;
+                        NxR.divisionCount            <= cBitWidth;
+                        NxR.divisionIntermZeroRem    <= '0';
+                        NxR.divisionState            <= calc;
+                        NxR.divisor                  <= vDivider.divisor;
+                        -- check if divisor is 0 -> set fields
+                        if (vDivider.divisor = 0) then
+                            NxR.divisionState                                                           <= prepare;
+                            NxR.divisionDone                                                            <= '1';
+                            NxR.divisionQ                                                               <= (others => '1');
+                            NxR.divisionS                                                               <= (others => '0');
+                            NxR.divisionS(NxR.divisionS'high - 1 downto NxR.divisionS'high - cBitWidth) <= vDivider.dividend(vDivider.dividend'high - 1 downto 0);
+                        -- calculate first step otherwise
+                        else
+                            -- ALU config
+                            vALU.src1         := cALUSrc1DivS;
+                            vALU.src2         := cALUSrc2DivDivisor;
+                            vALU.stepDiv      := '1';
+                            -- check if 1 or -1 should be stored
+                            if (vDivider.s(vDivider.s'high) /= vDivider.divisor(vDivider.divisor'high)) then
+                                vDivider.Q(cBitWidth - 1) := '0';
+                                vALU.op                   := ALUOpAdd;
+                            else
+                                vDivider.Q(cBitWidth - 1) := '1';
+                                vALU.op                   := ALUOpSub;
+                            end if;
+                            -- shift left and let alu calculate
+                            vDivider.s        := shift_left(vDivider.s, 1);
+                            NxR.divisionCount <= cBitWidth - 1;
+                            NxR.divisionQ     <= vDivider.Q;
+                            NxR.divisionS     <= vDivider.s;
+                        end if;
                     end if;
-                    vDivider.s(R.dividend'range) := signed(vDivider.dividend);
-                    NxR.divisionS                <= vDivider.s;
-                    NxR.divisionCount            <= cBitWidth;
-                    NxR.divisionIntermZeroRem    <= '0';
-                    NxR.divisionState            <= calc;
-                    NxR.divisor                  <= vDivider.divisor;
-                    -- check if divisor is 0 -> set fields
-                    if (vDivider.divisor = 0) then
-                        NxR.divisionState                                                           <= prepare;
-                        NxR.divisionDone                                                            <= '1';
-                        NxR.divisionQ                                                               <= (others => '1');
-                        NxR.divisionS                                                               <= (others => '0');
-                        NxR.divisionS(NxR.divisionS'high - 1 downto NxR.divisionS'high - cBitWidth) <= vDivider.dividend(vDivider.dividend'high - 1 downto 0);
-                    -- calculate first step otherwise
-                    else
+                when calc =>
+                    vDivider.divisor := R.divisor;
+                    -- calculating step
+                    if (R.divisionCount > 0) then
                         -- ALU config
                         vALU.src1         := cALUSrc1DivS;
                         vALU.src2         := cALUSrc2DivDivisor;
                         vALU.stepDiv      := '1';
+                        -- intermediate zero remainder?
+                        if R.aluZero = '1' and R.divisionCount /= 1 then
+                            NxR.divisionIntermZeroRem <= '1';
+                        end if;
                         -- check if 1 or -1 should be stored
-                        if (vDivider.s(vDivider.s'high) /= vDivider.divisor(vDivider.divisor'high)) then
-                            vDivider.Q(cBitWidth - 1) := '0';
-                            vALU.op                   := ALUOpAdd;
+                        if (vDivider.s(vDivider.s'high) /= R.divisor(R.divisor'high)) then
+                            vDivider.Q(R.divisionCount - 1) := '0';
+                            vALU.op                         := ALUOpAdd;
                         else
-                            vDivider.Q(cBitWidth - 1) := '1';
-                            vALU.op                   := ALUOpSub;
+                            vDivider.Q(R.divisionCount - 1) := '1';
+                            vALU.op                         := ALUOpSub;
                         end if;
                         -- shift left and let alu calculate
                         vDivider.s        := shift_left(vDivider.s, 1);
-                        NxR.divisionCount <= cBitWidth - 1;
-                        NxR.divisionQ     <= vDivider.Q;
-                        NxR.divisionS     <= vDivider.s;
-                    end if;
-                end if;
-            when calc =>
-                vDivider.divisor := R.divisor;
-                -- calculating step
-                if (R.divisionCount > 0) then
-                    -- ALU config
-                    vALU.src1         := cALUSrc1DivS;
-                    vALU.src2         := cALUSrc2DivDivisor;
-                    vALU.stepDiv      := '1';
-                    -- intermediate zero remainder?
-                    if R.aluZero = '1' and R.divisionCount /= 1 then
-                        NxR.divisionIntermZeroRem <= '1';
-                    end if;
-                    -- check if 1 or -1 should be stored
-                    if (vDivider.s(vDivider.s'high) /= R.divisor(R.divisor'high)) then
-                        vDivider.Q(R.divisionCount - 1) := '0';
-                        vALU.op                         := ALUOpAdd;
-                    else
-                        vDivider.Q(R.divisionCount - 1) := '1';
-                        vALU.op                         := ALUOpSub;
-                    end if;
-                    -- shift left and let alu calculate
-                    vDivider.s        := shift_left(vDivider.s, 1);
-                    NxR.divisionCount <= R.divisionCount - 1;
-                -- final result, convert and check if correction step is needed
-                elsif (R.divisionCount = 0) then
-                    NxR.divisionState <= prepare;
-                    NxR.divisionDone  <= '1';
-                    -- convert from 1s complement to 2s complement
-                    vDivider.Q        := shift_left(vDivider.Q, 1) + 1;
-                    -- correct result if signs do not match
-                    if vDivider.s(vDivider.s'high) /= R.signDividend or R.divisionIntermZeroRem = '1' then
-                        vALU.src1    := cALUSrc1DivS;
-                        vALU.src2    := cALUSrc2DivDivisor;
-                        vALU.stepDiv := '1';
-                        -- correct vDivider.Q and use ALU to add/subtract divisor from remainder
-                        if (R.divisor(R.divisor'high) = vDivider.s(vDivider.s'high)) then
-                            vDivider.Q := vDivider.Q + 1;
-                            vALU.op    := ALUOpSub;
-                        else
-                            vDivider.Q := vDivider.Q - 1;
-                            vALU.op    := ALUOpAdd;
+                        NxR.divisionCount <= R.divisionCount - 1;
+                    -- final result, convert and check if correction step is needed
+                    elsif (R.divisionCount = 0) then
+                        NxR.divisionState <= prepare;
+                        NxR.divisionDone  <= '1';
+                        -- convert from 1s complement to 2s complement
+                        vDivider.Q        := shift_left(vDivider.Q, 1) + 1;
+                        -- correct result if signs do not match
+                        if vDivider.s(vDivider.s'high) /= R.signDividend or R.divisionIntermZeroRem = '1' then
+                            vALU.src1    := cALUSrc1DivS;
+                            vALU.src2    := cALUSrc2DivDivisor;
+                            vALU.stepDiv := '1';
+                            -- correct vDivider.Q and use ALU to add/subtract divisor from remainder
+                            if (R.divisor(R.divisor'high) = vDivider.s(vDivider.s'high)) then
+                                vDivider.Q := vDivider.Q + 1;
+                                vALU.op    := ALUOpSub;
+                            else
+                                vDivider.Q := vDivider.Q - 1;
+                                vALU.op    := ALUOpAdd;
+                            end if;
                         end if;
                     end if;
-                end if;
 
-                NxR.divisionQ <= vDivider.Q;
-                NxR.divisionS <= vDivider.s;
+                    NxR.divisionQ <= vDivider.Q;
+                    NxR.divisionS <= vDivider.s;
 
-            when others => null;
-        end case;
+                when others => null;
+            end case;
+        end if;
 
         -------------------------------------------------------------------------------
         -- ALU
@@ -528,22 +530,24 @@ begin
         -- calculate shift amount
         vALU.shiftAmount := to_integer(unsigned(vALU.data2(aALUShiftRange)));
 
-        -- calculate multiplication
-        -- correct sign for multiplicands
-        case vALU.op is
-            when ALUOpMul | ALUOpMulhu =>
-                vALU.mul1 := vALU.data1;
-                vALU.mul2 := vALU.data2;
-            when ALUOpMulh =>
-                vALU.mul1 := vALU.data1(vALU.data1'high - 1) & vALU.data1(vALU.data1'high - 1 downto 0);
-                vALU.mul2 := vALU.data2(vALU.data2'high - 1) & vALU.data2(vALU.data2'high - 1 downto 0);
-            when ALUOpMulhsu =>
-                vALU.mul1 := vALU.data1(vALU.data1'high - 1) & vALU.data1(vALU.data1'high - 1 downto 0);
-                vALU.mul2 := vALU.data2;
-            when others => null;
-        end case;
+        if gImplementMExtension = 1 then
+            -- calculate multiplication
+            -- correct sign for multiplicands
+            case vALU.op is
+                when ALUOpMul | ALUOpMulhu =>
+                    vALU.mul1 := vALU.data1;
+                    vALU.mul2 := vALU.data2;
+                when ALUOpMulh =>
+                    vALU.mul1 := vALU.data1(vALU.data1'high - 1) & vALU.data1(vALU.data1'high - 1 downto 0);
+                    vALU.mul2 := vALU.data2(vALU.data2'high - 1) & vALU.data2(vALU.data2'high - 1 downto 0);
+                when ALUOpMulhsu =>
+                    vALU.mul1 := vALU.data1(vALU.data1'high - 1) & vALU.data1(vALU.data1'high - 1 downto 0);
+                    vALU.mul2 := vALU.data2;
+                when others => null;
+            end case;
 
-        vALU.mulRes := std_ulogic_vector(signed(vALU.mul1) * signed(vALU.mul2));
+            vALU.mulRes := std_ulogic_vector(signed(vALU.mul1) * signed(vALU.mul2));
+        end if;
 
         case vALU.op is
             when ALUOpAdd | ALUOpSub =>
@@ -596,7 +600,7 @@ begin
         end if;
 
         -- forward alu res to division unit if told so
-        if (vALU.stepDiv = '1') then
+        if (gImplementMExtension = 1 and vALU.stepDiv = '1') then
             NxR.divisionS(NxR.divisionS'high downto NxR.divisionS'high - cBitWidth) <= signed(vALU.rawRes);
             NxR.aluZero                                                             <= vALU.zero;
         end if;
@@ -605,15 +609,21 @@ begin
         -- BranchCheck Unit
         -------------------------------------------------------------------------------
         if (R.ctrlState = CalculateBranch) then
-            -- check if condition is met
+            -- check if condition is met           
             case R.curInst(aFunct3Range) is
                 when cCondEq | cCondGe | cCondGeu =>
                     if vALU.zero = '1' then
                         NxR.ctrlState <= PerformBranch;
+                    else
+                        NxR.ctrlState  <= Fetch;
+                        vInstrMem.read := '1';
                     end if;
                 when cCondNe | cCondLt | cCondLtu =>
                     if vALU.zero = '0' then
                         NxR.ctrlState <= PerformBranch;
+                    else
+                        NxR.ctrlState  <= Fetch;
+                        vInstrMem.read := '1';
                     end if;
                 when others =>
                     null;
@@ -632,7 +642,7 @@ begin
         end case;
 
         if (R.ctrlState = Fetch) then
-            NxR.curInst <= std_ulogic_vector(i_readdata_remapped);
+            NxR.curInst <= i_readdata;
         end if;
 
         -------------------------------------------------------------------------------
@@ -675,19 +685,19 @@ begin
                 -- check if address is byte aligned
                 case vDataMem.address(aMemLowerBytes'range) is
                     when cAddressByte0 =>
-                        vDataMem.readData(aByte0AcceseRange)  := d_readdata_remapped(aByte0AcceseRange);
+                        vDataMem.readData(aByte0AcceseRange)  := d_readdata(aByte0AcceseRange);
                         vDataMem.byteenable                   := cEnableByte0;
                         vDataMem.writeData(aByte0AcceseRange) := vRegfile.readData2(aByte0AcceseRange);
                     when cAddressByte1 =>
-                        vDataMem.readData(aByte0AcceseRange)  := d_readdata_remapped(aByte1AcceseRange);
+                        vDataMem.readData(aByte0AcceseRange)  := d_readdata(aByte1AcceseRange);
                         vDataMem.byteenable                   := cEnableByte1;
                         vDataMem.writeData(aByte1AcceseRange) := vRegfile.readData2(aByte0AcceseRange);
                     when cAddressByte2 =>
-                        vDataMem.readData(aByte0AcceseRange)  := d_readdata_remapped(aByte2AcceseRange);
+                        vDataMem.readData(aByte0AcceseRange)  := d_readdata(aByte2AcceseRange);
                         vDataMem.byteenable                   := cEnableByte2;
                         vDataMem.writeData(aByte2AcceseRange) := vRegfile.readData2(aByte0AcceseRange);
                     when cAddressByte3 =>
-                        vDataMem.readData(aByte0AcceseRange)  := d_readdata_remapped(aByte3AcceseRange);
+                        vDataMem.readData(aByte0AcceseRange)  := d_readdata(aByte3AcceseRange);
                         vDataMem.byteenable                   := cEnableByte3;
                         vDataMem.writeData(aByte3AcceseRange) := vRegfile.readData2(aByte0AcceseRange);
                     when others => null;
@@ -704,11 +714,11 @@ begin
                 -- check how the halfword is aligned
                 case vDataMem.address(aMemLowerBytes'range) is
                     when cAddressByte0 =>
-                        vDataMem.readData(aHalfword0AcceseRange)  := d_readdata_remapped(aHalfword0AcceseRange);
+                        vDataMem.readData(aHalfword0AcceseRange)  := d_readdata(aHalfword0AcceseRange);
                         vDataMem.writeData(aHalfword0AcceseRange) := vRegfile.readData2(aHalfword0AcceseRange);
                         vDataMem.byteenable                       := cEnableHalfWord0;
                     when cAddressByte2 =>
-                        vDataMem.readData(aHalfword0AcceseRange)  := d_readdata_remapped(aHalfword1AcceseRange);
+                        vDataMem.readData(aHalfword0AcceseRange)  := d_readdata(aHalfword1AcceseRange);
                         vDataMem.writeData(aHalfword1AcceseRange) := vRegfile.readData2(aHalfword0AcceseRange);
                         vDataMem.byteenable                       := cEnableHalfWord1;
 
@@ -724,7 +734,7 @@ begin
                 end if;
 
             when cMemWord =>
-                vDataMem.readData   := std_ulogic_vector(d_readdata_remapped);
+                vDataMem.readData   := std_ulogic_vector(d_readdata);
                 vDataMem.writeData  := vRegfile.readData2;
                 vDataMem.byteenable := cEnableWord;
             when others =>
@@ -741,11 +751,11 @@ begin
             NxR.dataBusAddress    <= vDataMem.address;
         end if;
 
-        avm_d_address        <= std_logic_vector(R.dataBusAddress);
-        avm_d_byteenable     <= std_logic_vector(R.dataBusByteenable);
-        avm_d_write          <= std_logic(R.dataBusWrite);
-        d_writedata_remapped <= R.dataBusWriteData;
-        avm_d_read           <= std_logic(R.dataBusRead);
+        avm_d_address    <= std_logic_vector(R.dataBusAddress);
+        avm_d_byteenable <= std_logic_vector(R.dataBusByteenable);
+        avm_d_write      <= std_logic(R.dataBusWrite);
+        d_writedata      <= R.dataBusWriteData;
+        avm_d_read       <= std_logic(R.dataBusRead);
 
         -------------------------------------------------------------------------------
         -- Register File - Write Stage

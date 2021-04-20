@@ -145,7 +145,7 @@ package RISCV is
         WaitLoad,
         CalculateStore,
         StoreIdleState,
-        WaitState,
+        WaitStore,
         CalculateBranch,
         PerformBranch,
         CalculateALUOp,
@@ -465,7 +465,6 @@ package RISCV is
         aluZero               : std_ulogic;
         -- signals for divider
         divisor               : signed(cALUWidth downto 0);
-        dividend              : signed(cALUWidth downto 0);
         divisionQ             : signed(cALUWidth - 1 downto 0);
         signDividend          : std_ulogic;
         divisionS             : signed(cALUWidth * 2 downto 0);
@@ -475,10 +474,9 @@ package RISCV is
         divisionState         : aDivState;
         -- signals for data bus
         dataBusAddress : aRegValue;
-        dataBusReadData : aRegValue;
         dataBusWriteData : aRegValue;
-        dataBusRead : std_ulogic;
         dataBusWrite : std_ulogic;
+        dataBusRead : std_ulogic;
         dataBusByteenable : aMemByteselect;
         -- signals for CSR
         csrReg                : aCsrSet;
@@ -491,7 +489,6 @@ package RISCV is
         aluRes                => (others => '0'),
         aluZero               => '0',
         divisor               => (others => '0'),
-        dividend              => (others => '0'),
         divisionQ             => (others => '0'),
         signDividend          => '0',
         divisionS             => (others => '0'),
@@ -500,10 +497,9 @@ package RISCV is
         divisionDone          => '0',
         divisionState         => prepare,
         dataBusAddress => (others => '0'),
-        dataBusReadData => (others => '0'),
         dataBusWriteData => (others => '0'),
-        dataBusRead => '0',
         dataBusWrite => '0',
+        dataBusRead => '0',
         dataBusByteenable => (others => '0'),
         csrReg                => (others => (others => '0'))
     );
