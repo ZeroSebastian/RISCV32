@@ -508,27 +508,29 @@ package RISCV is
     -- RAM definition
     -------------------------------------------------------------------------------
     -- store working registers and csr regs, workaround needed for block ram generation
-    type aRAM is array (0 to cRegCount + cCsrAddrCnt - 1) of aRegValue;
+    type aRAM is array (0 to cRegCount - 1) of aRegValue;
 
     type aRAMCtrl is record
         -- interfacing regfile
-        regfileRs1Addr : integer;
-        regfileRs2Addr : integer;
+        regfilePortAAddr : integer;
+        regfilePortBAddr : integer;
         rs1Data        : aRegValue;
         rs2Data        : aRegValue;
         regfileWrAddr  : integer;
         regfileWrData  : aRegValue;
+		we : std_ulogic;
 
     end record;
 
     constant cRAMCtrlDefault : aRAMCtrl := (
-        regfileRs1Addr => 0,
-        regfileRs2Addr => 0,
+        regfilePortAAddr => 0,
+        regfilePortBAddr => 0,
         rs1Data        => (others => '0'),
         rs2Data        => (others => '0'),
         -- init ram causes all zeros in r0
         regfileWrAddr  => 0,
-        regfileWrData  => (others => '0')
+        regfileWrData  => (others => '0'),
+		we => '0'
     );
 
     ------------------------------------------------------------------------------

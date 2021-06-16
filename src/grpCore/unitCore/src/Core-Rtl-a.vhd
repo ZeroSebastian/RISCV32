@@ -35,15 +35,20 @@ begin
     -- data bus
     d_readdata      <= std_ulogic_vector(avm_d_readdata);
     avm_d_writedata <= std_logic_vector(d_writedata);
-
+    
+    
     RAMData : process(csi_clk) is
     begin
         if (rising_edge(csi_clk)) then
             -- write
-            RAM(NxRAMCtrl.regfileWrAddr) <= NxRAMCtrl.regfileWrData;
-            -- read
-            RAMCtrl.rs1Data              <= RAM(NxRAMCtrl.regfileRs1Addr);
-            RAMCtrl.rs2Data              <= RAM(NxRAMCtrl.regfileRs2Addr);
+            if (NxRAMCtrl.we = '1') then
+                RAM(NxRAMCtrl.regfilePortAAddr) <= NxRAMCtrl.regfileWrData;
+                RAMCtrl.rs1Data <=  NxRAMCtrl.regfileWrData;
+            else
+                -- read
+                RAMCtrl.rs1Data <= RAM(NxRAMCtrl.regfilePortAAddr);
+            end if;            
+            RAMCtrl.rs2Data <= RAM(NxRAMCtrl.regfilePortBAddr);
         end if;
     end process;
 
@@ -355,8 +360,8 @@ begin
         -- Register File - Read Stage
         -------------------------------------------------------------------------------
         if (R.ctrlState = ReadReg) then
-            NxRAMCtrl.regfileRs1Addr <= to_integer(unsigned(R.curInst(aRs1AddrRange)));
-            NxRAMCtrl.regfileRs2Addr <= to_integer(unsigned(R.curInst(aRs2AddrRange)));
+            NxRAMCtrl.regfilePortAAddr <= to_integer(unsigned(R.curInst(aRs1AddrRange)));
+            NxRAMCtrl.regfilePortBAddr <= to_integer(unsigned(R.curInst(aRs2AddrRange)));
         end if;
 
         vRegfile.readData1 := RAMCtrl.rs1Data;
@@ -397,8 +402,8 @@ begin
             case R.divisionState is
                 when prepare =>
                     if (vDivider.start = '1') then
-                        NxR.divisionQ                <= (others => '0');
-                        vDivider.Q                   := (others => '0');
+                        NxR.divisionQ                       <= (others => '0');
+                        vDivider.Q                          := (others => '0');
                         if (vDivider.calcSigned = '1') then
                             NxR.signDividend <= vDivider.dividend(vDivider.dividend'high);
                             vDivider.s       := (others => vDivider.dividend(vDivider.dividend'high));
@@ -407,11 +412,11 @@ begin
                             NxR.signDividend <= '0';
                         end if;
                         vDivider.s(vDivider.dividend'range) := signed(vDivider.dividend);
-                        NxR.divisionS                <= vDivider.s;
-                        NxR.divisionCount            <= cBitWidth;
-                        NxR.divisionIntermZeroRem    <= '0';
-                        NxR.divisionState            <= calc;
-                        NxR.divisor                  <= vDivider.divisor;
+                        NxR.divisionS                       <= vDivider.s;
+                        NxR.divisionCount                   <= cBitWidth;
+                        NxR.divisionIntermZeroRem           <= '0';
+                        NxR.divisionState                   <= calc;
+                        NxR.divisor                         <= vDivider.divisor;
                         -- check if divisor is 0 -> set fields
                         if (vDivider.divisor = 0) then
                             NxR.divisionState                                                           <= prepare;
@@ -771,11 +776,11 @@ begin
 
         -- only configure to write when reg address is not 0
         if vRegfile.writeEnable = '1' and R.curInst(aRdAddrRange) /= (aRdAddrRange => '0') then
-            NxRAMCtrl.regfileWrAddr <= to_integer(unsigned(R.curInst(aRdAddrRange)));
+            NxRAMCtrl.regfilePortAAddr <= to_integer(unsigned(R.curInst(aRdAddrRange)));
             NxRAMCtrl.regfileWrData <= vRegfile.writeData;
+            NxRAMCtrl.we            <= '1';
         else
-            NxRAMCtrl.regfileWrAddr <= RAMCtrl.regfileWrAddr;
-            NxRAMCtrl.regfileWrData <= RAMCtrl.regfileWrData;
+            NxRAMCtrl.we            <= '0';
         end if;
 
         -------------------------------------------------------------------------------

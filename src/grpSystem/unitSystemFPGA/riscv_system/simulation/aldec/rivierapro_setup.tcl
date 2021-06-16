@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 18.1 625 win32 2021.04.20.19:42:11
+# ACDS 18.1 625 win32 2021.05.13.12:07:25
 # ----------------------------------------
 # Auto-generated simulation script rivierapro_setup.tcl
 # ----------------------------------------
@@ -188,46 +188,46 @@ ensure_lib                       ./libraries/altera_lnsim
 vmap       altera_lnsim          ./libraries/altera_lnsim         
 ensure_lib                       ./libraries/cyclonev             
 vmap       cyclonev              ./libraries/cyclonev             
-ensure_lib                               ./libraries/error_adapter_0              
-vmap       error_adapter_0               ./libraries/error_adapter_0              
-ensure_lib                               ./libraries/rsp_mux                      
-vmap       rsp_mux                       ./libraries/rsp_mux                      
-ensure_lib                               ./libraries/cmd_mux                      
-vmap       cmd_mux                       ./libraries/cmd_mux                      
-ensure_lib                               ./libraries/cmd_demux                    
-vmap       cmd_demux                     ./libraries/cmd_demux                    
-ensure_lib                               ./libraries/router_001                   
-vmap       router_001                    ./libraries/router_001                   
-ensure_lib                               ./libraries/router                       
-vmap       router                        ./libraries/router                       
-ensure_lib                               ./libraries/avalon_st_adapter            
-vmap       avalon_st_adapter             ./libraries/avalon_st_adapter            
-ensure_lib                               ./libraries/rsp_demux                    
-vmap       rsp_demux                     ./libraries/rsp_demux                    
-ensure_lib                               ./libraries/leds_s1_agent_rsp_fifo       
-vmap       leds_s1_agent_rsp_fifo        ./libraries/leds_s1_agent_rsp_fifo       
-ensure_lib                               ./libraries/leds_s1_agent                
-vmap       leds_s1_agent                 ./libraries/leds_s1_agent                
-ensure_lib                               ./libraries/rv32ui_fsmd_0_data_agent     
-vmap       rv32ui_fsmd_0_data_agent      ./libraries/rv32ui_fsmd_0_data_agent     
-ensure_lib                               ./libraries/leds_s1_translator           
-vmap       leds_s1_translator            ./libraries/leds_s1_translator           
-ensure_lib                               ./libraries/rv32ui_fsmd_0_data_translator
-vmap       rv32ui_fsmd_0_data_translator ./libraries/rv32ui_fsmd_0_data_translator
-ensure_lib                               ./libraries/rst_controller               
-vmap       rst_controller                ./libraries/rst_controller               
-ensure_lib                               ./libraries/mm_interconnect_1            
-vmap       mm_interconnect_1             ./libraries/mm_interconnect_1            
-ensure_lib                               ./libraries/mm_interconnect_0            
-vmap       mm_interconnect_0             ./libraries/mm_interconnect_0            
-ensure_lib                               ./libraries/switches                     
-vmap       switches                      ./libraries/switches                     
-ensure_lib                               ./libraries/rv32ui_fsmd_0                
-vmap       rv32ui_fsmd_0                 ./libraries/rv32ui_fsmd_0                
-ensure_lib                               ./libraries/onchip_memory2_0             
-vmap       onchip_memory2_0              ./libraries/onchip_memory2_0             
-ensure_lib                               ./libraries/leds                         
-vmap       leds                          ./libraries/leds                         
+ensure_lib                                 ./libraries/error_adapter_0                
+vmap       error_adapter_0                 ./libraries/error_adapter_0                
+ensure_lib                                 ./libraries/rsp_mux                        
+vmap       rsp_mux                         ./libraries/rsp_mux                        
+ensure_lib                                 ./libraries/cmd_mux                        
+vmap       cmd_mux                         ./libraries/cmd_mux                        
+ensure_lib                                 ./libraries/cmd_demux                      
+vmap       cmd_demux                       ./libraries/cmd_demux                      
+ensure_lib                                 ./libraries/router_001                     
+vmap       router_001                      ./libraries/router_001                     
+ensure_lib                                 ./libraries/router                         
+vmap       router                          ./libraries/router                         
+ensure_lib                                 ./libraries/avalon_st_adapter              
+vmap       avalon_st_adapter               ./libraries/avalon_st_adapter              
+ensure_lib                                 ./libraries/rsp_demux                      
+vmap       rsp_demux                       ./libraries/rsp_demux                      
+ensure_lib                                 ./libraries/leds_s1_agent_rsp_fifo         
+vmap       leds_s1_agent_rsp_fifo          ./libraries/leds_s1_agent_rsp_fifo         
+ensure_lib                                 ./libraries/leds_s1_agent                  
+vmap       leds_s1_agent                   ./libraries/leds_s1_agent                  
+ensure_lib                                 ./libraries/rv32ui_m_fsmd_0_data_agent     
+vmap       rv32ui_m_fsmd_0_data_agent      ./libraries/rv32ui_m_fsmd_0_data_agent     
+ensure_lib                                 ./libraries/leds_s1_translator             
+vmap       leds_s1_translator              ./libraries/leds_s1_translator             
+ensure_lib                                 ./libraries/rv32ui_m_fsmd_0_data_translator
+vmap       rv32ui_m_fsmd_0_data_translator ./libraries/rv32ui_m_fsmd_0_data_translator
+ensure_lib                                 ./libraries/rst_controller                 
+vmap       rst_controller                  ./libraries/rst_controller                 
+ensure_lib                                 ./libraries/mm_interconnect_1              
+vmap       mm_interconnect_1               ./libraries/mm_interconnect_1              
+ensure_lib                                 ./libraries/mm_interconnect_0              
+vmap       mm_interconnect_0               ./libraries/mm_interconnect_0              
+ensure_lib                                 ./libraries/switches                       
+vmap       switches                        ./libraries/switches                       
+ensure_lib                                 ./libraries/rv32ui_m_fsmd_0                
+vmap       rv32ui_m_fsmd_0                 ./libraries/rv32ui_m_fsmd_0                
+ensure_lib                                 ./libraries/onchip_memory2_0               
+vmap       onchip_memory2_0                ./libraries/onchip_memory2_0               
+ensure_lib                                 ./libraries/leds                           
+vmap       leds                            ./libraries/leds                           
 
 # ----------------------------------------
 # Compile device library files
@@ -268,55 +268,55 @@ alias dev_com {
 # Compile the design files in correct order
 alias com {
   echo "\[exec\] com"
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv" -work error_adapter_0              
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1_rsp_mux.sv"                           -work rsp_mux                      
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                         -work rsp_mux                      
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1_cmd_mux.sv"                           -work cmd_mux                      
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                         -work cmd_mux                      
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1_cmd_demux.sv"                         -work cmd_demux                    
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1_router_001.sv"                        -work router_001                   
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1_router.sv"                            -work router                       
-  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_avalon_st_adapter.vhd"                -work avalon_st_adapter            
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_rsp_mux.sv"                           -work rsp_mux                      
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                         -work rsp_mux                      
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_rsp_demux.sv"                         -work rsp_demux                    
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_cmd_mux.sv"                           -work cmd_mux                      
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                         -work cmd_mux                      
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_cmd_demux.sv"                         -work cmd_demux                    
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_router_001.sv"                        -work router_001                   
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_router.sv"                            -work router                       
-  eval  vlog -v2k5 $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                                             -work leds_s1_agent_rsp_fifo       
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_slave_agent.sv"                                        -work leds_s1_agent                
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv"                                 -work leds_s1_agent                
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_master_agent.sv"                                       -work rv32ui_fsmd_0_data_agent     
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_slave_translator.sv"                                   -work leds_s1_translator           
-  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_master_translator.sv"                                  -work rv32ui_fsmd_0_data_translator
-  eval  vlog -v2k5 $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_reset_controller.v"                                           -work rst_controller               
-  eval  vlog -v2k5 $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_reset_synchronizer.v"                                         -work rst_controller               
-  eval  vlog -v2k5 $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1.v"                                    -work mm_interconnect_1            
-  eval  vlog -v2k5 $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0.v"                                    -work mm_interconnect_0            
-  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/riscv_system_switches.vhd"                                           -work switches                     
-  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/Global-p.vhd"                                                        -work rv32ui_fsmd_0                
-  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/RISCV-p.vhd"                                                         -work rv32ui_fsmd_0                
-  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/Core-e.vhd"                                                          -work rv32ui_fsmd_0                
-  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/Core-Rtl-a.vhd"                                                      -work rv32ui_fsmd_0                
-  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/riscv_system_onchip_memory2_0.vhd"                                   -work onchip_memory2_0             
-  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/riscv_system_leds.vhd"                                               -work leds                         
-  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/riscv_system.vhd"                                                                                                  
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv" -work error_adapter_0                
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1_rsp_mux.sv"                           -work rsp_mux                        
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                         -work rsp_mux                        
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1_cmd_mux.sv"                           -work cmd_mux                        
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                         -work cmd_mux                        
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1_cmd_demux.sv"                         -work cmd_demux                      
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1_router_001.sv"                        -work router_001                     
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1_router.sv"                            -work router                         
+  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_avalon_st_adapter.vhd"                -work avalon_st_adapter              
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_rsp_mux.sv"                           -work rsp_mux                        
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                         -work rsp_mux                        
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_rsp_demux.sv"                         -work rsp_demux                      
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_cmd_mux.sv"                           -work cmd_mux                        
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                         -work cmd_mux                        
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_cmd_demux.sv"                         -work cmd_demux                      
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_router_001.sv"                        -work router_001                     
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0_router.sv"                            -work router                         
+  eval  vlog -v2k5 $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                                             -work leds_s1_agent_rsp_fifo         
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_slave_agent.sv"                                        -work leds_s1_agent                  
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv"                                 -work leds_s1_agent                  
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_master_agent.sv"                                       -work rv32ui_m_fsmd_0_data_agent     
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_slave_translator.sv"                                   -work leds_s1_translator             
+  eval  vlog  $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/submodules/altera_merlin_master_translator.sv"                                  -work rv32ui_m_fsmd_0_data_translator
+  eval  vlog -v2k5 $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_reset_controller.v"                                           -work rst_controller                 
+  eval  vlog -v2k5 $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_reset_synchronizer.v"                                         -work rst_controller                 
+  eval  vlog -v2k5 $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_1.v"                                    -work mm_interconnect_1              
+  eval  vlog -v2k5 $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/riscv_system_mm_interconnect_0.v"                                    -work mm_interconnect_0              
+  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/riscv_system_switches.vhd"                                           -work switches                       
+  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/Global-p.vhd"                                                        -work rv32ui_m_fsmd_0                
+  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/RISCV-p.vhd"                                                         -work rv32ui_m_fsmd_0                
+  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/Core-e.vhd"                                                          -work rv32ui_m_fsmd_0                
+  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/Core-Rtl-a.vhd"                                                      -work rv32ui_m_fsmd_0                
+  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/riscv_system_onchip_memory2_0.vhd"                                   -work onchip_memory2_0               
+  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/submodules/riscv_system_leds.vhd"                                               -work leds                           
+  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS          "$QSYS_SIMDIR/riscv_system.vhd"                                                                                                    
 }
 
 # ----------------------------------------
 # Elaborate top level design
 alias elab {
   echo "\[exec\] elab"
-  eval vsim +access +r -t ps $ELAB_OPTIONS -L work -L error_adapter_0 -L rsp_mux -L cmd_mux -L cmd_demux -L router_001 -L router -L avalon_st_adapter -L rsp_demux -L leds_s1_agent_rsp_fifo -L leds_s1_agent -L rv32ui_fsmd_0_data_agent -L leds_s1_translator -L rv32ui_fsmd_0_data_translator -L rst_controller -L mm_interconnect_1 -L mm_interconnect_0 -L switches -L rv32ui_fsmd_0 -L onchip_memory2_0 -L leds -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev $TOP_LEVEL_NAME
+  eval vsim +access +r -t ps $ELAB_OPTIONS -L work -L error_adapter_0 -L rsp_mux -L cmd_mux -L cmd_demux -L router_001 -L router -L avalon_st_adapter -L rsp_demux -L leds_s1_agent_rsp_fifo -L leds_s1_agent -L rv32ui_m_fsmd_0_data_agent -L leds_s1_translator -L rv32ui_m_fsmd_0_data_translator -L rst_controller -L mm_interconnect_1 -L mm_interconnect_0 -L switches -L rv32ui_m_fsmd_0 -L onchip_memory2_0 -L leds -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev $TOP_LEVEL_NAME
 }
 
 # ----------------------------------------
 # Elaborate the top level design with -dbg -O2 option
 alias elab_debug {
   echo "\[exec\] elab_debug"
-  eval vsim -dbg -O2 +access +r -t ps $ELAB_OPTIONS -L work -L error_adapter_0 -L rsp_mux -L cmd_mux -L cmd_demux -L router_001 -L router -L avalon_st_adapter -L rsp_demux -L leds_s1_agent_rsp_fifo -L leds_s1_agent -L rv32ui_fsmd_0_data_agent -L leds_s1_translator -L rv32ui_fsmd_0_data_translator -L rst_controller -L mm_interconnect_1 -L mm_interconnect_0 -L switches -L rv32ui_fsmd_0 -L onchip_memory2_0 -L leds -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev $TOP_LEVEL_NAME
+  eval vsim -dbg -O2 +access +r -t ps $ELAB_OPTIONS -L work -L error_adapter_0 -L rsp_mux -L cmd_mux -L cmd_demux -L router_001 -L router -L avalon_st_adapter -L rsp_demux -L leds_s1_agent_rsp_fifo -L leds_s1_agent -L rv32ui_m_fsmd_0_data_agent -L leds_s1_translator -L rv32ui_m_fsmd_0_data_translator -L rst_controller -L mm_interconnect_1 -L mm_interconnect_0 -L switches -L rv32ui_m_fsmd_0 -L onchip_memory2_0 -L leds -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclonev $TOP_LEVEL_NAME
 }
 
 # ----------------------------------------

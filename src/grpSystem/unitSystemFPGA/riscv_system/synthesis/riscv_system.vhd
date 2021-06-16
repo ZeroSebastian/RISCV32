@@ -82,47 +82,47 @@ architecture rtl of riscv_system is
 
 	component riscv_system_mm_interconnect_0 is
 		port (
-			clk_0_clk_clk                                     : in  std_logic                     := 'X';             -- clk
-			rv32ui_fsmd_0_reset_n_reset_bridge_in_reset_reset : in  std_logic                     := 'X';             -- reset
-			rv32ui_fsmd_0_data_address                        : in  std_logic_vector(31 downto 0) := (others => 'X'); -- address
-			rv32ui_fsmd_0_data_waitrequest                    : out std_logic;                                        -- waitrequest
-			rv32ui_fsmd_0_data_byteenable                     : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
-			rv32ui_fsmd_0_data_read                           : in  std_logic                     := 'X';             -- read
-			rv32ui_fsmd_0_data_readdata                       : out std_logic_vector(31 downto 0);                    -- readdata
-			rv32ui_fsmd_0_data_write                          : in  std_logic                     := 'X';             -- write
-			rv32ui_fsmd_0_data_writedata                      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
-			leds_s1_address                                   : out std_logic_vector(1 downto 0);                     -- address
-			leds_s1_write                                     : out std_logic;                                        -- write
-			leds_s1_readdata                                  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
-			leds_s1_writedata                                 : out std_logic_vector(31 downto 0);                    -- writedata
-			leds_s1_chipselect                                : out std_logic;                                        -- chipselect
-			onchip_memory2_0_s2_address                       : out std_logic_vector(12 downto 0);                    -- address
-			onchip_memory2_0_s2_write                         : out std_logic;                                        -- write
-			onchip_memory2_0_s2_readdata                      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
-			onchip_memory2_0_s2_writedata                     : out std_logic_vector(31 downto 0);                    -- writedata
-			onchip_memory2_0_s2_byteenable                    : out std_logic_vector(3 downto 0);                     -- byteenable
-			onchip_memory2_0_s2_chipselect                    : out std_logic;                                        -- chipselect
-			onchip_memory2_0_s2_clken                         : out std_logic;                                        -- clken
-			switches_s1_address                               : out std_logic_vector(1 downto 0);                     -- address
-			switches_s1_readdata                              : in  std_logic_vector(31 downto 0) := (others => 'X')  -- readdata
+			clk_0_clk_clk                                       : in  std_logic                     := 'X';             -- clk
+			rv32ui_m_fsmd_0_reset_n_reset_bridge_in_reset_reset : in  std_logic                     := 'X';             -- reset
+			rv32ui_m_fsmd_0_data_address                        : in  std_logic_vector(31 downto 0) := (others => 'X'); -- address
+			rv32ui_m_fsmd_0_data_waitrequest                    : out std_logic;                                        -- waitrequest
+			rv32ui_m_fsmd_0_data_byteenable                     : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			rv32ui_m_fsmd_0_data_read                           : in  std_logic                     := 'X';             -- read
+			rv32ui_m_fsmd_0_data_readdata                       : out std_logic_vector(31 downto 0);                    -- readdata
+			rv32ui_m_fsmd_0_data_write                          : in  std_logic                     := 'X';             -- write
+			rv32ui_m_fsmd_0_data_writedata                      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			leds_s1_address                                     : out std_logic_vector(1 downto 0);                     -- address
+			leds_s1_write                                       : out std_logic;                                        -- write
+			leds_s1_readdata                                    : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			leds_s1_writedata                                   : out std_logic_vector(31 downto 0);                    -- writedata
+			leds_s1_chipselect                                  : out std_logic;                                        -- chipselect
+			onchip_memory2_0_s1_address                         : out std_logic_vector(12 downto 0);                    -- address
+			onchip_memory2_0_s1_write                           : out std_logic;                                        -- write
+			onchip_memory2_0_s1_readdata                        : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			onchip_memory2_0_s1_writedata                       : out std_logic_vector(31 downto 0);                    -- writedata
+			onchip_memory2_0_s1_byteenable                      : out std_logic_vector(3 downto 0);                     -- byteenable
+			onchip_memory2_0_s1_chipselect                      : out std_logic;                                        -- chipselect
+			onchip_memory2_0_s1_clken                           : out std_logic;                                        -- clken
+			switches_s1_address                                 : out std_logic_vector(1 downto 0);                     -- address
+			switches_s1_readdata                                : in  std_logic_vector(31 downto 0) := (others => 'X')  -- readdata
 		);
 	end component riscv_system_mm_interconnect_0;
 
 	component riscv_system_mm_interconnect_1 is
 		port (
-			clk_0_clk_clk                                     : in  std_logic                     := 'X';             -- clk
-			rv32ui_fsmd_0_reset_n_reset_bridge_in_reset_reset : in  std_logic                     := 'X';             -- reset
-			rv32ui_fsmd_0_instruction_address                 : in  std_logic_vector(31 downto 0) := (others => 'X'); -- address
-			rv32ui_fsmd_0_instruction_waitrequest             : out std_logic;                                        -- waitrequest
-			rv32ui_fsmd_0_instruction_read                    : in  std_logic                     := 'X';             -- read
-			rv32ui_fsmd_0_instruction_readdata                : out std_logic_vector(31 downto 0);                    -- readdata
-			onchip_memory2_0_s1_address                       : out std_logic_vector(12 downto 0);                    -- address
-			onchip_memory2_0_s1_write                         : out std_logic;                                        -- write
-			onchip_memory2_0_s1_readdata                      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
-			onchip_memory2_0_s1_writedata                     : out std_logic_vector(31 downto 0);                    -- writedata
-			onchip_memory2_0_s1_byteenable                    : out std_logic_vector(3 downto 0);                     -- byteenable
-			onchip_memory2_0_s1_chipselect                    : out std_logic;                                        -- chipselect
-			onchip_memory2_0_s1_clken                         : out std_logic                                         -- clken
+			clk_0_clk_clk                                       : in  std_logic                     := 'X';             -- clk
+			rv32ui_m_fsmd_0_reset_n_reset_bridge_in_reset_reset : in  std_logic                     := 'X';             -- reset
+			rv32ui_m_fsmd_0_instruction_address                 : in  std_logic_vector(31 downto 0) := (others => 'X'); -- address
+			rv32ui_m_fsmd_0_instruction_waitrequest             : out std_logic;                                        -- waitrequest
+			rv32ui_m_fsmd_0_instruction_read                    : in  std_logic                     := 'X';             -- read
+			rv32ui_m_fsmd_0_instruction_readdata                : out std_logic_vector(31 downto 0);                    -- readdata
+			onchip_memory2_0_s2_address                         : out std_logic_vector(12 downto 0);                    -- address
+			onchip_memory2_0_s2_write                           : out std_logic;                                        -- write
+			onchip_memory2_0_s2_readdata                        : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			onchip_memory2_0_s2_writedata                       : out std_logic_vector(31 downto 0);                    -- writedata
+			onchip_memory2_0_s2_byteenable                      : out std_logic_vector(3 downto 0);                     -- byteenable
+			onchip_memory2_0_s2_chipselect                      : out std_logic;                                        -- chipselect
+			onchip_memory2_0_s2_clken                           : out std_logic                                         -- clken
 		);
 	end component riscv_system_mm_interconnect_1;
 
@@ -192,13 +192,13 @@ architecture rtl of riscv_system is
 		);
 	end component altera_reset_controller;
 
-	signal rv32ui_fsmd_0_data_readdata                      : std_logic_vector(31 downto 0); -- mm_interconnect_0:rv32ui_fsmd_0_data_readdata -> rv32ui_fsmd_0:avm_d_readdata
-	signal rv32ui_fsmd_0_data_waitrequest                   : std_logic;                     -- mm_interconnect_0:rv32ui_fsmd_0_data_waitrequest -> rv32ui_fsmd_0:avm_d_waitrequest
-	signal rv32ui_fsmd_0_data_address                       : std_logic_vector(31 downto 0); -- rv32ui_fsmd_0:avm_d_address -> mm_interconnect_0:rv32ui_fsmd_0_data_address
-	signal rv32ui_fsmd_0_data_byteenable                    : std_logic_vector(3 downto 0);  -- rv32ui_fsmd_0:avm_d_byteenable -> mm_interconnect_0:rv32ui_fsmd_0_data_byteenable
-	signal rv32ui_fsmd_0_data_read                          : std_logic;                     -- rv32ui_fsmd_0:avm_d_read -> mm_interconnect_0:rv32ui_fsmd_0_data_read
-	signal rv32ui_fsmd_0_data_write                         : std_logic;                     -- rv32ui_fsmd_0:avm_d_write -> mm_interconnect_0:rv32ui_fsmd_0_data_write
-	signal rv32ui_fsmd_0_data_writedata                     : std_logic_vector(31 downto 0); -- rv32ui_fsmd_0:avm_d_writedata -> mm_interconnect_0:rv32ui_fsmd_0_data_writedata
+	signal rv32ui_m_fsmd_0_data_readdata                    : std_logic_vector(31 downto 0); -- mm_interconnect_0:rv32ui_m_fsmd_0_data_readdata -> rv32ui_m_fsmd_0:avm_d_readdata
+	signal rv32ui_m_fsmd_0_data_waitrequest                 : std_logic;                     -- mm_interconnect_0:rv32ui_m_fsmd_0_data_waitrequest -> rv32ui_m_fsmd_0:avm_d_waitrequest
+	signal rv32ui_m_fsmd_0_data_address                     : std_logic_vector(31 downto 0); -- rv32ui_m_fsmd_0:avm_d_address -> mm_interconnect_0:rv32ui_m_fsmd_0_data_address
+	signal rv32ui_m_fsmd_0_data_byteenable                  : std_logic_vector(3 downto 0);  -- rv32ui_m_fsmd_0:avm_d_byteenable -> mm_interconnect_0:rv32ui_m_fsmd_0_data_byteenable
+	signal rv32ui_m_fsmd_0_data_read                        : std_logic;                     -- rv32ui_m_fsmd_0:avm_d_read -> mm_interconnect_0:rv32ui_m_fsmd_0_data_read
+	signal rv32ui_m_fsmd_0_data_write                       : std_logic;                     -- rv32ui_m_fsmd_0:avm_d_write -> mm_interconnect_0:rv32ui_m_fsmd_0_data_write
+	signal rv32ui_m_fsmd_0_data_writedata                   : std_logic_vector(31 downto 0); -- rv32ui_m_fsmd_0:avm_d_writedata -> mm_interconnect_0:rv32ui_m_fsmd_0_data_writedata
 	signal mm_interconnect_0_leds_s1_chipselect             : std_logic;                     -- mm_interconnect_0:leds_s1_chipselect -> leds:chipselect
 	signal mm_interconnect_0_leds_s1_readdata               : std_logic_vector(31 downto 0); -- leds:readdata -> mm_interconnect_0:leds_s1_readdata
 	signal mm_interconnect_0_leds_s1_address                : std_logic_vector(1 downto 0);  -- mm_interconnect_0:leds_s1_address -> leds:address
@@ -206,29 +206,29 @@ architecture rtl of riscv_system is
 	signal mm_interconnect_0_leds_s1_writedata              : std_logic_vector(31 downto 0); -- mm_interconnect_0:leds_s1_writedata -> leds:writedata
 	signal mm_interconnect_0_switches_s1_readdata           : std_logic_vector(31 downto 0); -- switches:readdata -> mm_interconnect_0:switches_s1_readdata
 	signal mm_interconnect_0_switches_s1_address            : std_logic_vector(1 downto 0);  -- mm_interconnect_0:switches_s1_address -> switches:address
-	signal mm_interconnect_0_onchip_memory2_0_s2_chipselect : std_logic;                     -- mm_interconnect_0:onchip_memory2_0_s2_chipselect -> onchip_memory2_0:chipselect2
-	signal mm_interconnect_0_onchip_memory2_0_s2_readdata   : std_logic_vector(31 downto 0); -- onchip_memory2_0:readdata2 -> mm_interconnect_0:onchip_memory2_0_s2_readdata
-	signal mm_interconnect_0_onchip_memory2_0_s2_address    : std_logic_vector(12 downto 0); -- mm_interconnect_0:onchip_memory2_0_s2_address -> onchip_memory2_0:address2
-	signal mm_interconnect_0_onchip_memory2_0_s2_byteenable : std_logic_vector(3 downto 0);  -- mm_interconnect_0:onchip_memory2_0_s2_byteenable -> onchip_memory2_0:byteenable2
-	signal mm_interconnect_0_onchip_memory2_0_s2_write      : std_logic;                     -- mm_interconnect_0:onchip_memory2_0_s2_write -> onchip_memory2_0:write2
-	signal mm_interconnect_0_onchip_memory2_0_s2_writedata  : std_logic_vector(31 downto 0); -- mm_interconnect_0:onchip_memory2_0_s2_writedata -> onchip_memory2_0:writedata2
-	signal mm_interconnect_0_onchip_memory2_0_s2_clken      : std_logic;                     -- mm_interconnect_0:onchip_memory2_0_s2_clken -> onchip_memory2_0:clken2
-	signal rv32ui_fsmd_0_instruction_readdata               : std_logic_vector(31 downto 0); -- mm_interconnect_1:rv32ui_fsmd_0_instruction_readdata -> rv32ui_fsmd_0:avm_i_readdata
-	signal rv32ui_fsmd_0_instruction_waitrequest            : std_logic;                     -- mm_interconnect_1:rv32ui_fsmd_0_instruction_waitrequest -> rv32ui_fsmd_0:avm_i_waitrequest
-	signal rv32ui_fsmd_0_instruction_address                : std_logic_vector(31 downto 0); -- rv32ui_fsmd_0:avm_i_address -> mm_interconnect_1:rv32ui_fsmd_0_instruction_address
-	signal rv32ui_fsmd_0_instruction_read                   : std_logic;                     -- rv32ui_fsmd_0:avm_i_read -> mm_interconnect_1:rv32ui_fsmd_0_instruction_read
-	signal mm_interconnect_1_onchip_memory2_0_s1_chipselect : std_logic;                     -- mm_interconnect_1:onchip_memory2_0_s1_chipselect -> onchip_memory2_0:chipselect
-	signal mm_interconnect_1_onchip_memory2_0_s1_readdata   : std_logic_vector(31 downto 0); -- onchip_memory2_0:readdata -> mm_interconnect_1:onchip_memory2_0_s1_readdata
-	signal mm_interconnect_1_onchip_memory2_0_s1_address    : std_logic_vector(12 downto 0); -- mm_interconnect_1:onchip_memory2_0_s1_address -> onchip_memory2_0:address
-	signal mm_interconnect_1_onchip_memory2_0_s1_byteenable : std_logic_vector(3 downto 0);  -- mm_interconnect_1:onchip_memory2_0_s1_byteenable -> onchip_memory2_0:byteenable
-	signal mm_interconnect_1_onchip_memory2_0_s1_write      : std_logic;                     -- mm_interconnect_1:onchip_memory2_0_s1_write -> onchip_memory2_0:write
-	signal mm_interconnect_1_onchip_memory2_0_s1_writedata  : std_logic_vector(31 downto 0); -- mm_interconnect_1:onchip_memory2_0_s1_writedata -> onchip_memory2_0:writedata
-	signal mm_interconnect_1_onchip_memory2_0_s1_clken      : std_logic;                     -- mm_interconnect_1:onchip_memory2_0_s1_clken -> onchip_memory2_0:clken
-	signal rst_controller_reset_out_reset                   : std_logic;                     -- rst_controller:reset_out -> [mm_interconnect_0:rv32ui_fsmd_0_reset_n_reset_bridge_in_reset_reset, mm_interconnect_1:rv32ui_fsmd_0_reset_n_reset_bridge_in_reset_reset, onchip_memory2_0:reset, rst_controller_reset_out_reset:in, rst_translator:in_reset]
+	signal mm_interconnect_0_onchip_memory2_0_s1_chipselect : std_logic;                     -- mm_interconnect_0:onchip_memory2_0_s1_chipselect -> onchip_memory2_0:chipselect
+	signal mm_interconnect_0_onchip_memory2_0_s1_readdata   : std_logic_vector(31 downto 0); -- onchip_memory2_0:readdata -> mm_interconnect_0:onchip_memory2_0_s1_readdata
+	signal mm_interconnect_0_onchip_memory2_0_s1_address    : std_logic_vector(12 downto 0); -- mm_interconnect_0:onchip_memory2_0_s1_address -> onchip_memory2_0:address
+	signal mm_interconnect_0_onchip_memory2_0_s1_byteenable : std_logic_vector(3 downto 0);  -- mm_interconnect_0:onchip_memory2_0_s1_byteenable -> onchip_memory2_0:byteenable
+	signal mm_interconnect_0_onchip_memory2_0_s1_write      : std_logic;                     -- mm_interconnect_0:onchip_memory2_0_s1_write -> onchip_memory2_0:write
+	signal mm_interconnect_0_onchip_memory2_0_s1_writedata  : std_logic_vector(31 downto 0); -- mm_interconnect_0:onchip_memory2_0_s1_writedata -> onchip_memory2_0:writedata
+	signal mm_interconnect_0_onchip_memory2_0_s1_clken      : std_logic;                     -- mm_interconnect_0:onchip_memory2_0_s1_clken -> onchip_memory2_0:clken
+	signal rv32ui_m_fsmd_0_instruction_readdata             : std_logic_vector(31 downto 0); -- mm_interconnect_1:rv32ui_m_fsmd_0_instruction_readdata -> rv32ui_m_fsmd_0:avm_i_readdata
+	signal rv32ui_m_fsmd_0_instruction_waitrequest          : std_logic;                     -- mm_interconnect_1:rv32ui_m_fsmd_0_instruction_waitrequest -> rv32ui_m_fsmd_0:avm_i_waitrequest
+	signal rv32ui_m_fsmd_0_instruction_address              : std_logic_vector(31 downto 0); -- rv32ui_m_fsmd_0:avm_i_address -> mm_interconnect_1:rv32ui_m_fsmd_0_instruction_address
+	signal rv32ui_m_fsmd_0_instruction_read                 : std_logic;                     -- rv32ui_m_fsmd_0:avm_i_read -> mm_interconnect_1:rv32ui_m_fsmd_0_instruction_read
+	signal mm_interconnect_1_onchip_memory2_0_s2_chipselect : std_logic;                     -- mm_interconnect_1:onchip_memory2_0_s2_chipselect -> onchip_memory2_0:chipselect2
+	signal mm_interconnect_1_onchip_memory2_0_s2_readdata   : std_logic_vector(31 downto 0); -- onchip_memory2_0:readdata2 -> mm_interconnect_1:onchip_memory2_0_s2_readdata
+	signal mm_interconnect_1_onchip_memory2_0_s2_address    : std_logic_vector(12 downto 0); -- mm_interconnect_1:onchip_memory2_0_s2_address -> onchip_memory2_0:address2
+	signal mm_interconnect_1_onchip_memory2_0_s2_byteenable : std_logic_vector(3 downto 0);  -- mm_interconnect_1:onchip_memory2_0_s2_byteenable -> onchip_memory2_0:byteenable2
+	signal mm_interconnect_1_onchip_memory2_0_s2_write      : std_logic;                     -- mm_interconnect_1:onchip_memory2_0_s2_write -> onchip_memory2_0:write2
+	signal mm_interconnect_1_onchip_memory2_0_s2_writedata  : std_logic_vector(31 downto 0); -- mm_interconnect_1:onchip_memory2_0_s2_writedata -> onchip_memory2_0:writedata2
+	signal mm_interconnect_1_onchip_memory2_0_s2_clken      : std_logic;                     -- mm_interconnect_1:onchip_memory2_0_s2_clken -> onchip_memory2_0:clken2
+	signal rst_controller_reset_out_reset                   : std_logic;                     -- rst_controller:reset_out -> [mm_interconnect_0:rv32ui_m_fsmd_0_reset_n_reset_bridge_in_reset_reset, mm_interconnect_1:rv32ui_m_fsmd_0_reset_n_reset_bridge_in_reset_reset, onchip_memory2_0:reset, rst_controller_reset_out_reset:in, rst_translator:in_reset]
 	signal rst_controller_reset_out_reset_req               : std_logic;                     -- rst_controller:reset_req -> [onchip_memory2_0:reset_req, rst_translator:reset_req_in]
 	signal reset_reset_n_ports_inv                          : std_logic;                     -- reset_reset_n:inv -> rst_controller:reset_in0
 	signal mm_interconnect_0_leds_s1_write_ports_inv        : std_logic;                     -- mm_interconnect_0_leds_s1_write:inv -> leds:write_n
-	signal rst_controller_reset_out_reset_ports_inv         : std_logic;                     -- rst_controller_reset_out_reset:inv -> [leds:reset_n, rv32ui_fsmd_0:rsi_reset_n, switches:reset_n]
+	signal rst_controller_reset_out_reset_ports_inv         : std_logic;                     -- rst_controller_reset_out_reset:inv -> [leds:reset_n, rv32ui_m_fsmd_0:rsi_reset_n, switches:reset_n]
 
 begin
 
@@ -246,40 +246,40 @@ begin
 
 	onchip_memory2_0 : component riscv_system_onchip_memory2_0
 		port map (
-			address     => mm_interconnect_1_onchip_memory2_0_s1_address,    --     s1.address
-			clken       => mm_interconnect_1_onchip_memory2_0_s1_clken,      --       .clken
-			chipselect  => mm_interconnect_1_onchip_memory2_0_s1_chipselect, --       .chipselect
-			write       => mm_interconnect_1_onchip_memory2_0_s1_write,      --       .write
-			readdata    => mm_interconnect_1_onchip_memory2_0_s1_readdata,   --       .readdata
-			writedata   => mm_interconnect_1_onchip_memory2_0_s1_writedata,  --       .writedata
-			byteenable  => mm_interconnect_1_onchip_memory2_0_s1_byteenable, --       .byteenable
-			address2    => mm_interconnect_0_onchip_memory2_0_s2_address,    --     s2.address
-			chipselect2 => mm_interconnect_0_onchip_memory2_0_s2_chipselect, --       .chipselect
-			clken2      => mm_interconnect_0_onchip_memory2_0_s2_clken,      --       .clken
-			write2      => mm_interconnect_0_onchip_memory2_0_s2_write,      --       .write
-			readdata2   => mm_interconnect_0_onchip_memory2_0_s2_readdata,   --       .readdata
-			writedata2  => mm_interconnect_0_onchip_memory2_0_s2_writedata,  --       .writedata
-			byteenable2 => mm_interconnect_0_onchip_memory2_0_s2_byteenable, --       .byteenable
+			address     => mm_interconnect_0_onchip_memory2_0_s1_address,    --     s1.address
+			clken       => mm_interconnect_0_onchip_memory2_0_s1_clken,      --       .clken
+			chipselect  => mm_interconnect_0_onchip_memory2_0_s1_chipselect, --       .chipselect
+			write       => mm_interconnect_0_onchip_memory2_0_s1_write,      --       .write
+			readdata    => mm_interconnect_0_onchip_memory2_0_s1_readdata,   --       .readdata
+			writedata   => mm_interconnect_0_onchip_memory2_0_s1_writedata,  --       .writedata
+			byteenable  => mm_interconnect_0_onchip_memory2_0_s1_byteenable, --       .byteenable
+			address2    => mm_interconnect_1_onchip_memory2_0_s2_address,    --     s2.address
+			chipselect2 => mm_interconnect_1_onchip_memory2_0_s2_chipselect, --       .chipselect
+			clken2      => mm_interconnect_1_onchip_memory2_0_s2_clken,      --       .clken
+			write2      => mm_interconnect_1_onchip_memory2_0_s2_write,      --       .write
+			readdata2   => mm_interconnect_1_onchip_memory2_0_s2_readdata,   --       .readdata
+			writedata2  => mm_interconnect_1_onchip_memory2_0_s2_writedata,  --       .writedata
+			byteenable2 => mm_interconnect_1_onchip_memory2_0_s2_byteenable, --       .byteenable
 			clk         => clk_clk,                                          --   clk1.clk
 			reset       => rst_controller_reset_out_reset,                   -- reset1.reset
 			reset_req   => rst_controller_reset_out_reset_req,               --       .reset_req
 			freeze      => '0'                                               -- (terminated)
 		);
 
-	rv32ui_fsmd_0 : component Core
+	rv32ui_m_fsmd_0 : component Core
 		port map (
 			csi_clk           => clk_clk,                                  --       clock.clk
-			avm_d_address     => rv32ui_fsmd_0_data_address,               --        data.address
-			avm_d_byteenable  => rv32ui_fsmd_0_data_byteenable,            --            .byteenable
-			avm_d_write       => rv32ui_fsmd_0_data_write,                 --            .write
-			avm_d_writedata   => rv32ui_fsmd_0_data_writedata,             --            .writedata
-			avm_d_read        => rv32ui_fsmd_0_data_read,                  --            .read
-			avm_d_readdata    => rv32ui_fsmd_0_data_readdata,              --            .readdata
-			avm_d_waitrequest => rv32ui_fsmd_0_data_waitrequest,           --            .waitrequest
-			avm_i_address     => rv32ui_fsmd_0_instruction_address,        -- instruction.address
-			avm_i_read        => rv32ui_fsmd_0_instruction_read,           --            .read
-			avm_i_readdata    => rv32ui_fsmd_0_instruction_readdata,       --            .readdata
-			avm_i_waitrequest => rv32ui_fsmd_0_instruction_waitrequest,    --            .waitrequest
+			avm_d_address     => rv32ui_m_fsmd_0_data_address,             --        data.address
+			avm_d_byteenable  => rv32ui_m_fsmd_0_data_byteenable,          --            .byteenable
+			avm_d_write       => rv32ui_m_fsmd_0_data_write,               --            .write
+			avm_d_writedata   => rv32ui_m_fsmd_0_data_writedata,           --            .writedata
+			avm_d_read        => rv32ui_m_fsmd_0_data_read,                --            .read
+			avm_d_readdata    => rv32ui_m_fsmd_0_data_readdata,            --            .readdata
+			avm_d_waitrequest => rv32ui_m_fsmd_0_data_waitrequest,         --            .waitrequest
+			avm_i_address     => rv32ui_m_fsmd_0_instruction_address,      -- instruction.address
+			avm_i_read        => rv32ui_m_fsmd_0_instruction_read,         --            .read
+			avm_i_readdata    => rv32ui_m_fsmd_0_instruction_readdata,     --            .readdata
+			avm_i_waitrequest => rv32ui_m_fsmd_0_instruction_waitrequest,  --            .waitrequest
 			rsi_reset_n       => rst_controller_reset_out_reset_ports_inv  --     reset_n.reset_n
 		);
 
@@ -294,46 +294,46 @@ begin
 
 	mm_interconnect_0 : component riscv_system_mm_interconnect_0
 		port map (
-			clk_0_clk_clk                                     => clk_clk,                                          --                                   clk_0_clk.clk
-			rv32ui_fsmd_0_reset_n_reset_bridge_in_reset_reset => rst_controller_reset_out_reset,                   -- rv32ui_fsmd_0_reset_n_reset_bridge_in_reset.reset
-			rv32ui_fsmd_0_data_address                        => rv32ui_fsmd_0_data_address,                       --                          rv32ui_fsmd_0_data.address
-			rv32ui_fsmd_0_data_waitrequest                    => rv32ui_fsmd_0_data_waitrequest,                   --                                            .waitrequest
-			rv32ui_fsmd_0_data_byteenable                     => rv32ui_fsmd_0_data_byteenable,                    --                                            .byteenable
-			rv32ui_fsmd_0_data_read                           => rv32ui_fsmd_0_data_read,                          --                                            .read
-			rv32ui_fsmd_0_data_readdata                       => rv32ui_fsmd_0_data_readdata,                      --                                            .readdata
-			rv32ui_fsmd_0_data_write                          => rv32ui_fsmd_0_data_write,                         --                                            .write
-			rv32ui_fsmd_0_data_writedata                      => rv32ui_fsmd_0_data_writedata,                     --                                            .writedata
-			leds_s1_address                                   => mm_interconnect_0_leds_s1_address,                --                                     leds_s1.address
-			leds_s1_write                                     => mm_interconnect_0_leds_s1_write,                  --                                            .write
-			leds_s1_readdata                                  => mm_interconnect_0_leds_s1_readdata,               --                                            .readdata
-			leds_s1_writedata                                 => mm_interconnect_0_leds_s1_writedata,              --                                            .writedata
-			leds_s1_chipselect                                => mm_interconnect_0_leds_s1_chipselect,             --                                            .chipselect
-			onchip_memory2_0_s2_address                       => mm_interconnect_0_onchip_memory2_0_s2_address,    --                         onchip_memory2_0_s2.address
-			onchip_memory2_0_s2_write                         => mm_interconnect_0_onchip_memory2_0_s2_write,      --                                            .write
-			onchip_memory2_0_s2_readdata                      => mm_interconnect_0_onchip_memory2_0_s2_readdata,   --                                            .readdata
-			onchip_memory2_0_s2_writedata                     => mm_interconnect_0_onchip_memory2_0_s2_writedata,  --                                            .writedata
-			onchip_memory2_0_s2_byteenable                    => mm_interconnect_0_onchip_memory2_0_s2_byteenable, --                                            .byteenable
-			onchip_memory2_0_s2_chipselect                    => mm_interconnect_0_onchip_memory2_0_s2_chipselect, --                                            .chipselect
-			onchip_memory2_0_s2_clken                         => mm_interconnect_0_onchip_memory2_0_s2_clken,      --                                            .clken
-			switches_s1_address                               => mm_interconnect_0_switches_s1_address,            --                                 switches_s1.address
-			switches_s1_readdata                              => mm_interconnect_0_switches_s1_readdata            --                                            .readdata
+			clk_0_clk_clk                                       => clk_clk,                                          --                                     clk_0_clk.clk
+			rv32ui_m_fsmd_0_reset_n_reset_bridge_in_reset_reset => rst_controller_reset_out_reset,                   -- rv32ui_m_fsmd_0_reset_n_reset_bridge_in_reset.reset
+			rv32ui_m_fsmd_0_data_address                        => rv32ui_m_fsmd_0_data_address,                     --                          rv32ui_m_fsmd_0_data.address
+			rv32ui_m_fsmd_0_data_waitrequest                    => rv32ui_m_fsmd_0_data_waitrequest,                 --                                              .waitrequest
+			rv32ui_m_fsmd_0_data_byteenable                     => rv32ui_m_fsmd_0_data_byteenable,                  --                                              .byteenable
+			rv32ui_m_fsmd_0_data_read                           => rv32ui_m_fsmd_0_data_read,                        --                                              .read
+			rv32ui_m_fsmd_0_data_readdata                       => rv32ui_m_fsmd_0_data_readdata,                    --                                              .readdata
+			rv32ui_m_fsmd_0_data_write                          => rv32ui_m_fsmd_0_data_write,                       --                                              .write
+			rv32ui_m_fsmd_0_data_writedata                      => rv32ui_m_fsmd_0_data_writedata,                   --                                              .writedata
+			leds_s1_address                                     => mm_interconnect_0_leds_s1_address,                --                                       leds_s1.address
+			leds_s1_write                                       => mm_interconnect_0_leds_s1_write,                  --                                              .write
+			leds_s1_readdata                                    => mm_interconnect_0_leds_s1_readdata,               --                                              .readdata
+			leds_s1_writedata                                   => mm_interconnect_0_leds_s1_writedata,              --                                              .writedata
+			leds_s1_chipselect                                  => mm_interconnect_0_leds_s1_chipselect,             --                                              .chipselect
+			onchip_memory2_0_s1_address                         => mm_interconnect_0_onchip_memory2_0_s1_address,    --                           onchip_memory2_0_s1.address
+			onchip_memory2_0_s1_write                           => mm_interconnect_0_onchip_memory2_0_s1_write,      --                                              .write
+			onchip_memory2_0_s1_readdata                        => mm_interconnect_0_onchip_memory2_0_s1_readdata,   --                                              .readdata
+			onchip_memory2_0_s1_writedata                       => mm_interconnect_0_onchip_memory2_0_s1_writedata,  --                                              .writedata
+			onchip_memory2_0_s1_byteenable                      => mm_interconnect_0_onchip_memory2_0_s1_byteenable, --                                              .byteenable
+			onchip_memory2_0_s1_chipselect                      => mm_interconnect_0_onchip_memory2_0_s1_chipselect, --                                              .chipselect
+			onchip_memory2_0_s1_clken                           => mm_interconnect_0_onchip_memory2_0_s1_clken,      --                                              .clken
+			switches_s1_address                                 => mm_interconnect_0_switches_s1_address,            --                                   switches_s1.address
+			switches_s1_readdata                                => mm_interconnect_0_switches_s1_readdata            --                                              .readdata
 		);
 
 	mm_interconnect_1 : component riscv_system_mm_interconnect_1
 		port map (
-			clk_0_clk_clk                                     => clk_clk,                                          --                                   clk_0_clk.clk
-			rv32ui_fsmd_0_reset_n_reset_bridge_in_reset_reset => rst_controller_reset_out_reset,                   -- rv32ui_fsmd_0_reset_n_reset_bridge_in_reset.reset
-			rv32ui_fsmd_0_instruction_address                 => rv32ui_fsmd_0_instruction_address,                --                   rv32ui_fsmd_0_instruction.address
-			rv32ui_fsmd_0_instruction_waitrequest             => rv32ui_fsmd_0_instruction_waitrequest,            --                                            .waitrequest
-			rv32ui_fsmd_0_instruction_read                    => rv32ui_fsmd_0_instruction_read,                   --                                            .read
-			rv32ui_fsmd_0_instruction_readdata                => rv32ui_fsmd_0_instruction_readdata,               --                                            .readdata
-			onchip_memory2_0_s1_address                       => mm_interconnect_1_onchip_memory2_0_s1_address,    --                         onchip_memory2_0_s1.address
-			onchip_memory2_0_s1_write                         => mm_interconnect_1_onchip_memory2_0_s1_write,      --                                            .write
-			onchip_memory2_0_s1_readdata                      => mm_interconnect_1_onchip_memory2_0_s1_readdata,   --                                            .readdata
-			onchip_memory2_0_s1_writedata                     => mm_interconnect_1_onchip_memory2_0_s1_writedata,  --                                            .writedata
-			onchip_memory2_0_s1_byteenable                    => mm_interconnect_1_onchip_memory2_0_s1_byteenable, --                                            .byteenable
-			onchip_memory2_0_s1_chipselect                    => mm_interconnect_1_onchip_memory2_0_s1_chipselect, --                                            .chipselect
-			onchip_memory2_0_s1_clken                         => mm_interconnect_1_onchip_memory2_0_s1_clken       --                                            .clken
+			clk_0_clk_clk                                       => clk_clk,                                          --                                     clk_0_clk.clk
+			rv32ui_m_fsmd_0_reset_n_reset_bridge_in_reset_reset => rst_controller_reset_out_reset,                   -- rv32ui_m_fsmd_0_reset_n_reset_bridge_in_reset.reset
+			rv32ui_m_fsmd_0_instruction_address                 => rv32ui_m_fsmd_0_instruction_address,              --                   rv32ui_m_fsmd_0_instruction.address
+			rv32ui_m_fsmd_0_instruction_waitrequest             => rv32ui_m_fsmd_0_instruction_waitrequest,          --                                              .waitrequest
+			rv32ui_m_fsmd_0_instruction_read                    => rv32ui_m_fsmd_0_instruction_read,                 --                                              .read
+			rv32ui_m_fsmd_0_instruction_readdata                => rv32ui_m_fsmd_0_instruction_readdata,             --                                              .readdata
+			onchip_memory2_0_s2_address                         => mm_interconnect_1_onchip_memory2_0_s2_address,    --                           onchip_memory2_0_s2.address
+			onchip_memory2_0_s2_write                           => mm_interconnect_1_onchip_memory2_0_s2_write,      --                                              .write
+			onchip_memory2_0_s2_readdata                        => mm_interconnect_1_onchip_memory2_0_s2_readdata,   --                                              .readdata
+			onchip_memory2_0_s2_writedata                       => mm_interconnect_1_onchip_memory2_0_s2_writedata,  --                                              .writedata
+			onchip_memory2_0_s2_byteenable                      => mm_interconnect_1_onchip_memory2_0_s2_byteenable, --                                              .byteenable
+			onchip_memory2_0_s2_chipselect                      => mm_interconnect_1_onchip_memory2_0_s2_chipselect, --                                              .chipselect
+			onchip_memory2_0_s2_clken                           => mm_interconnect_1_onchip_memory2_0_s2_clken       --                                              .clken
 		);
 
 	rst_controller : component altera_reset_controller

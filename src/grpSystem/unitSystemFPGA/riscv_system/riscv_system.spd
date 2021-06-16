@@ -83,7 +83,7 @@
  <file
    path="simulation/submodules/altera_merlin_master_agent.sv"
    type="SYSTEM_VERILOG"
-   library="rv32ui_fsmd_0_data_agent" />
+   library="rv32ui_m_fsmd_0_data_agent" />
  <file
    path="simulation/submodules/altera_merlin_slave_translator.sv"
    type="SYSTEM_VERILOG"
@@ -91,7 +91,7 @@
  <file
    path="simulation/submodules/altera_merlin_master_translator.sv"
    type="SYSTEM_VERILOG"
-   library="rv32ui_fsmd_0_data_translator" />
+   library="rv32ui_m_fsmd_0_data_translator" />
  <file
    path="simulation/submodules/altera_reset_controller.v"
    type="VERILOG"
@@ -119,19 +119,19 @@
  <file
    path="simulation/submodules/Global-p.vhd"
    type="VHDL"
-   library="rv32ui_fsmd_0" />
+   library="rv32ui_m_fsmd_0" />
  <file
    path="simulation/submodules/RISCV-p.vhd"
    type="VHDL"
-   library="rv32ui_fsmd_0" />
+   library="rv32ui_m_fsmd_0" />
  <file
    path="simulation/submodules/Core-e.vhd"
    type="VHDL"
-   library="rv32ui_fsmd_0" />
+   library="rv32ui_m_fsmd_0" />
  <file
    path="simulation/submodules/Core-Rtl-a.vhd"
    type="VHDL"
-   library="rv32ui_fsmd_0" />
+   library="rv32ui_m_fsmd_0" />
  <file
    path="simulation/submodules/riscv_system_onchip_memory2_0.vhd"
    type="VHDL"

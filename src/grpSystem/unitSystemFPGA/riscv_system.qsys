@@ -21,7 +21,7 @@
    {
       datum _sortIndex
       {
-         value = "4";
+         value = "3";
          type = "int";
       }
    }
@@ -42,7 +42,7 @@
    {
       datum _sortIndex
       {
-         value = "2";
+         value = "1";
          type = "int";
       }
       datum sopceditor_expanded
@@ -213,11 +213,19 @@
          type = "String";
       }
    }
-   element rv32ui_fsmd_0
+   element riscv_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
+         type = "String";
+      }
+   }
+   element rv32ui_m_fsmd_0
    {
       datum _sortIndex
       {
-         value = "1";
+         value = "4";
          type = "int";
       }
    }
@@ -225,7 +233,7 @@
    {
       datum _sortIndex
       {
-         value = "3";
+         value = "2";
          type = "int";
       }
    }
@@ -327,7 +335,7 @@
   <parameter name="useShallowMemBlocks" value="false" />
   <parameter name="writable" value="true" />
  </module>
- <module name="rv32ui_fsmd_0" kind="rv32ui_fsmd" version="1.0" enabled="1" />
+ <module name="rv32ui_m_fsmd_0" kind="rv32ui_m_fsmd" version="1.0" enabled="1" />
  <module name="switches" kind="altera_avalon_pio" version="18.1" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
@@ -342,7 +350,11 @@
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="8" />
  </module>
- <connection kind="avalon" version="18.1" start="rv32ui_fsmd_0.data" end="leds.s1">
+ <connection
+   kind="avalon"
+   version="18.1"
+   start="rv32ui_m_fsmd_0.data"
+   end="leds.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x8000" />
   <parameter name="defaultConnection" value="false" />
@@ -350,7 +362,7 @@
  <connection
    kind="avalon"
    version="18.1"
-   start="rv32ui_fsmd_0.data"
+   start="rv32ui_m_fsmd_0.data"
    end="switches.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x8010" />
@@ -359,8 +371,8 @@
  <connection
    kind="avalon"
    version="18.1"
-   start="rv32ui_fsmd_0.data"
-   end="onchip_memory2_0.s2">
+   start="rv32ui_m_fsmd_0.data"
+   end="onchip_memory2_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
@@ -368,8 +380,8 @@
  <connection
    kind="avalon"
    version="18.1"
-   start="rv32ui_fsmd_0.instruction"
-   end="onchip_memory2_0.s1">
+   start="rv32ui_m_fsmd_0.instruction"
+   end="onchip_memory2_0.s2">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
@@ -385,7 +397,7 @@
    kind="clock"
    version="18.1"
    start="clk_0.clk"
-   end="rv32ui_fsmd_0.clock" />
+   end="rv32ui_m_fsmd_0.clock" />
  <connection kind="reset" version="18.1" start="clk_0.clk_reset" end="leds.reset" />
  <connection
    kind="reset"
@@ -401,7 +413,7 @@
    kind="reset"
    version="18.1"
    start="clk_0.clk_reset"
-   end="rv32ui_fsmd_0.reset_n" />
+   end="rv32ui_m_fsmd_0.reset_n" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
